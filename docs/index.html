@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>finesse - design skill for coding agents</title>
+<meta name="description" content="A design skill pack that makes coding agents ship polished, animated, RTL-aware Next.js + shadcn interfaces.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230d9488'/%3E%3Cpath d='M9 22 L16 8 L23 22' stroke='white' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='16' cy='17' r='2' fill='white'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Heebo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0c0f; --bg-soft:#10141a; --card:#131922; --card-2:#182030;
+  --border:#223041; --border-soft:#1a2432;
+  --text:#e8eef4; --muted:#8fa0b3; --faint:#5c6b7d;
+  --accent:#14b8a6; --accent-soft:rgba(20,184,166,.14); --accent-strong:#0d9488;
+  --amber:#f5b453; --rose:#fb7185; --green:#34d399;
+  --radius:16px; --shadow-1:0 1px 2px rgba(0,0,0,.3); --shadow-2:0 8px 24px rgba(0,0,0,.35);
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:"Inter",system-ui,sans-serif;overflow-x:clip;-webkit-font-smoothing:antialiased}
+::selection{background:var(--accent-soft)}
+.heb{font-family:"Heebo","Inter",sans-serif}
+.bg-fx{position:fixed;inset:0;z-index:-1;pointer-events:none}
+.bg-fx::before{content:"";position:absolute;inset:0;background:radial-gradient(900px 500px at 15% -5%,rgba(20,184,166,.10),transparent 60%),radial-gradient(700px 420px at 90% 10%,rgba(245,180,83,.06),transparent 60%)}
+.bg-fx::after{content:"";position:absolute;inset:0;opacity:.35;background-image:linear-gradient(rgba(143,160,179,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(143,160,179,.05) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 30%,transparent 75%)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+header{padding:72px 0 40px;text-align:center}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border:1px solid var(--border);border-radius:999px;background:var(--bg-soft);color:var(--muted);font-size:13px;font-weight:500}
+.badge .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);animation:pulse 2.4s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+h1{font-size:clamp(44px,7vw,84px);font-weight:800;letter-spacing:-.04em;line-height:1.02;margin:26px 0 18px;background:linear-gradient(180deg,#fff 30%,#9fb2c5);-webkit-background-clip:text;background-clip:text;color:transparent}
+h1 .x{background:linear-gradient(120deg,var(--accent),var(--amber));-webkit-background-clip:text;background-clip:text;color:transparent}
+.tag{color:var(--muted);font-size:clamp(16px,2.2vw,20px);line-height:1.6;max-width:640px;margin:0 auto}
+.tag b{color:var(--text);font-weight:600}
+.cta-row{display:flex;gap:12px;justify-content:center;margin-top:32px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:12px 22px;border-radius:12px;font-weight:600;font-size:15px;text-decoration:none;border:1px solid var(--border);color:var(--text);background:var(--card);transition:transform .15s var(--ease),box-shadow .2s,border-color .2s;cursor:pointer;font-family:inherit}
+.btn:hover{transform:translateY(-2px);border-color:var(--accent-strong);box-shadow:var(--shadow-2)}
+.btn:active{transform:translateY(0) scale(.98)}
+.btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent-strong));border-color:transparent;color:#04211d}
+.btn.primary:hover{box-shadow:0 8px 30px rgba(20,184,166,.35)}
+.btn svg{width:17px;height:17px}
+.fictional{margin-top:22px;display:inline-block;font-size:12.5px;color:var(--faint);border:1px dashed var(--border);border-radius:8px;padding:5px 12px}
+.install{margin:44px auto 0;max-width:720px;display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--border-soft);border-radius:14px;padding:14px 18px;box-shadow:var(--shadow-1)}
+.install code{font-family:"JetBrains Mono",monospace;font-size:13.5px;color:var(--accent);overflow-x:auto;white-space:nowrap;flex:1;text-align:start}
+.copy-btn{background:var(--bg-soft);border:1px solid var(--border);color:var(--muted);border-radius:9px;padding:7px 13px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;align-items:center;gap:6px;flex-shrink:0}
+.copy-btn:hover{color:var(--text);border-color:var(--accent-strong)}
+.copy-btn.ok{color:var(--green);border-color:var(--green)}
+section{padding:56px 0 8px}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px;flex-wrap:wrap}
+.sec-num{font-family:"JetBrains Mono",monospace;color:var(--accent);font-size:13px;font-weight:500}
+h2{font-size:clamp(24px,3.4vw,34px);font-weight:700;letter-spacing:-.02em}
+.sec-sub{color:var(--muted);font-size:15px;line-height:1.65;max-width:660px;margin-bottom:26px}
+.demo{border:1px solid var(--border-soft);border-radius:var(--radius);background:var(--bg-soft);overflow:hidden;box-shadow:var(--shadow-2)}
+.demo-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;border-bottom:1px solid var(--border-soft);flex-wrap:wrap}
+.demo-title{font-size:14px;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:9px}
+.demo-title svg{width:15px;height:15px;color:var(--faint)}
+.seg{display:inline-flex;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:3px;position:relative}
+.seg button{border:0;background:transparent;color:var(--muted);font-family:inherit;font-size:13px;font-weight:600;padding:7px 18px;border-radius:8px;cursor:pointer;position:relative;z-index:1;transition:color .2s}
+.seg button[aria-pressed="true"]{color:#04211d}
+.seg .pill{position:absolute;top:3px;bottom:3px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent-strong));transition:left .25s var(--ease),width .25s var(--ease);z-index:0}
+.stage{padding:34px clamp(18px,4vw,44px);min-height:300px;display:flex;align-items:center;justify-content:center}
+.stage-inner{width:100%;max-width:640px;position:relative}
+.swap{animation:swapIn .35s var(--ease)}
+@keyframes swapIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.before .card-b{background:#f4f4f5;border:1px solid #d4d4d8;border-radius:8px;padding:16px;color:#18181b}
+.before .lbl{color:#71717a;font-size:13px}
+.before .num{font-size:24px;font-weight:700;margin-top:4px}
+.before .delta{color:#16a34a;font-size:12px;margin-top:4px}
+.before .grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px}
+.before button.plain{background:#3b82f6;color:#fff;border:0;padding:10px;border-radius:6px;cursor:pointer;width:100%;font-size:14px}
+.before input.plain{border:1px solid #a1a1aa;padding:10px;border-radius:6px;width:100%;font-size:14px;color:#18181b;background:#fff}
+.before .blanknote{color:#71717a;font-size:13px;font-style:italic;text-align:center;padding:40px 0;background:#f4f4f5;border:1px solid #d4d4d8;border-radius:8px}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;width:100%}
+.stat{background:var(--card);border:1px solid var(--border-soft);border-radius:14px;padding:18px;box-shadow:var(--shadow-1);transition:transform .2s var(--ease),box-shadow .25s,border-color .2s;position:relative;overflow:hidden}
+.stat::before{content:"";position:absolute;inset:0 0 auto;height:2px;background:linear-gradient(90deg,var(--accent),transparent);opacity:.7}
+.stat:hover{transform:translateY(-3px);box-shadow:var(--shadow-2);border-color:var(--border)}
+.stat .lbl{color:var(--muted);font-size:13px;font-weight:500}
+.stat .num{font-size:26px;font-weight:700;margin-top:6px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.stat .delta{display:flex;align-items:center;gap:5px;font-size:12px;margin-top:6px;font-weight:600}
+.stat .delta.up{color:var(--green)}.stat .delta.down{color:var(--rose)}
+.stat .delta svg{width:12px;height:12px}
+.form-card{background:var(--card);border:1px solid var(--border-soft);border-radius:14px;padding:24px;box-shadow:var(--shadow-1);max-width:420px;margin:0 auto;width:100%}
+.form-card h3{font-size:16px;font-weight:700;margin-bottom:4px}
+.form-card p{font-size:13px;color:var(--muted);margin-bottom:18px}
+.f-row{margin-bottom:14px}
+.f-row label{display:block;font-size:13px;font-weight:500;color:var(--muted);margin-bottom:6px}
+.f-input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:11px 13px;color:var(--text);font-family:inherit;font-size:14px;transition:border-color .15s,box-shadow .15s}
+.f-input:focus{outline:0;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.submit{width:100%;padding:12px;border-radius:10px;border:0;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;background:linear-gradient(135deg,var(--accent),var(--accent-strong));color:#04211d;display:flex;align-items:center;justify-content:center;gap:9px;transition:transform .12s var(--ease),filter .2s}
+.submit:hover:not(:disabled){filter:brightness(1.08)}
+.submit:active:not(:disabled){transform:scale(.98)}
+.submit:disabled{opacity:.75;cursor:not-allowed}
+.spinner{width:16px;height:16px;border:2px solid rgba(4,33,29,.3);border-top-color:#04211d;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.err{margin-top:12px;font-size:13px;color:var(--rose);display:flex;align-items:center;gap:8px}
+.err button{background:none;border:0;color:var(--rose);font:inherit;text-decoration:underline;cursor:pointer}
+.ok-card{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--border-soft);border-radius:14px;padding:20px 22px;box-shadow:var(--shadow-1)}
+.ok-card .ic{width:38px;height:38px;border-radius:50%;background:var(--accent-soft);display:grid;place-items:center;color:var(--green);flex-shrink:0}
+.ok-card b{font-size:14.5px}
+.ok-card span{display:block;font-size:13px;color:var(--muted);margin-top:2px}
+.checkpop{animation:checkpop .45s var(--ease)}
+@keyframes checkpop{0%{transform:scale(.4);opacity:0}70%{transform:scale(1.12)}100%{transform:scale(1);opacity:1}}
+.skel-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;width:100%}
+.skel-card{background:var(--card);border:1px solid var(--border-soft);border-radius:14px;padding:18px}
+.shimmer{background:linear-gradient(100deg,var(--card-2) 40%,#232f42 50%,var(--card-2) 60%);background-size:200% 100%;animation:shimmer 1.4s linear infinite;border-radius:7px}
+@keyframes shimmer{to{background-position:-200% 0}}
+.replay{background:var(--bg);border:1px solid var(--border);color:var(--muted);border-radius:9px;padding:7px 14px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:7px;transition:all .15s}
+.replay:hover{color:var(--text);border-color:var(--accent-strong)}
+.replay svg{width:13px;height:13px}
+.chat-card{background:var(--card);border:1px solid var(--border-soft);border-radius:14px;box-shadow:var(--shadow-1);overflow:hidden;width:100%}
+.chat-head{display:flex;align-items:center;gap:11px;padding:14px 18px;border-bottom:1px solid var(--border-soft)}
+.avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#2563eb);display:grid;place-items:center;font-weight:700;font-size:14px;color:#fff;flex-shrink:0}
+.chat-head b{font-size:14px}
+.chat-head .sub{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:5px}
+.chat-body{padding:18px;display:flex;flex-direction:column;gap:10px;min-height:170px}
+.msg{max-width:78%;padding:10px 14px;border-radius:14px;font-size:14px;line-height:1.55;animation:msgIn .3s var(--ease)}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.msg.them{align-self:flex-start;margin-right:auto;background:var(--card-2);border-top-left-radius:4px}
+.msg.me{align-self:flex-start;margin-left:auto;background:linear-gradient(135deg,var(--accent),var(--accent-strong));color:#04211d;font-weight:500;border-top-right-radius:4px}
+.chat-foot{display:flex;gap:9px;padding:12px 18px;border-top:1px solid var(--border-soft)}
+.chat-foot .f-input{flex:1}
+.send-btn{width:42px;height:42px;border-radius:10px;border:0;background:var(--accent-soft);color:var(--accent);cursor:pointer;display:grid;place-items:center;transition:transform .12s;flex-shrink:0}
+.send-btn:active{transform:scale(.92)}
+.send-btn svg{width:17px;height:17px}
+[dir="rtl"] .mirror{transform:scaleX(-1)}
+.dir-seg{display:inline-flex;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:3px}
+.dir-seg button{border:0;background:transparent;color:var(--muted);font-family:inherit;font-size:12.5px;font-weight:600;padding:6px 14px;border-radius:8px;cursor:pointer;transition:all .2s}
+.dir-seg button[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent)}
+.phone{font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate}
+.feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:8px}
+.feat{background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:14px;padding:22px;transition:transform .2s var(--ease),border-color .2s}
+.feat:hover{transform:translateY(-3px);border-color:var(--border)}
+.feat .ic{width:38px;height:38px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;margin-bottom:14px}
+.feat .ic svg{width:18px;height:18px}
+.feat b{font-size:15px;display:block;margin-bottom:6px}
+.feat p{font-size:13.5px;color:var(--muted);line-height:1.6}
+.rv{opacity:0;transform:translateY(22px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.rv.in{opacity:1;transform:none}
+footer{margin-top:80px;border-top:1px solid var(--border-soft);padding:34px 0 44px;text-align:center;color:var(--faint);font-size:13.5px;line-height:2}
+footer a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--border)}
+footer a:hover{color:var(--accent)}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}html{scroll-behavior:auto}}
+@media (max-width:560px){.stage{padding:24px 14px}header{padding:52px 0 30px}}
+</style>
+</head>
+<body>
+<div class="bg-fx"></div>
+<div class="wrap">
+<header>
+  <span class="badge rv in"><span class="dot"></span> a design skill for coding agents</span>
+  <h1>finesse<span class="x">.</span></h1>
+  <p class="tag">A skill pack that makes Claude Code, Cursor and Codex ship <b>polished, animated, RTL-aware</b> interfaces in Next.js + shadcn/ui - instead of library defaults.</p>
+  <div class="cta-row">
+    <a class="btn primary" href="https://github.com/delevski/finesse" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.15c-3.2.69-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.05.77 2.12v3.14c0 .3.21.67.8.55A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+      GitHub repo
+    </a>
+    <a class="btn" href="#demos">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14m-6-6 6 6 6-6"/></svg>
+      See the difference
+    </a>
+  </div>
+  <span class="fictional">All content on this page is fictional demo data</span>
+  <div class="install">
+    <code id="installCmd">curl -fsSL https://raw.githubusercontent.com/delevski/finesse/main/install.sh | bash</code>
+    <button class="copy-btn" id="copyBtn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+      <span>Copy</span>
+    </button>
+  </div>
+</header>
+
+<section id="demos">
+  <div class="sec-head rv"><span class="sec-num">01</span><h2>Stats cards</h2></div>
+  <p class="sec-sub rv">The default output is four gray boxes. Finesse adds token-based surfaces, a staggered entrance, count-up numbers with locale formatting, hover lift - and a skeleton with retry for when the API is slow or down.</p>
+  <div class="demo rv">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>stats-grid.tsx</span>
+      <div class="seg" data-demo="stats"><div class="pill"></div><button aria-pressed="true" data-side="before">Before</button><button aria-pressed="false" data-side="after">After</button></div>
+    </div>
+    <div class="stage" id="stage-stats"></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head rv"><span class="sec-num">02</span><h2>Form submit</h2></div>
+  <p class="sec-sub rv">A button that silently does nothing is the most common agent bug. After finesse: pending state in one frame, double-click guard, error with retry that keeps what you typed, and a success state that confirms.</p>
+  <div class="demo rv">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>contact-form.tsx</span>
+      <div class="seg" data-demo="form"><div class="pill"></div><button aria-pressed="true" data-side="before">Before</button><button aria-pressed="false" data-side="after">After</button></div>
+    </div>
+    <div class="stage" id="stage-form"></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head rv"><span class="sec-num">03</span><h2>Loading states</h2></div>
+  <p class="sec-sub rv">Blank screen, then content pops in - that is the default. After finesse: a shimmer skeleton that matches the layout, then a staggered reveal. Hit replay to watch it again.</p>
+  <div class="demo rv">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-9-9"/></svg>dashboard-loading.tsx</span>
+      <div style="display:flex;gap:10px;align-items:center">
+        <button class="replay" id="replayBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>Replay</button>
+        <div class="seg" data-demo="load"><div class="pill"></div><button aria-pressed="true" data-side="before">Before</button><button aria-pressed="false" data-side="after">After</button></div>
+      </div>
+    </div>
+    <div class="stage" id="stage-load"></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head rv"><span class="sec-num">04</span><h2>RTL, built in</h2></div>
+  <p class="sec-sub rv">Most agent output breaks the moment it meets Hebrew: unmirrored arrows, LTR phone numbers, wrong alignment. Finesse makes RTL structural - logical properties, mirrored icons, bidi-safe numbers, Hebrew typography. Flip the direction:</p>
+  <div class="demo rv">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>support-chat.tsx</span>
+      <div class="dir-seg" id="dirSeg"><button aria-pressed="false" data-dir="ltr">English LTR</button><button aria-pressed="true" data-dir="rtl">עברית RTL</button></div>
+    </div>
+    <div class="stage" id="stage-chat"></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head rv"><span class="sec-num">05</span><h2>What the skill enforces</h2></div>
+  <p class="sec-sub rv">Eight hard rules bind every component an agent touches. The references carry copy-paste patterns for each.</p>
+  <div class="feats rv">
+    <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-9-9"/><path d="M21 3v6h-6"/></svg></div><b>States first</b><p>Pending, error, empty, success - built before the happy path. Every submit guards double clicks and offers retry.</p></div>
+    <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m12 2 9 5-9 5-9-5 9-5z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/></svg></div><b>Tokens only</b><p>No hex literals, no one-off grays. Semantic theme tokens, a real radius and elevation scale, dark mode re-tuned rather than inverted.</p></div>
+    <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></div><b>Motion with intent</b><p>Staggered entrances, layout transitions, press feedback - transform and opacity only, with reduced-motion fallbacks.</p></div>
+    <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg></div><b>RTL native</b><p>Logical properties, mirrored directional icons, LTR islands for numbers, Hebrew typography - from the first commit.</p></div>
+  </div>
+</section>
+
+<footer>
+  <div>Built by <a href="https://github.com/delevski" target="_blank" rel="noopener">Ori Delevski</a> · MIT license · <a href="https://github.com/delevski/finesse" target="_blank" rel="noopener">github.com/delevski/finesse</a></div>
+  <div>Inspired by <a href="https://github.com/Nutlope/hallmark" target="_blank" rel="noopener">hallmark</a> - finesse focuses on app UI, the Next.js + shadcn stack and RTL.</div>
+</footer>
+</div>
+<script>
+(function(){
+"use strict";
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}}),{threshold:.12});
+$$(".rv").forEach(el=>io.observe(el));
+
+const copyBtn=$("#copyBtn");
+copyBtn.addEventListener("click",async()=>{
+  if(copyBtn.disabled)return;
+  copyBtn.disabled=true;
+  const txt=$("#installCmd").textContent;
+  try{await navigator.clipboard.writeText(txt);}catch(e){const t=document.createElement("textarea");t.value=txt;document.body.appendChild(t);t.select();document.execCommand("copy");t.remove();}
+  copyBtn.classList.add("ok");copyBtn.querySelector("span").textContent="Copied";
+  setTimeout(()=>{copyBtn.classList.remove("ok");copyBtn.querySelector("span").textContent="Copy";copyBtn.disabled=false;},1800);
+});
+
+/* ---- fictional demo data ---- */
+const STATS=[{l:"Active users",v:8421,d:12,up:true},{l:"Revenue",v:56230,d:8,up:true,ils:true},{l:"Churn",v:2.4,d:3,up:false,suffix:"%"},{l:"NPS",v:62,d:5,up:true}];
+
+function countUp(el,target,suffix,ils){
+  if(reduce){el.textContent=fmt(target,suffix,ils);return;}
+  const t0=performance.now(),dur=650;
+  (function tick(t){
+    const p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,3);
+    el.textContent=fmt(target*e,suffix,ils,target);
+    if(p<1)requestAnimationFrame(tick);
+  })(t0);
+}
+function fmt(n,suffix,ils,final){
+  if(suffix)return (Math.round(n*10)/10)+suffix;
+  const v=Math.round(n);
+  if(ils)return "\u20AA"+v.toLocaleString("en-US");
+  return v.toLocaleString("en-US");
+}
+
+/* ---- demo renderers ---- */
+const R={};
+
+R.stats={
+  before:()=>`<div class="stage-inner swap before"><div class="grid4">${STATS.map(s=>`
+    <div class="card-b"><div class="lbl">${s.l}</div><div class="num">${s.ils?"\u20AA"+s.v.toLocaleString():s.suffix?s.v+"%":s.v.toLocaleString()}</div><div class="delta">+${s.d}% this week \u2197</div></div>`).join("")}
+  </div></div>`,
+  after:()=>`<div class="stage-inner swap"><div class="stats-grid">${STATS.map((s,i)=>`
+    <div class="stat" style="animation:swapIn .4s var(--ease) ${i*70}ms backwards">
+      <div class="lbl">${s.l}</div>
+      <div class="num" dir="ltr" data-count="${s.v}" data-suffix="${s.suffix||""}" data-ils="${s.ils?1:0}">0</div>
+      <div class="delta ${s.up?"up":"down"}"><svg class="mirror" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="${s.up?"M7 17 17 7M9 7h8v8":"M7 7l10 10M17 9v8H9"}"/></svg>${s.d}% this week</div>
+    </div>`).join("")}</div></div>`,
+  afterMount:stage=>$$("[data-count]",stage).forEach(el=>countUp(el,+el.dataset.count,el.dataset.suffix,el.dataset.ils==="1"))
+};
+
+R.form={
+  before:()=>`<div class="stage-inner swap before"><div class="card-b" style="max-width:400px;margin:0 auto">
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <input class="plain" placeholder="Name"><input class="plain" placeholder="Email">
+      <button class="plain" id="beforeSend">Send</button>
+      <div id="beforeNote" style="color:#71717a;font-size:12px;text-align:center;min-height:16px"></div>
+    </div></div></div>`,
+  after:()=>`<div class="stage-inner swap"><form class="form-card" id="finesseForm" novalidate>
+    <h3>Contact us</h3><p>Demo form - nothing is sent anywhere.</p>
+    <div class="f-row"><label for="ff-name">Name</label><input class="f-input" id="ff-name" autocomplete="off" placeholder="Dana Levi"></div>
+    <div class="f-row"><label for="ff-mail">Email</label><input class="f-input" id="ff-mail" dir="ltr" autocomplete="off" placeholder="dana@example.com"></div>
+    <button class="submit" id="finesseSubmit" type="submit">Send</button>
+    <div id="formNote"></div>
+  </form></div>`,
+  mount:stage=>{
+    const b=$("#beforeSend",stage);
+    if(b)b.addEventListener("click",e=>{e.preventDefault();$("#beforeNote",stage).textContent="(clicked - nothing happens)";});
+    const f=$("#finesseForm",stage);
+    if(!f)return;
+    let st="idle";
+    f.addEventListener("submit",e=>{
+      e.preventDefault();
+      if(st==="pending")return;
+      st="pending";
+      const btn=$("#finesseSubmit",stage);
+      btn.disabled=true;btn.setAttribute("aria-busy","true");
+      btn.innerHTML='<span class="spinner"></span>Sending...';
+      setTimeout(()=>{
+        st="idle";btn.disabled=false;btn.removeAttribute("aria-busy");btn.textContent="Send";
+        const inner=$(".form-card",stage)||f;
+        f.outerHTML=`<div class="ok-card checkpop"><div class="ic"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg></div><div><b>Message sent</b><span>Demo only - no data left this page.</span></div></div>`;
+      },reduce?60:1400);
+    });
+  }
+};
+
+R.load={
+  before:()=>`<div class="stage-inner swap before"><div class="blanknote" id="loadBefore">Loading...<br><br>(blank for 1.8s, then everything pops in at once)</div><div class="grid4" id="loadBeforeGrid" style="display:none">${STATS.map(s=>`
+    <div class="card-b"><div class="lbl">${s.l}</div><div class="num">${s.ils?"\u20AA"+s.v.toLocaleString():s.suffix?s.v+"%":s.v.toLocaleString()}</div><div class="delta">+${s.d}% this week</div></div>`).join("")}</div></div>`,
+  after:()=>`<div class="stage-inner swap"><div class="skel-grid" id="skelGrid">${STATS.map(()=>`
+    <div class="skel-card"><div class="shimmer" style="height:13px;width:55%"></div><div class="shimmer" style="height:24px;width:75%;margin-top:10px"></div><div class="shimmer" style="height:10px;width:40%;margin-top:10px"></div></div>`).join("")}
+    </div><div class="stats-grid" id="loadAfterGrid" style="display:none"></div></div>`,
+  mount:stage=>{
+    const bn=$("#loadBefore",stage),bg=$("#loadBeforeGrid",stage);
+    if(bn&&bg){bg.style.display="none";bn.style.display="block";
+      setTimeout(()=>{bn.style.display="none";bg.style.display="grid";},reduce?50:1800);}
+    const sk=$("#skelGrid",stage),ag=$("#loadAfterGrid",stage);
+    if(sk&&ag){
+      sk.style.display="grid";ag.style.display="none";ag.innerHTML="";
+      setTimeout(()=>{
+        ag.innerHTML=STATS.map((s,i)=>`<div class="stat" style="animation:swapIn .4s var(--ease) ${i*70}ms backwards">
+          <div class="lbl">${s.l}</div><div class="num" dir="ltr">${s.ils?"\u20AA"+s.v.toLocaleString():s.suffix?s.v+"%":s.v.toLocaleString()}</div>
+          <div class="delta ${s.up?"up":"down"}"><svg class="mirror" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="${s.up?"M7 17 17 7M9 7h8v8":"M7 7l10 10M17 9v8H9"}"/></svg>${s.d}% this week</div></div>`).join("");
+        sk.style.display="none";ag.style.display="grid";
+      },reduce?50:1600);
+    }
+  }
+};
+
+let chatDir="rtl";
+const CHAT={
+  rtl:{name:"תמיכה - דמו",sub:"מחוברת עכשיו",me:"היי, ההזמנה שלי לא הגיעה",them:"היי! בודקת את זה עכשיו מול המשלוחים",me2:"תודה! המספר שלי זמין ב <span class=\"phone\">054-555-0132</span>",send:"שליחה",ph:"כתבו הודעה..."},
+  ltr:{name:"Support - demo",sub:"online now",me:"Hi, my order never arrived",them:"Hi! Checking it with the courier right now",me2:"Thanks! My number is <span class=\"phone\">054-555-0132</span>",send:"Send",ph:"Type a message..."}
+};
+function renderChat(){
+  const c=CHAT[chatDir];
+  $("#stage-chat").innerHTML=`<div class="stage-inner swap" dir="${chatDir}" ${chatDir==="rtl"?'lang="he"':""}>
+    <div class="chat-card${chatDir==="rtl"?" heb":""}">
+      <div class="chat-head">
+        <div class="avatar">${chatDir==="rtl"?"ש":"S"}</div>
+        <div><b>${c.name}</b><div class="sub"><svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="#34d399"/></svg>${c.sub}</div></div>
+        <svg class="mirror" style="margin-inline-start:auto;color:var(--faint)" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m15 18-6-6 6-6"/></svg>
+      </div>
+      <div class="chat-body">
+        <div class="msg me" style="animation-delay:.05s">${c.me}</div>
+        <div class="msg them" style="animation-delay:.18s">${c.them}</div>
+        <div class="msg me" style="animation-delay:.31s">${c.me2}</div>
+      </div>
+      <div class="chat-foot">
+        <input class="f-input" placeholder="${c.ph}" aria-label="message">
+        <button class="send-btn" aria-label="${c.send}"><svg class="mirror" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
+      </div>
+    </div></div>`;
+}
+renderChat();
+$$("#dirSeg button").forEach(b=>b.addEventListener("click",()=>{
+  if(b.dataset.dir===chatDir)return;
+  chatDir=b.dataset.dir;
+  $$("#dirSeg button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
+  renderChat();
+}));
+
+/* ---- segmented before/after wiring ---- */
+const cur={stats:"before",form:"before",load:"before"};
+function setDemo(name,side){
+  cur[name]=side;
+  const seg=$(`.seg[data-demo="${name}"]`);
+  $$("button",seg).forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.side===side)));
+  const on=$('button[data-side="'+side+'"]',seg),pill=$(".pill",seg);
+  pill.style.left=on.offsetLeft+"px";pill.style.width=on.offsetWidth+"px";
+  const stage=$("#stage-"+name);
+  stage.innerHTML=R[name][side]();
+  R[name].mount&&R[name].mount(stage);
+  if(side==="after"&&R[name].afterMount)R[name].afterMount(stage);
+}
+$$(".seg[data-demo]").forEach(seg=>{
+  const name=seg.dataset.demo;
+  $$("button",seg).forEach(b=>b.addEventListener("click",()=>{if(cur[name]!==b.dataset.side)setDemo(name,b.dataset.side);}));
+});
+Object.keys(R).forEach(n=>setDemo(n,"before"));
+addEventListener("resize",()=>{Object.keys(cur).forEach(n=>{const seg=$(`.seg[data-demo="${n}"]`);const on=$(`button[data-side="${cur[n]}"]`,seg);const pill=$(".pill",seg);if(on&&pill){pill.style.left=on.offsetLeft+"px";pill.style.width=on.offsetWidth+"px";}});});
+$("#replayBtn").addEventListener("click",()=>setDemo("load",cur.load));
+})();
+</script>
+</body>
+</html>

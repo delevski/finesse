@@ -1,0 +1,17 @@
+---
+description: Design bar for Next.js + shadcn/ui + Tailwind interfaces - states, motion, tokens, RTL
+globs: ["**/*.tsx", "**/*.jsx", "**/*.css"]
+alwaysApply: true
+---
+
+# Finesse (condensed for Cursor)
+
+Full skill: https://github.com/delevski/finesse (skills/finesse/SKILL.md)
+
+- Every action shows feedback: pending state within one frame, double-submit guard, inline error with retry that keeps user input.
+- Never a blank screen: skeleton matching the layout on first load and tab switches; designed empty states with one next action.
+- Tokens only: no hex colors or font-family outside the theme block; semantic tokens (`muted-foreground`, not `text-gray-500`).
+- Motion: transform/opacity only, never `transition: all`, 100-150ms micro / 200-300ms UI, `prefers-reduced-motion` fallback on everything.
+- RTL: logical properties only (`ms- me- ps- pe- start- end-`), directional icons mirror (`rtl:-scale-x-100`), numbers/phones/dates in `dir="ltr"` spans, Intl formatting, Hebrew-capable font (Heebo/Assistant).
+- Every rendered control works or does not render. No invented metrics or testimonials; demo data labelled.
+- `:focus-visible` ring on everything interactive; `aria-label` on icon-only buttons; `role="alert"` on errors.
