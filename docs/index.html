@@ -3370,7 +3370,7 @@ void main(){
     });
     if(open){
       labels.hidden=false;
-      labels.innerHTML=items.map(([,lb],i)=>`<span style="animation-delay:${i*60+120}ms">${lb}</span>`).join("");
+      labels.innerHTML=items.slice().reverse().map(([,lb],i)=>`<span style="animation-delay:${i*60+120}ms">${lb}</span>`).join("");
     }else labels.hidden=true;
   });
 })();

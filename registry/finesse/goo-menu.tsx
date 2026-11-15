@@ -60,7 +60,7 @@ export function GooMenu({ className }: { className?: string }) {
       </div>
       {open && (
         <div className="absolute bottom-5 right-20 flex flex-col items-end gap-[26px] pb-1 text-xs font-semibold text-neutral-500">
-          {ITEMS.map((it, i) => (
+          {[...ITEMS].reverse().map((it, i) => (
             <span key={it.label} style={{ animation: `gooLabel .3s ${i * 60 + 120}ms both` }}>{it.label}</span>
           ))}
         </div>
