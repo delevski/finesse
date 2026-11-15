@@ -59,7 +59,7 @@ Nine animated components from the gallery, installable straight into any shadcn/
 npx shadcn@latest add https://finesse-demo.orworkdelevski.workers.dev/r/fan-drawer.json
 ```
 
-Available: `fan-drawer`, `swipe-stack`, `liquid-tabs`, `toast-physics`, `tilt-card`, `text-scramble`, `otp-input`, `flip-dialog`, `odometer`. Sources live in `registry/finesse/` and are built into `docs/r/` by `scripts/build-registry.mjs`. Every component card in the live gallery also has a copy-TSX button.
+Available: `fan-drawer`, `swipe-stack`, `liquid-tabs`, `toast-physics`, `tilt-card`, `text-scramble`, `otp-input`, `flip-dialog`, `odometer`, `playground`, `pull-refresh`, `split-flap`, `empty-robot`, `cmd-palette`, `swipe-actions`, `step-walker`, `peel-skeleton`, `voice-note`, `sunset-toggle`. Sources live in `registry/finesse/` and are built into `docs/r/` by `scripts/build-registry.mjs`. Every component card in the live gallery also has a copy-TSX button.
 
 ## What's inside
 

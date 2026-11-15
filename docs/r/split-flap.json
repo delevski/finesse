@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "split-flap",
+  "type": "registry:component",
+  "title": "Split Flap",
+  "description": "ספרות מתהפכות כמו שלט שדה תעופה ישן, חצי עליון מתקפל ונפתח מחדש.",
+  "files": [
+    {
+      "path": "components/finesse/split-flap.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * SplitFlap - digits flip like an old airport departure board. Each changed\n * digit folds its top half down, swaps, and folds back over.\n */\nexport function SplitFlap({\n  value,\n  digits = 3,\n  className,\n}: {\n  value: number;\n  digits?: number;\n  className?: string;\n}) {\n  const reduce = React.useMemo(\n    () => typeof matchMedia !== \"undefined\" && matchMedia(\"(prefers-reduced-motion: reduce)\").matches,\n    []\n  );\n  const str = String(Math.max(0, value)).padStart(digits, \"0\").slice(-digits);\n  return (\n    <div className={cn(\"flex gap-1.5\", className)} dir=\"ltr\" aria-label={str}>\n      {Array.from({ length: digits }).map((_, i) => (\n        <FlapDigit key={i} char={str[i]} reduce={reduce} />\n      ))}\n    </div>\n  );\n}\n\nfunction FlapDigit({ char, reduce }: { char: string; reduce: boolean }) {\n  const [shown, setShown] = React.useState(char);\n  const flapRef = React.useRef<HTMLDivElement>(null);\n  const prev = React.useRef(char);\n\n  React.useEffect(() => {\n    if (prev.current === char) return;\n    const from = prev.current;\n    prev.current = char;\n    const flap = flapRef.current;\n    if (!flap || reduce) { setShown(char); return; }\n    const flapSpan = flap.querySelector(\"span\");\n    if (flapSpan) flapSpan.textContent = from;\n    flap\n      .animate(\n        [{ transform: \"rotateX(0deg)\" }, { transform: \"rotateX(-90deg)\" }],\n        { duration: 150, easing: \"ease-in\", fill: \"forwards\" }\n      )\n      .finished.then(() => {\n        setShown(char);\n        if (flapSpan) flapSpan.textContent = char;\n        flap.animate(\n          [{ transform: \"rotateX(88deg)\" }, { transform: \"rotateX(0deg)\" }],\n          { duration: 170, easing: \"ease-out\", fill: \"forwards\" }\n        );\n      });\n  }, [char, reduce]);\n\n  const cell =\n    \"absolute inset-0 grid place-items-center rounded-lg border bg-card font-mono text-3xl font-bold text-primary [backface-visibility:hidden]\";\n  return (\n    <div className=\"relative h-[62px] w-[46px]\">\n      <div className={cn(cell, \"[clip-path:inset(50%_0_0_0)]\")}><span>{shown}</span></div>\n      <div className={cn(cell, \"[clip-path:inset(0_0_50%_0)]\")}><span>{shown}</span></div>\n      <div ref={flapRef} className={cn(cell, \"z-[2] origin-bottom [clip-path:inset(0_0_50%_0)]\")}><span>{shown}</span></div>\n      <div className=\"absolute inset-x-0 top-1/2 z-[3] h-[1.5px] bg-black/50\" />\n    </div>\n  );\n}\n"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "empty-robot",
+  "type": "registry:component",
+  "title": "Empty Robot",
+  "description": "רובוט עצוב למצב ריק שמתאושש וקופץ כשמגיע הפריט הראשון.",
+  "files": [
+    {
+      "path": "components/finesse/empty-robot.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * EmptyRobot - a sad little robot for empty states that perks up when the\n * first item arrives: eyes open, antenna springs, a happy hop.\n */\nexport function EmptyRobot({\n  itemCount,\n  emptyText = \"עוד אין פריטים - הרובוט קצת עצוב\",\n  happyText,\n  className,\n}: {\n  itemCount: number;\n  emptyText?: string;\n  happyText?: (n: number) => string;\n  className?: string;\n}) {\n  const happy = itemCount > 0;\n  const robotRef = React.useRef<HTMLDivElement>(null);\n\n  React.useEffect(() => {\n    const el = robotRef.current;\n    if (!el || !happy) return;\n    el.animate(\n      [\n        { transform: \"translateY(0)\" },\n        { transform: \"translateY(-16px)\", offset: 0.4 },\n        { transform: \"translateY(-8px)\" },\n      ],\n      { duration: 450, easing: \"cubic-bezier(.2,1.4,.3,1)\", fill: \"forwards\" }\n    );\n  }, [happy]);\n\n  return (\n    <div className={cn(\"grid justify-items-center gap-3\", className)} dir=\"rtl\">\n      <div ref={robotRef} className=\"relative h-[86px] w-[70px]\">\n        <span\n          className={cn(\n            \"absolute left-1/2 top-0 h-[18px] w-[3px] -translate-x-1/2 rounded bg-border transition-transform duration-300\",\n            happy && \"-rotate-12\"\n          )}\n        >\n          <span className={cn(\"absolute -top-[7px] left-1/2 h-[9px] w-[9px] -translate-x-1/2 rounded-full transition-colors\", happy ? \"bg-primary\" : \"bg-muted-foreground/50\")} />\n        </span>\n        <span className=\"absolute left-1/2 top-[18px] flex h-[42px] w-[56px] -translate-x-1/2 justify-center gap-2.5 rounded-[14px] border-2 bg-card pt-[13px]\">\n          <i className={cn(\"h-1 w-[9px] rounded bg-muted-foreground/50 transition-all duration-300\", happy && \"h-[11px] rounded-full bg-primary\")} />\n          <i className={cn(\"h-1 w-[9px] rounded bg-muted-foreground/50 transition-all duration-300\", happy && \"h-[11px] rounded-full bg-primary\")} />\n        </span>\n        <span className=\"absolute bottom-0 left-1/2 h-[22px] w-[42px] -translate-x-1/2 rounded-b-[13px] rounded-t-[9px] border-2 bg-card\" />\n      </div>\n      <p className=\"text-center text-[13px] text-muted-foreground\">\n        {happy ? (happyText ? happyText(itemCount) : `${itemCount} פריטים - הרובוט מאושר`) : emptyText}\n      </p>\n    </div>\n  );\n}\n"
+    }
+  ]
+}
