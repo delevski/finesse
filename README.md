@@ -18,7 +18,7 @@ finesse is a set of hard rules and copy-paste patterns the agent reads before it
 
 1. **States first** - every action shows a pending state, guards double submits, and recovers with an inline error + retry. First load and every tab switch render a skeleton, never a blank screen.
 2. **Tokens only** - no hex literals, no one-off grays; a real semantic theme, radius and elevation scale.
-3. **Motion with intent** - staggered entrances, layout transitions, press feedback. Transform/opacity only, reduced-motion fallbacks everywhere.
+3. **Motion with intent** - staggered entrances, layout transitions, press feedback. Transform/opacity only, reduced-motion fallbacks everywhere. Plus a signature layer: Three.js scenes (aurora blob, particle fields), the eyeball switch, pointer-true ripple and magnetic hover - each with its fallback and performance budget.
 4. **RTL native** - logical properties, mirrored directional icons, LTR islands for numbers and phones, Hebrew typography (Heebo/Assistant), Intl formatting. Built in from the first commit, not retrofitted.
 5. **No dead controls, no invented content** - every rendered button works; demo data is labelled as demo.
 
@@ -55,6 +55,7 @@ skills/finesse/
   references/
     states.md                   pending / empty / error / retry patterns (copy-paste React)
     motion-recipes.md           Framer Motion + CSS recipes with a timing vocabulary
+    advanced-motion.md          signature animations: Three.js scenes, eyeball switch, ripple, magnetic hover
     rtl.md                      the complete RTL checklist: logical props, icon mirroring, bidi, Hebrew fonts
     shadcn-theme.md             semantic tokens, elevation scale, dark mode done right
     review-checklist.md         pre-ship self-review

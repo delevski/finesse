@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Heebo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"}}</script>
 <style>
 :root{
   --bg:#0a0c0f; --bg-soft:#10141a; --card:#131922; --card-2:#182030;
@@ -143,6 +144,58 @@ h2{font-size:clamp(24px,3.4vw,34px);font-weight:700;letter-spacing:-.02em}
 footer{margin-top:80px;border-top:1px solid var(--border-soft);padding:34px 0 44px;text-align:center;color:var(--faint);font-size:13.5px;line-height:2}
 footer a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--border)}
 footer a:hover{color:var(--accent)}
+/* --- signature motion section (Hebrew RTL demos) --- */
+.eyewrap{display:flex;flex-direction:column;align-items:center;gap:22px;width:100%}
+.sky{position:relative;width:100%;max-width:440px;height:150px;border-radius:14px;overflow:hidden;border:1px solid var(--border-soft)}
+.sky .day,.sky .nightl{position:absolute;inset:0}
+.sky .day{background:linear-gradient(180deg,#7dd3fc,#e0f2fe)}
+.sky .nightl{background:linear-gradient(180deg,#0b1220,#1e293b);clip-path:circle(0 at var(--ox,50%) var(--oy,130%));transition:clip-path .85s var(--ease)}
+.sky.night .nightl{clip-path:circle(160% at var(--ox,50%) var(--oy,130%))}
+.sky .body{position:absolute;top:24px;left:18%;width:44px;height:44px;border-radius:50%;background:#fde047;box-shadow:0 0 26px rgba(253,224,71,.75);transition:left .8s var(--ease),top .8s var(--ease),background .8s,box-shadow .8s}
+.sky.night .body{left:64%;top:18px;background:#e2e8f0;box-shadow:inset -10px -6px 0 #94a3b8,0 0 18px rgba(226,232,240,.45)}
+.sky .star{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;opacity:0;transition:opacity .6s}
+.sky.night .star{opacity:.9}
+.sky .star.s1{top:16px;left:32%}.sky .star.s2{top:44px;left:50%;transition-delay:.15s}.sky .star.s3{top:12px;left:80%;transition-delay:.3s}
+.eyeswitch{position:relative;width:64px;height:36px;border-radius:999px;border:1px solid var(--border);background:var(--bg);cursor:pointer;transition:background .3s,border-color .3s;flex-shrink:0;padding:0}
+.eyeswitch[aria-checked="true"]{background:var(--accent-soft);border-color:var(--accent-strong)}
+.eyeswitch:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.es-thumb{position:absolute;top:2px;inset-inline-start:3px;width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-strong));display:grid;place-items:center;box-shadow:var(--shadow-1);will-change:transform}
+.es-eyes{width:20px;height:12px;transform:scaleY(.12);transform-origin:50% 50%;transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+.eyeswitch.awake .es-eyes{transform:scaleY(1)}
+.es-pupil{transition:transform .2s}
+.eyeswitch.looking .es-pupil{transform:translateX(var(--look,0px))}
+.es-state{font-size:14px;color:var(--muted);line-height:1.7}
+.es-state b{color:var(--text)}
+.ripple-host{position:relative;overflow:hidden;isolation:isolate}
+.ripple-ink{position:absolute;border-radius:999px;pointer-events:none;background:currentColor;opacity:.22;transform:scale(0);animation:rip .55s var(--ease) forwards}
+@keyframes rip{to{transform:scale(1);opacity:0}}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text);border-radius:12px;padding:12px 22px;font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;transition:border-color .2s}
+.btn-ghost:hover{border-color:var(--accent-strong)}
+.ok-mini{display:flex;align-items:center;gap:8px;color:var(--green);font-size:13.5px;font-weight:600}
+.burst-bit{position:absolute;inset-inline-start:50%;top:50%;width:6px;height:6px;border-radius:2px;pointer-events:none}
+.three-stage{position:relative;width:100%;min-height:320px;border-radius:12px;overflow:hidden;background:radial-gradient(80% 80% at 50% 30%,#131c2a,#0a0c0f)}
+.three-stage.three-fallback::after{content:"";position:absolute;inset:0;background:radial-gradient(55% 55% at 42% 38%,rgba(20,184,166,.30),transparent 70%),radial-gradient(35% 35% at 65% 60%,rgba(245,180,83,.14),transparent 70%)}
+.three-stage canvas{display:block;width:100%;height:100%}
+.three-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:var(--muted);font-size:14px;text-align:center;padding:20px}
+.three-overlay .spinner{width:22px;height:22px;border-width:2.5px;border-color:rgba(143,160,179,.25);border-top-color:var(--accent)}
+.three-err{color:var(--rose);font-weight:600}
+.magnet{will-change:transform;display:inline-block}
+.gswrap{display:flex;flex-direction:column;align-items:center;gap:14px;width:100%}
+.glass-switch{position:relative;width:min(300px,84vw);height:96px;border-radius:26px;overflow:hidden;cursor:grab;border:1px solid var(--border-soft);touch-action:pan-y;user-select:none;-webkit-user-select:none;box-shadow:var(--shadow-1)}
+.glass-switch:active{cursor:grabbing}
+.glass-switch:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.gs-day{position:absolute;inset:0;background:linear-gradient(160deg,#bae6fd,#fef3c7)}
+.gs-night{position:absolute;inset:0;background:linear-gradient(160deg,#1e1b4b,#3b0764);opacity:0}
+.gs-pane{position:absolute;top:11px;left:12px;width:118px;height:74px;border-radius:18px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);box-shadow:0 6px 22px rgba(0,0,0,.22);will-change:transform}
+.gs-dots{position:absolute;inset:0;transition:opacity .35s}
+.gs-dot{position:absolute;width:4px;height:4px;border-radius:50%}
+.gs-dot.tw{animation:twinkle 1.7s ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:.15}50%{opacity:1}}
+.gs-labels{display:flex;align-items:center;gap:14px;font-size:13px;color:var(--muted)}
+.gs-labels output{font-family:"JetBrains Mono",monospace;color:var(--accent);min-width:46px;text-align:center}
+.demo-note{font-size:12.5px;color:var(--faint);margin-top:14px;line-height:1.7}
+.demo-note a{color:var(--muted);border-bottom:1px solid var(--border)}
+.demo-note a:hover{color:var(--accent)}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}html{scroll-behavior:auto}}
 @media (max-width:560px){.stage{padding:24px 14px}header{padding:52px 0 30px}}
 </style>
@@ -225,14 +278,111 @@ footer a:hover{color:var(--accent)}
   </div>
 </section>
 
+<section id="signature" dir="rtl" lang="he" class="heb">
+  <div class="sec-head rv"><span class="sec-num">05</span><h2>אנימציות חתימה - השכבה המתקדמת</h2></div>
+  <p class="sec-sub rv">מעבר ל-stagger ול-fade הרגילים: סוויץ עם אופי, זכוכית שגוררים בין יום ללילה, ripple מהנקודה המדויקת, סצנת Three.js חיה וכפתור מגנטי. כל דמו כאן באמת עובד - עם טוען, שגיאה וניסיון חוזר, ובלי מסכים ריקים. הקוד המלא להעתקה נמצא בקובץ <a href="https://github.com/delevski/finesse/blob/main/skills/finesse/references/advanced-motion.md" target="_blank" rel="noopener" dir="ltr" style="color:var(--muted);border-bottom:1px solid var(--border)">advanced-motion.md</a> בריפו.</p>
+
+  <div class="demo rv" style="margin-bottom:18px">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg><span dir="ltr">eye-switch.tsx</span></span>
+    </div>
+    <div class="stage"><div class="stage-inner">
+      <div class="eyewrap">
+        <div class="sky" id="sky">
+          <div class="day"></div>
+          <div class="nightl"></div>
+          <span class="star s1"></span><span class="star s2"></span><span class="star s3"></span>
+          <div class="body"></div>
+        </div>
+        <button class="eyeswitch" id="eyeSwitch" role="switch" aria-checked="false" aria-label="מעבר למצב לילה">
+          <span class="es-thumb" id="esThumb">
+            <svg class="es-eyes" viewBox="0 0 20 12" aria-hidden="true">
+              <ellipse cx="6" cy="6" rx="3.2" ry="4.4" fill="#e6fffa"/>
+              <ellipse cx="14" cy="6" rx="3.2" ry="4.4" fill="#e6fffa"/>
+              <circle class="es-pupil" cx="6" cy="6" r="1.6" fill="#04211d"/>
+              <circle class="es-pupil" cx="14" cy="6" r="1.6" fill="#04211d"/>
+            </svg>
+          </span>
+        </button>
+        <div class="es-state"><b id="esState">יום</b> · בלחיצה הכדורי פוקח עיניים, קופץ לצד השני ועוצם - והרקע נפתח במעגל מתוך הסוויץ</div>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="demo rv" style="margin-bottom:18px">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4m11.4-11.4 1.4-1.4"/></svg><span dir="ltr">glass-switch.tsx</span></span>
+    </div>
+    <div class="stage"><div class="stage-inner">
+      <div class="gswrap">
+        <div class="glass-switch" id="glassSwitch" role="switch" aria-checked="false" aria-label="מעבר בין יום ללילה" tabindex="0">
+          <div class="gs-day"></div>
+          <div class="gs-night" id="gsNight"></div>
+          <div class="gs-pane" id="gsPane">
+            <div class="gs-dots" id="gsSun"></div>
+            <div class="gs-dots" id="gsMoon" style="opacity:0"></div>
+          </div>
+        </div>
+        <div class="gs-labels"><span>יום</span><output id="gsVal" dir="ltr">0.00</output><span>לילה</span></div>
+        <div class="es-state">גוררים את הזכוכית ומחזיקים באמצע, או מקישים על צד. עובד גם במקלדת: רווח או חצים</div>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="demo rv" style="margin-bottom:18px">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg><span dir="ltr">ripple-button.tsx</span></span>
+    </div>
+    <div class="stage"><div class="stage-inner" style="text-align:center">
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <button class="btn primary ripple-host">גל מנקודת הלחיצה</button>
+        <button class="btn-ghost ripple-host">גם בכפתור שקוף</button>
+      </div>
+      <div id="saveWrap" style="position:relative;max-width:340px;margin:28px auto 0">
+        <button class="submit ripple-host" id="saveDemo">שמירת ההגדרות</button>
+        <div id="saveNote" style="margin-top:12px;min-height:22px"></div>
+      </div>
+      <div class="es-state" style="margin-top:14px">כפתור השמירה מראה טוען תוך פריים, חוסם לחיצה כפולה, נכשל בפעם הראשונה עם ניסיון חוזר - ומצליח בשנייה עם פיצוץ חלקיקים</div>
+    </div></div>
+  </div>
+
+  <div class="demo rv" style="margin-bottom:18px">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="5" r="1.6"/><circle cx="19" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/><circle cx="12" cy="12" r="1.6"/></svg><span dir="ltr">particle-morph.tsx</span></span>
+    </div>
+    <div class="stage"><div class="stage-inner">
+      <div class="three-stage" id="threeStage">
+        <div class="three-overlay" id="threeLoader"><span class="spinner"></span><span>טוען סצנת תלת-ממד...</span></div>
+        <div class="three-overlay" id="threeErr" style="display:none">
+          <span class="three-err">לא הצלחנו לטעון את ספריית התלת-ממד</span>
+          <span>הספרייה נטענת מ-CDN - בדקו חיבור ונסו שוב</span>
+          <button class="replay" id="threeRetry">נסו שוב</button>
+        </div>
+      </div>
+      <div class="es-state" style="text-align:center;margin-top:14px">כ-2,400 חלקיקים משנים צורה - כדור, קשר, גלקסיה - עם parallax לתנועה. הסצנה נעצרת מחוץ למסך, ויש fallback אם WebGL לא זמין</div>
+    </div></div>
+  </div>
+
+  <div class="demo rv">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m12 2 9 5-9 5-9-5 9-5z"/></svg><span dir="ltr">magnetic-button.tsx</span></span>
+    </div>
+    <div class="stage" id="magnetStage"><div class="stage-inner" style="text-align:center">
+      <span class="magnet" id="magnetWrap"><button class="btn primary" id="magnetBtn" style="padding:16px 34px;font-size:16px">כפתור מגנטי</button></span>
+      <div class="es-state" style="margin-top:20px" id="magnetHint">הקיפו אותו עם העכבר - הוא נמשך וקופץ חזרה</div>
+    </div></div>
+  </div>
+</section>
+
 <section>
-  <div class="sec-head rv"><span class="sec-num">05</span><h2>What the skill enforces</h2></div>
+  <div class="sec-head rv"><span class="sec-num">06</span><h2>What the skill enforces</h2></div>
   <p class="sec-sub rv">Eight hard rules bind every component an agent touches. The references carry copy-paste patterns for each.</p>
   <div class="feats rv">
     <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-9-9"/><path d="M21 3v6h-6"/></svg></div><b>States first</b><p>Pending, error, empty, success - built before the happy path. Every submit guards double clicks and offers retry.</p></div>
     <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m12 2 9 5-9 5-9-5 9-5z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/></svg></div><b>Tokens only</b><p>No hex literals, no one-off grays. Semantic theme tokens, a real radius and elevation scale, dark mode re-tuned rather than inverted.</p></div>
     <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></div><b>Motion with intent</b><p>Staggered entrances, layout transitions, press feedback - transform and opacity only, with reduced-motion fallbacks.</p></div>
     <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg></div><b>RTL native</b><p>Logical properties, mirrored directional icons, LTR islands for numbers, Hebrew typography - from the first commit.</p></div>
+    <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9L19 15z"/></svg></div><b>Signature motion</b><p>One standout animation per screen: Three.js particle scenes, the eyeball switch, a drag-the-glass day/night toggle, pointer-true ripple - each paused offscreen and degrading gracefully.</p></div>
   </div>
 </section>
 
@@ -409,6 +559,296 @@ Object.keys(R).forEach(n=>setDemo(n,"before"));
 addEventListener("resize",()=>{Object.keys(cur).forEach(n=>{const seg=$(`.seg[data-demo="${n}"]`);const on=$(`button[data-side="${cur[n]}"]`,seg);const pill=$(".pill",seg);if(on&&pill){pill.style.left=on.offsetLeft+"px";pill.style.width=on.offsetWidth+"px";}});});
 $("#replayBtn").addEventListener("click",()=>setDemo("load",cur.load));
 })();
+</script>
+<script>
+(function(){
+"use strict";
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ============ eye switch ============ */
+const sw=$("#eyeSwitch"),sky=$("#sky");
+if(sw&&sky){
+  const thumb=$("#esThumb",sw),stateTxt=$("#esState");
+  const TRAVEL=28; // 64 - 30 - 3*2
+  let checked=false,animating=false;
+  sw.addEventListener("pointerdown",()=>sw.classList.add("awake"));
+  sw.addEventListener("focus",()=>sw.classList.add("awake"));
+  sw.addEventListener("blur",()=>{if(!animating)sw.classList.remove("awake");});
+  sw.addEventListener("pointerleave",()=>{if(!animating)sw.classList.remove("awake");});
+  sw.addEventListener("click",()=>{
+    if(animating)return; // double-click guard mid-jump
+    checked=!checked;
+    sw.setAttribute("aria-checked",String(checked));
+    stateTxt.textContent=checked?"לילה":"יום";
+    // circular reveal from the switch itself
+    const kr=sky.getBoundingClientRect(),br=sw.getBoundingClientRect();
+    sky.style.setProperty("--ox",((br.left+br.width/2-kr.left)/kr.width*100)+"%");
+    sky.style.setProperty("--oy",((br.top+br.height/2-kr.top)/kr.height*100)+"%");
+    sky.classList.toggle("night",checked);
+    const x0=parseFloat(thumb.dataset.x||"0"),x1=checked?-TRAVEL:0; // RTL: "on" travels left
+    thumb.dataset.x=x1;
+    if(reduce){thumb.style.transform=`translateX(${x1}px)`;sw.classList.remove("awake");return;}
+    animating=true;
+    sw.classList.add("awake");
+    sw.style.setProperty("--look",(x1>x0?1:-1)*1.4+"px");
+    sw.classList.add("looking");
+    const xm=(x0+x1)/2;
+    thumb.animate([
+      {transform:`translate(${x0}px,0) scale(1,1)`},
+      {transform:`translate(${x0}px,0) scale(1.16,.78)`,offset:.18},
+      {transform:`translate(${xm}px,-10px) scale(.9,1.14)`,offset:.55},
+      {transform:`translate(${x1}px,0) scale(1.08,.9)`,offset:.85},
+      {transform:`translate(${x1}px,0) scale(1,1)`}
+    ],{duration:560,easing:"cubic-bezier(.22,1,.36,1)"}).onfinish=()=>{
+      thumb.style.transform=`translateX(${x1}px)`;
+      animating=false;
+      sw.classList.remove("looking");
+      setTimeout(()=>{if(!animating)sw.classList.remove("awake");},240); // eyes close after landing
+    };
+  });
+}
+
+/* ============ glass day/night switch ============ */
+const gs=$("#glassSwitch");
+if(gs){
+  const pane=$("#gsPane",gs),night=$("#gsNight",gs),sun=$("#gsSun",gs),moon=$("#gsMoon",gs),out=$("#gsVal");
+  const isRtl=true; // this section is dir=rtl: day sits at inline-start (right)
+  const maxX=()=>gs.clientWidth-pane.offsetWidth-24;
+  let tx=isRtl?maxX():0,snapRaf=0,dragging=false,moved=0,startPX=0,startTx=0;
+  const apply=()=>{
+    const v=isRtl?1-tx/maxX():tx/maxX();
+    pane.style.transform=`translateX(${tx}px)`;
+    night.style.opacity=v;
+    sun.style.opacity=1-v;
+    moon.style.opacity=v;
+    out.textContent=v.toFixed(2);
+    gs.setAttribute("aria-checked",String(v>.5));
+  };
+  const easeOutBack=p=>{const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(p-1,3)+c1*Math.pow(p-1,2);};
+  const snapTo=vTarget=>{
+    const to=(isRtl?1-vTarget:vTarget)*maxX();
+    if(reduce){tx=to;apply();return;}
+    cancelAnimationFrame(snapRaf);
+    const from=tx,t0=performance.now(),dur=420;
+    const step=now=>{
+      const p=Math.min(1,(now-t0)/dur);
+      tx=from+(to-from)*easeOutBack(p);
+      apply();
+      if(p<1)snapRaf=requestAnimationFrame(step);
+    };
+    snapRaf=requestAnimationFrame(step);
+  };
+  // dots: sun (rings + rays) and a crescent moon, built from dots not icons
+  const build=(host,pts,color)=>{
+    host.innerHTML=pts.map(p=>`<span class="gs-dot${p[3]?" tw":""}" style="left:${p[0]}%;top:${p[1]}%;width:${p[2]}px;height:${p[2]}px;background:${color};${p[3]?`animation-delay:${p[3]}s`:""}"></span>`).join("");
+  };
+  const sunPts=[];
+  sunPts.push([48,46,5]);
+  for(let i=0;i<7;i++){const a=Math.PI*2*i/7;sunPts.push([48+11*Math.cos(a),46+18*Math.sin(a),4]);}
+  for(let i=0;i<12;i++){const a=Math.PI*2*i/12+.26;sunPts.push([48+21*Math.cos(a),46+34*Math.sin(a),4]);}
+  for(let i=0;i<8;i++){const a=Math.PI*2*i/8+.4;sunPts.push([48+29*Math.cos(a),46+46*Math.sin(a),3]);}
+  build(sun,sunPts,"#f59e0b");
+  const moonPts=[];
+  for(let i=0;i<26;i++){const a=Math.PI*2*i/26;
+    if(Math.cos(a)<0.32)moonPts.push([48+20*Math.cos(a),46+32*Math.sin(a),4]);
+  }
+  for(let i=0;i<12;i++){const a=Math.PI*2*i/12;
+    if(Math.cos(a)<0.1)moonPts.push([48+9*Math.cos(a),46+15*Math.sin(a),3.5]);
+  }
+  moonPts.push([30,20,2.5,.2],[70,15,2,.7],[78,70,2.5,1.1],[25,72,2,1.5]); // twinkling sparks inside the glass
+  build(moon,moonPts,"#e0e7ff");
+  // stars in the night sky behind the glass
+  for(let i=0;i<7;i++){
+    const s=document.createElement("span");
+    s.className="gs-dot tw";
+    s.style.cssText=`left:${8+Math.random()*84}%;top:${10+Math.random()*76}%;width:2.5px;height:2.5px;background:#e0e7ff;animation-delay:${(Math.random()*1.8).toFixed(2)}s`;
+    night.appendChild(s);
+  }
+  pane.addEventListener("pointerdown",e=>{
+    dragging=true;moved=0;startPX=e.clientX;startTx=tx;
+    pane.setPointerCapture(e.pointerId);
+    cancelAnimationFrame(snapRaf);
+    e.preventDefault();
+  });
+  pane.addEventListener("pointermove",e=>{
+    if(!dragging)return;
+    const dx=e.clientX-startPX;
+    moved=Math.max(moved,Math.abs(dx));
+    tx=Math.max(0,Math.min(maxX(),startTx+dx));
+    apply();
+  });
+  pane.addEventListener("pointerup",()=>{
+    if(!dragging)return;
+    dragging=false;
+    const v=isRtl?1-tx/maxX():tx/maxX();
+    if(moved<6){snapTo(v>.5?0:1);}else{snapTo(v>.5?1:0);}
+  });
+  pane.addEventListener("pointercancel",()=>{dragging=false;snapTo((isRtl?1-tx/maxX():tx/maxX())>.5?1:0);});
+  gs.addEventListener("click",e=>{
+    if(e.target.closest(".gs-pane"))return;
+    const r=gs.getBoundingClientRect();
+    const rel=(e.clientX-r.left)/r.width;
+    const nightSide=isRtl?rel<0.5:rel>0.5;
+    snapTo(nightSide?1:0);
+  });
+  gs.addEventListener("keydown",e=>{
+    if(e.key===" "||e.key==="Enter"){e.preventDefault();const v=isRtl?1-tx/maxX():tx/maxX();snapTo(v>.5?0:1);}
+    if(e.key==="ArrowLeft"||e.key==="ArrowRight"){e.preventDefault();const left=e.key==="ArrowLeft";snapTo(isRtl?(left?1:0):(left?0:1));}
+  });
+  apply();
+}
+
+/* ============ ripple ============ */
+$$(".ripple-host").forEach(b=>b.addEventListener("pointerdown",e=>{
+  if(reduce)return;
+  const el=e.currentTarget,r=el.getBoundingClientRect();
+  const d=Math.max(r.width,r.height)*2.1;
+  const ink=document.createElement("span");
+  ink.className="ripple-ink";
+  ink.style.cssText=`width:${d}px;height:${d}px;left:${e.clientX-r.left-d/2}px;top:${e.clientY-r.top-d/2}px`;
+  el.appendChild(ink);
+  ink.addEventListener("animationend",()=>ink.remove());
+}));
+
+/* ============ guarded save with error + retry + success burst ============ */
+const saveBtn=$("#saveDemo"),saveNote=$("#saveNote"),saveWrap=$("#saveWrap");
+if(saveBtn){
+  let st="idle",attempts=0;
+  const burst=host=>{
+    if(reduce)return;
+    const colors=["#14b8a6","#f5b453","#fb7185","#34d399"];
+    for(let i=0;i<14;i++){
+      const bit=document.createElement("span");
+      bit.className="burst-bit";
+      bit.style.background=colors[i%4];
+      host.appendChild(bit);
+      const a=Math.PI*2*i/14+Math.random()*.6,d=44+Math.random()*38;
+      bit.animate([
+        {transform:"translate(-50%,-50%) rotate(0)",opacity:1},
+        {transform:`translate(calc(-50% + ${Math.cos(a)*d}px),calc(-50% + ${Math.sin(a)*d}px)) rotate(${200+Math.random()*160}deg)`,opacity:0}
+      ],{duration:540+Math.random()*260,easing:"cubic-bezier(.22,1,.36,1)"}).onfinish=()=>bit.remove();
+    }
+  };
+  saveBtn.addEventListener("click",()=>{
+    if(st==="pending")return; // double-click guard
+    st="pending";attempts++;
+    saveBtn.disabled=true;saveBtn.setAttribute("aria-busy","true");
+    saveBtn.innerHTML='<span class="spinner"></span>שומר...';
+    saveNote.innerHTML="";
+    setTimeout(()=>{
+      st="idle";saveBtn.disabled=false;saveBtn.removeAttribute("aria-busy");saveBtn.textContent="שמירת ההגדרות";
+      if(attempts%2===1){
+        saveNote.innerHTML='<div class="err" role="alert" style="justify-content:center">השמירה נכשלה (דמו) <button id="retrySave">נסו שוב</button></div>';
+        $("#retrySave").addEventListener("click",()=>saveBtn.click());
+      }else{
+        saveNote.innerHTML='<div class="ok-mini checkpop" style="justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>נשמר בהצלחה (דמו)</div>';
+        burst(saveWrap);
+      }
+    },reduce?60:1200);
+  });
+}
+
+/* ============ magnetic button ============ */
+const magWrap=$("#magnetWrap"),magStage=$("#magnetStage"),magHint=$("#magnetHint");
+if(magWrap&&magStage){
+  if(reduce||matchMedia("(hover: none)").matches){
+    magHint.textContent="במסך מגע אין ריחוף - הכפתור מתנהג רגיל";
+  }else{
+    let tx=0,ty=0,cx=0,cy=0,raf=null;
+    const loop=()=>{
+      cx+=(tx-cx)*.16;cy+=(ty-cy)*.16;
+      magWrap.style.transform=`translate(${cx.toFixed(2)}px,${cy.toFixed(2)}px)`;
+      if(Math.abs(tx-cx)>.1||Math.abs(ty-cy)>.1)raf=requestAnimationFrame(loop);
+      else{raf=null;magWrap.style.transform=`translate(${tx}px,${ty}px)`;}
+    };
+    magStage.addEventListener("pointermove",e=>{
+      const r=magWrap.getBoundingClientRect();
+      const dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2);
+      const dist=Math.hypot(dx,dy);
+      if(dist<120){tx=dx*.3;ty=dy*.3;}else{tx=0;ty=0;}
+      if(!raf)raf=requestAnimationFrame(loop);
+    });
+    magStage.addEventListener("pointerleave",()=>{tx=0;ty=0;if(!raf)raf=requestAnimationFrame(loop);});
+  }
+}
+})();
+</script>
+<script type="module">
+const stage=document.getElementById("threeStage");
+if(stage){
+  const loader=document.getElementById("threeLoader"),errBox=document.getElementById("threeErr");
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let cleanup=null;
+  const sphere=n=>{const a=new Float32Array(n*3);for(let i=0;i<n;i++){const phi=Math.acos(1-2*(i+.5)/n),th=Math.PI*(1+Math.sqrt(5))*i;a[i*3]=1.9*Math.sin(phi)*Math.cos(th);a[i*3+1]=1.9*Math.cos(phi);a[i*3+2]=1.9*Math.sin(phi)*Math.sin(th);}return a;};
+  const knot=n=>{const a=new Float32Array(n*3);for(let i=0;i<n;i++){const t=i/n*Math.PI*2,r=1.25+.55*Math.cos(3*t);a[i*3]=r*Math.cos(2*t);a[i*3+1]=r*Math.sin(2*t);a[i*3+2]=.85*Math.sin(3*t);}return a;};
+  const galaxy=n=>{const a=new Float32Array(n*3);for(let i=0;i<n;i++){const arm=i%3,r=Math.pow(Math.random(),.6)*2.4,ang=r*2.1+arm*Math.PI*2/3;a[i*3]=Math.cos(ang)*r;a[i*3+1]=(Math.random()-.5)*.28;a[i*3+2]=Math.sin(ang)*r;}return a;};
+  async function init(){
+    loader.style.display="flex";errBox.style.display="none";
+    let THREE;
+    try{THREE=await import("three");}
+    catch(e){loader.style.display="none";errBox.style.display="flex";return;}
+    if(cleanup){cleanup();cleanup=null;}
+    let renderer;
+    try{renderer=new THREE.WebGLRenderer({alpha:true,antialias:false,powerPreference:"low-power"});}
+    catch(e){loader.style.display="none";stage.classList.add("three-fallback");return;}
+    renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));
+    const W=stage.clientWidth,H=320;
+    renderer.setSize(W,H);
+    stage.appendChild(renderer.domElement);
+    const scene=new THREE.Scene();
+    const cam=new THREE.PerspectiveCamera(45,W/H,.1,100);
+    cam.position.z=7;
+    const N=2400;
+    const shapes=[sphere(N),knot(N),galaxy(N)];
+    const geo=new THREE.BufferGeometry();
+    geo.setAttribute("position",new THREE.BufferAttribute(new Float32Array(shapes[0]),3));
+    const col=new Float32Array(N*3);
+    const c1=new THREE.Color("#14b8a6"),c2=new THREE.Color("#f5b453"),c3=new THREE.Color("#fb7185");
+    for(let i=0;i<N;i++){const t=i/N;const c=t<.5?c1.clone().lerp(c2,t*2):c2.clone().lerp(c3,(t-.5)*2);col.set([c.r,c.g,c.b],i*3);}
+    geo.setAttribute("color",new THREE.BufferAttribute(col,3));
+    const mat=new THREE.PointsMaterial({size:.05,vertexColors:true,transparent:true,opacity:.95,blending:THREE.AdditiveBlending,depthWrite:false});
+    const pts=new THREE.Points(geo,mat);
+    scene.add(pts);
+    let shape=0,target=shapes[0],swapT=0,running=true,raf=0;
+    const pointer={x:0,y:0};
+    const onPointer=e=>{pointer.x=(e.clientX/innerWidth)*2-1;pointer.y=(e.clientY/innerHeight)*2-1;};
+    const frame=now=>{
+      if(!running)return;
+      const t=now/1000;
+      if(t-swapT>4.2){swapT=t;shape=(shape+1)%shapes.length;target=shapes[shape];}
+      const arr=geo.attributes.position.array;
+      for(let i=0;i<arr.length;i++)arr[i]+=(target[i]-arr[i])*.045;
+      geo.attributes.position.needsUpdate=true;
+      pts.rotation.y=t*.18;
+      pts.rotation.x+=(pointer.y*.35-pts.rotation.x)*.05;
+      pts.rotation.z+=(pointer.x*.12-pts.rotation.z)*.05;
+      renderer.render(scene,cam);
+      raf=requestAnimationFrame(frame);
+    };
+    const io=new IntersectionObserver(([e])=>{
+      running=e.isIntersecting&&!document.hidden;
+      if(running)raf=requestAnimationFrame(frame);else cancelAnimationFrame(raf);
+    },{threshold:.05});
+    const onVis=()=>{running=!document.hidden;if(running)raf=requestAnimationFrame(frame);else cancelAnimationFrame(raf);};
+    const onResize=()=>{const w=stage.clientWidth;renderer.setSize(w,320);cam.aspect=w/320;cam.updateProjectionMatrix();};
+    io.observe(stage);
+    document.addEventListener("visibilitychange",onVis);
+    addEventListener("resize",onResize);
+    if(!reduce)addEventListener("pointermove",onPointer);
+    loader.style.display="none";
+    if(reduce){renderer.render(scene,cam);}else{raf=requestAnimationFrame(frame);}
+    cleanup=()=>{
+      running=false;cancelAnimationFrame(raf);io.disconnect();
+      document.removeEventListener("visibilitychange",onVis);
+      removeEventListener("resize",onResize);removeEventListener("pointermove",onPointer);
+      geo.dispose();mat.dispose();renderer.dispose();renderer.domElement.remove();
+    };
+  }
+  document.getElementById("threeRetry").addEventListener("click",()=>init());
+  init();
+}
 </script>
 </body>
 </html>
