@@ -408,7 +408,25 @@ Call it when the submit promise resolves, on the button that was clicked. The bu
 
 ---
 
-## 6. Performance and fallback checklist
+## 6. Standard controls, signature level
+
+The everyday components are where "basic" is most visible. Each of these keeps its states layer (focus ring, aria, keyboard) and adds one crafted motion detail:
+
+**Checkbox** - the check draws itself: SVG path with `stroke-dasharray`/`dashoffset` transitioning 22 -> 0 over ~300ms, the box fills and pops to `scale(1.1)` with an overshoot bezier (`cubic-bezier(.34,1.56,.64,1)`), and a one-shot ring ping expands on check. The label row presses to `scale(.98)`.
+
+**Dropdown** - the panel opens with `scale(.96) translateY(-6px)` -> none from `transform-origin: top`, and items stagger in at ~45ms each. The selected item's check pops in with the same overshoot bezier; the chevron rotates 180deg. Close on outside click and Escape; `aria-expanded`, `role="listbox"`/`option`, `aria-selected`.
+
+**Combobox** - typing shows a mini spinner inside the input (the async state is visible, per the states layer), results stagger in like the dropdown, zero results get a designed empty state, and the selection becomes a removable chip that pops in above the input.
+
+**Drawer / bottom sheet** - enters with a spring (`cubic-bezier(.22,1,.36,1)`, ~420ms) over a fading backdrop. The handle is draggable with pointer capture: downward drags follow the finger, upward drags rubber-band at 25%, release past ~90px (or fast velocity) closes, otherwise it springs back. In RTL nothing changes - the sheet moves on the Y axis.
+
+**Loaders with character** - replace the gray spinner: three orbiting dots, an equalizer of bars, or a progress ring that fills with a live `Intl`-formatted percentage and ends in a drawn check. A determinate action (upload, import) always gets the ring over an indeterminate spinner.
+
+All five are demoed live in the gallery (`docs/index.html`, the signature-motion section) - copy the behavior from there.
+
+---
+
+## 7. Performance and fallback checklist
 
 - [ ] One signature animation per screen; everyday motion everywhere else.
 - [ ] rAF loops pause on `visibilitychange` and `IntersectionObserver`; verified in devtools (0% CPU when hidden).

@@ -193,6 +193,74 @@ footer a:hover{color:var(--accent)}
 @keyframes twinkle{0%,100%{opacity:.15}50%{opacity:1}}
 .gs-labels{display:flex;align-items:center;gap:14px;font-size:13px;color:var(--muted)}
 .gs-labels output{font-family:"JetBrains Mono",monospace;color:var(--accent);min-width:46px;text-align:center}
+/* --- animated standard controls --- */
+.xc-list{display:flex;flex-direction:column;gap:12px;width:100%;max-width:400px}
+.xcheck{display:flex;align-items:center;gap:12px;cursor:pointer;padding:13px 15px;border:1px solid var(--border-soft);border-radius:13px;background:var(--card);transition:border-color .2s,transform .12s var(--ease);user-select:none;font-size:14.5px}
+.xcheck:hover{border-color:var(--border)}
+.xcheck:active{transform:scale(.98)}
+.xcheck input{position:absolute;opacity:0;pointer-events:none}
+.xc-box{position:relative;width:24px;height:24px;border-radius:8px;border:2px solid var(--border);display:grid;place-items:center;transition:background .25s,border-color .25s,transform .35s cubic-bezier(.34,1.56,.64,1);flex-shrink:0}
+.xc-box svg{width:14px;height:14px;fill:none;stroke:#04211d;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.xc-tick{stroke-dasharray:22;stroke-dashoffset:22;transition:stroke-dashoffset .3s ease .06s}
+.xcheck input:checked+.xc-box{background:linear-gradient(135deg,var(--accent),var(--accent-strong));border-color:transparent;transform:scale(1.1)}
+.xcheck input:checked+.xc-box .xc-tick{stroke-dashoffset:0}
+.xcheck input:checked+.xc-box::after{content:"";position:absolute;inset:-2px;border-radius:10px;border:2px solid var(--accent);animation:xcPing .5s ease-out forwards}
+@keyframes xcPing{from{opacity:.85;transform:scale(1)}to{opacity:0;transform:scale(1.7)}}
+.xcheck input:focus-visible+.xc-box{outline:2px solid var(--accent);outline-offset:3px}
+.xc-count{margin-top:18px;font-size:14px;color:var(--muted)}
+.xc-count b{color:var(--accent);display:inline-block}
+.xc-count b.pop{animation:checkpop .4s var(--ease)}
+.dd,.cb{position:relative;width:100%;max-width:340px}
+.dd-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px 16px;color:var(--text);font-family:inherit;font-size:14.5px;font-weight:600;cursor:pointer;transition:border-color .2s}
+.dd-btn:hover{border-color:var(--accent-strong)}
+.dd-btn:focus-visible,.cb-input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.dd-btn .chev{transition:transform .25s var(--ease);color:var(--muted);flex-shrink:0}
+.dd.open .dd-btn .chev{transform:rotate(180deg)}
+.dd-panel,.cb-panel{position:absolute;top:calc(100% + 8px);inset-inline:0;background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-2);padding:6px;z-index:6;opacity:0;transform:scale(.96) translateY(-6px);transform-origin:top center;pointer-events:none;transition:opacity .18s var(--ease),transform .22s var(--ease);max-height:240px;overflow-y:auto}
+.dd.open .dd-panel,.cb.open .cb-panel{opacity:1;transform:none;pointer-events:auto}
+.dd-item{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;padding:11px 12px;border:0;background:transparent;color:var(--text);font-family:inherit;font-size:14px;border-radius:9px;cursor:pointer;text-align:start;opacity:0;transform:translateY(6px)}
+.dd.open .dd-item,.cb.open .dd-item{opacity:1;transform:none;transition:opacity .25s var(--ease) calc(var(--i)*45ms),transform .25s var(--ease) calc(var(--i)*45ms),background .15s}
+.dd-item:hover{background:var(--card-2)}
+.dd-check{width:16px;height:16px;color:var(--accent);opacity:0;transform:scale(.5);transition:all .25s cubic-bezier(.34,1.56,.64,1);flex-shrink:0}
+.dd-item[aria-selected="true"] .dd-check{opacity:1;transform:scale(1)}
+.dd-item[aria-selected="true"]{color:var(--accent);font-weight:600}
+.cb-inputwrap{position:relative}
+.mini-spin{position:absolute;inset-inline-end:13px;top:50%;translate:0 -50%;width:15px;height:15px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;display:none}
+.cb.searching .mini-spin{display:block}
+.cb-empty{padding:20px 12px;text-align:center;color:var(--faint);font-size:13.5px}
+.cb-chip{display:inline-flex;align-items:center;gap:9px;background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:6px 8px 6px 15px;font-size:13.5px;font-weight:600;margin-bottom:12px;animation:checkpop .35s var(--ease)}
+[dir="rtl"] .cb-chip{padding:6px 15px 6px 8px}
+.cb-chip button{background:none;border:0;color:inherit;cursor:pointer;font-size:16px;line-height:1;padding:0 2px}
+.drawer-stage{position:relative;width:100%;min-height:380px;border-radius:12px;overflow:hidden;background:var(--bg);display:grid;place-items:center}
+.sheet-backdrop{position:absolute;inset:0;background:rgba(4,8,12,.62);opacity:0;pointer-events:none;transition:opacity .3s}
+.drawer-stage.open .sheet-backdrop{opacity:1;pointer-events:auto}
+.sheet{position:absolute;inset-inline:0;bottom:0;background:var(--card);border:1px solid var(--border);border-bottom:0;border-radius:20px 20px 0 0;padding:8px 20px 22px;transform:translateY(105%);box-shadow:0 -12px 40px rgba(0,0,0,.45);will-change:transform}
+.sheet-handle{width:44px;height:5px;border-radius:99px;background:var(--border);margin:6px auto 16px;cursor:grab;touch-action:none}
+.sheet-handle:active{cursor:grabbing}
+.sheet-title{font-size:15.5px;font-weight:700;margin-bottom:6px}
+.sheet-row{display:flex;align-items:center;gap:12px;padding:13px 4px;border-bottom:1px solid var(--border-soft);font-size:14px;color:var(--text)}
+.sheet-row:last-of-type{border-bottom:0}
+.sheet-row .avatar{width:32px;height:32px;font-size:12px}
+.sheet-sub{font-size:12px;color:var(--muted)}
+.loaders{display:flex;gap:34px;justify-content:center;align-items:center;flex-wrap:wrap;padding:6px 0 26px}
+.orbit{position:relative;width:46px;height:46px;animation:spin 1.6s linear infinite}
+.orbit span{position:absolute;width:9px;height:9px;border-radius:50%;background:var(--accent)}
+.orbit span:nth-child(1){top:0;left:50%;translate:-50% 0}
+.orbit span:nth-child(2){bottom:6%;inset-inline-start:8%;background:var(--amber)}
+.orbit span:nth-child(3){bottom:6%;inset-inline-end:8%;background:var(--rose)}
+.bars{display:flex;gap:5px;align-items:center;height:40px}
+.bars span{width:5px;border-radius:99px;background:var(--accent);animation:barEq 1s ease-in-out infinite}
+.bars span:nth-child(2){animation-delay:.12s}
+.bars span:nth-child(3){animation-delay:.24s;background:var(--amber)}
+.bars span:nth-child(4){animation-delay:.36s}
+.bars span:nth-child(5){animation-delay:.48s;background:var(--rose)}
+@keyframes barEq{0%,100%{height:10px}50%{height:34px}}
+.ring-wrap{display:flex;flex-direction:column;align-items:center;gap:16px}
+.ring-holder{position:relative;width:84px;height:84px}
+.ring-holder svg{transform:rotate(-90deg)}
+.ring-bg{fill:none;stroke:var(--card-2);stroke-width:7}
+.ring-fg{fill:none;stroke:var(--accent);stroke-width:7;stroke-linecap:round}
+.ring-val{position:absolute;inset:0;display:grid;place-items:center;font-family:"JetBrains Mono",monospace;font-size:15px;font-weight:600;color:var(--text)}
 .demo-note{font-size:12.5px;color:var(--faint);margin-top:14px;line-height:1.7}
 .demo-note a{color:var(--muted);border-bottom:1px solid var(--border)}
 .demo-note a:hover{color:var(--accent)}
@@ -227,60 +295,9 @@ footer a:hover{color:var(--accent)}
   </div>
 </header>
 
-<section id="demos">
-  <div class="sec-head rv"><span class="sec-num">01</span><h2>Stats cards</h2></div>
-  <p class="sec-sub rv">The default output is four gray boxes. Finesse adds token-based surfaces, a staggered entrance, count-up numbers with locale formatting, hover lift - and a skeleton with retry for when the API is slow or down.</p>
-  <div class="demo rv">
-    <div class="demo-bar">
-      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>stats-grid.tsx</span>
-      <div class="seg" data-demo="stats"><div class="pill"></div><button aria-pressed="true" data-side="before">Before</button><button aria-pressed="false" data-side="after">After</button></div>
-    </div>
-    <div class="stage" id="stage-stats"></div>
-  </div>
-</section>
-
-<section>
-  <div class="sec-head rv"><span class="sec-num">02</span><h2>Form submit</h2></div>
-  <p class="sec-sub rv">A button that silently does nothing is the most common agent bug. After finesse: pending state in one frame, double-click guard, error with retry that keeps what you typed, and a success state that confirms.</p>
-  <div class="demo rv">
-    <div class="demo-bar">
-      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>contact-form.tsx</span>
-      <div class="seg" data-demo="form"><div class="pill"></div><button aria-pressed="true" data-side="before">Before</button><button aria-pressed="false" data-side="after">After</button></div>
-    </div>
-    <div class="stage" id="stage-form"></div>
-  </div>
-</section>
-
-<section>
-  <div class="sec-head rv"><span class="sec-num">03</span><h2>Loading states</h2></div>
-  <p class="sec-sub rv">Blank screen, then content pops in - that is the default. After finesse: a shimmer skeleton that matches the layout, then a staggered reveal. Hit replay to watch it again.</p>
-  <div class="demo rv">
-    <div class="demo-bar">
-      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-9-9"/></svg>dashboard-loading.tsx</span>
-      <div style="display:flex;gap:10px;align-items:center">
-        <button class="replay" id="replayBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>Replay</button>
-        <div class="seg" data-demo="load"><div class="pill"></div><button aria-pressed="true" data-side="before">Before</button><button aria-pressed="false" data-side="after">After</button></div>
-      </div>
-    </div>
-    <div class="stage" id="stage-load"></div>
-  </div>
-</section>
-
-<section>
-  <div class="sec-head rv"><span class="sec-num">04</span><h2>RTL, built in</h2></div>
-  <p class="sec-sub rv">Most agent output breaks the moment it meets Hebrew: unmirrored arrows, LTR phone numbers, wrong alignment. Finesse makes RTL structural - logical properties, mirrored icons, bidi-safe numbers, Hebrew typography. Flip the direction:</p>
-  <div class="demo rv">
-    <div class="demo-bar">
-      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>support-chat.tsx</span>
-      <div class="dir-seg" id="dirSeg"><button aria-pressed="false" data-dir="ltr">English LTR</button><button aria-pressed="true" data-dir="rtl">עברית RTL</button></div>
-    </div>
-    <div class="stage" id="stage-chat"></div>
-  </div>
-</section>
-
 <section id="signature" dir="rtl" lang="he" class="heb">
-  <div class="sec-head rv"><span class="sec-num">05</span><h2>אנימציות חתימה - השכבה המתקדמת</h2></div>
-  <p class="sec-sub rv">מעבר ל-stagger ול-fade הרגילים: סוויץ עם אופי, זכוכית שגוררים בין יום ללילה, ripple מהנקודה המדויקת, סצנת Three.js חיה וכפתור מגנטי. כל דמו כאן באמת עובד - עם טוען, שגיאה וניסיון חוזר, ובלי מסכים ריקים. הקוד המלא להעתקה נמצא בקובץ <a href="https://github.com/delevski/finesse/blob/main/skills/finesse/references/advanced-motion.md" target="_blank" rel="noopener" dir="ltr" style="color:var(--muted);border-bottom:1px solid var(--border)">advanced-motion.md</a> בריפו.</p>
+  <div class="sec-head rv"><span class="sec-num">01</span><h2>אנימציות חתימה - השכבה המתקדמת</h2></div>
+  <p class="sec-sub rv">מעבר ל-stagger ול-fade הרגילים: סוויץ עם אופי, זכוכית שגוררים בין יום ללילה, סצנת Three.js חיה - וגם קומפוננטות יומיומיות ברמה אחרת: צ'קבוקס שה-V נצייר, דרופדאון שפותח בסטאגר, קומבובוקס עם חיפוש חי, דרואר שגוררים וטוענים עם אופי. כל דמו כאן באמת עובד - עם טוען, שגיאה וניסיון חוזר, ובלי מסכים ריקים. הקוד המלא להעתקה נמצא בקובץ <a href="https://github.com/delevski/finesse/blob/main/skills/finesse/references/advanced-motion.md" target="_blank" rel="noopener" dir="ltr" style="color:var(--muted);border-bottom:1px solid var(--border)">advanced-motion.md</a> בריפו.</p>
 
   <div class="demo rv" style="margin-bottom:18px">
     <div class="demo-bar">
@@ -363,6 +380,89 @@ footer a:hover{color:var(--accent)}
     </div></div>
   </div>
 
+  <div class="demo rv" style="margin-bottom:18px">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="m8 12.5 3 3 5.5-7"/></svg><span dir="ltr">checkbox.tsx</span></span>
+    </div>
+    <div class="stage"><div class="stage-inner">
+      <div class="xc-list">
+        <label class="xcheck" style="animation:swapIn .4s var(--ease) backwards"><input type="checkbox" checked><span class="xc-box"><svg viewBox="0 0 24 24"><path class="xc-tick" d="M5 12.5l4.5 4.5L19 7"/></svg></span><span>קבלת עדכונים בוואטסאפ</span></label>
+        <label class="xcheck" style="animation:swapIn .4s var(--ease) 80ms backwards"><input type="checkbox"><span class="xc-box"><svg viewBox="0 0 24 24"><path class="xc-tick" d="M5 12.5l4.5 4.5L19 7"/></svg></span><span>תזכורת יום לפני פגישה</span></label>
+        <label class="xcheck" style="animation:swapIn .4s var(--ease) 160ms backwards"><input type="checkbox"><span class="xc-box"><svg viewBox="0 0 24 24"><path class="xc-tick" d="M5 12.5l4.5 4.5L19 7"/></svg></span><span>סיכום שבועי במייל</span></label>
+      </div>
+      <div class="xc-count" id="xcCount">נבחרו <b>1</b> מתוך 3</div>
+    </div></div>
+  </div>
+
+  <div class="demo rv" style="margin-bottom:18px">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg><span dir="ltr">dropdown.tsx</span></span>
+    </div>
+    <div class="stage" style="min-height:380px;align-items:flex-start"><div class="stage-inner" style="display:grid;place-items:center">
+      <div class="dd" id="dd">
+        <button class="dd-btn" id="ddBtn" aria-expanded="false" aria-haspopup="listbox"><span id="ddLabel">בחירת סניף</span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="dd-panel" role="listbox" aria-label="סניפים" id="ddPanel"></div>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="demo rv" style="margin-bottom:18px">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><span dir="ltr">combobox.tsx</span></span>
+    </div>
+    <div class="stage" style="min-height:400px;align-items:flex-start"><div class="stage-inner" style="display:grid;place-items:center">
+      <div class="cb" id="cb">
+        <div id="cbChipWrap"></div>
+        <div class="cb-inputwrap">
+          <input class="f-input cb-input" id="cbInput" placeholder="חיפוש עיר..." autocomplete="off" role="combobox" aria-expanded="false" aria-label="חיפוש עיר">
+          <span class="mini-spin"></span>
+        </div>
+        <div class="cb-panel" role="listbox" aria-label="ערים" id="cbPanel"></div>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="demo rv" style="margin-bottom:18px">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 20h18"/><path d="M6 20V8m6 12V4m6 16v-8"/></svg><span dir="ltr">drawer.tsx</span></span>
+    </div>
+    <div class="stage"><div class="stage-inner">
+      <div class="drawer-stage" id="drawerStage">
+        <button class="btn primary ripple-host" id="openSheet">פתח חלונית תחתונה</button>
+        <div class="sheet-backdrop" id="sheetBackdrop"></div>
+        <div class="sheet" id="sheet" role="dialog" aria-label="חלונית נציגים">
+          <div class="sheet-handle" id="sheetHandle"></div>
+          <div class="sheet-title">בחירת נציג</div>
+          <div class="sheet-row"><span class="avatar">ש</span><div><div>שירה כהן</div><div class="sheet-sub">זמינה עכשיו</div></div></div>
+          <div class="sheet-row"><span class="avatar">ד</span><div><div>דוד לוי</div><div class="sheet-sub">חוזר בעוד 10 דקות</div></div></div>
+          <div class="sheet-row"><span class="avatar">מ</span><div><div>מאיה אברהם</div><div class="sheet-sub">זמינה עכשיו</div></div></div>
+          <button class="submit ripple-host" id="sheetDone" style="margin-top:16px">סגירה</button>
+        </div>
+      </div>
+      <div class="es-state" style="text-align:center;margin-top:14px">החלונית קופצת מלמטה, הרקע מחשיך, ואפשר לגרור אותה מהידית כדי לסגור - עם אלסטיות בקצה</div>
+    </div></div>
+  </div>
+
+  <div class="demo rv" style="margin-bottom:18px">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-9-9"/></svg><span dir="ltr">loading.tsx</span></span>
+    </div>
+    <div class="stage"><div class="stage-inner">
+      <div class="loaders">
+        <div class="orbit" aria-label="טוען"><span></span><span></span><span></span></div>
+        <div class="bars" aria-label="טוען"><span></span><span></span><span></span><span></span><span></span></div>
+      </div>
+      <div class="ring-wrap">
+        <div class="ring-holder">
+          <svg width="84" height="84" viewBox="0 0 84 84"><circle class="ring-bg" cx="42" cy="42" r="36"/><circle class="ring-fg" id="ringFg" cx="42" cy="42" r="36" stroke-dasharray="226.2" stroke-dashoffset="226.2"/></svg>
+          <div class="ring-val" id="ringVal">0%</div>
+        </div>
+        <button class="btn primary ripple-host" id="ringBtn">התחל העלאה (דמו)</button>
+      </div>
+      <div class="es-state" style="text-align:center;margin-top:16px">טוענים עם אופי במקום ספינר אפור: מסלול, אקולייזר, וטבעת התקדמות עם אחוזים ו-V בסוף</div>
+    </div></div>
+  </div>
+
   <div class="demo rv">
     <div class="demo-bar">
       <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m12 2 9 5-9 5-9-5 9-5z"/></svg><span dir="ltr">magnetic-button.tsx</span></span>
@@ -371,6 +471,57 @@ footer a:hover{color:var(--accent)}
       <span class="magnet" id="magnetWrap"><button class="btn primary" id="magnetBtn" style="padding:16px 34px;font-size:16px">כפתור מגנטי</button></span>
       <div class="es-state" style="margin-top:20px" id="magnetHint">הקיפו אותו עם העכבר - הוא נמשך וקופץ חזרה</div>
     </div></div>
+  </div>
+</section>
+
+<section id="demos">
+  <div class="sec-head rv"><span class="sec-num">02</span><h2>Stats cards</h2></div>
+  <p class="sec-sub rv">The default output is four gray boxes. Finesse adds token-based surfaces, a staggered entrance, count-up numbers with locale formatting, hover lift - and a skeleton with retry for when the API is slow or down.</p>
+  <div class="demo rv">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>stats-grid.tsx</span>
+      <div class="seg" data-demo="stats"><div class="pill"></div><button aria-pressed="true" data-side="before">Before</button><button aria-pressed="false" data-side="after">After</button></div>
+    </div>
+    <div class="stage" id="stage-stats"></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head rv"><span class="sec-num">03</span><h2>Form submit</h2></div>
+  <p class="sec-sub rv">A button that silently does nothing is the most common agent bug. After finesse: pending state in one frame, double-click guard, error with retry that keeps what you typed, and a success state that confirms.</p>
+  <div class="demo rv">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>contact-form.tsx</span>
+      <div class="seg" data-demo="form"><div class="pill"></div><button aria-pressed="true" data-side="before">Before</button><button aria-pressed="false" data-side="after">After</button></div>
+    </div>
+    <div class="stage" id="stage-form"></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head rv"><span class="sec-num">04</span><h2>Loading states</h2></div>
+  <p class="sec-sub rv">Blank screen, then content pops in - that is the default. After finesse: a shimmer skeleton that matches the layout, then a staggered reveal. Hit replay to watch it again.</p>
+  <div class="demo rv">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-9-9"/></svg>dashboard-loading.tsx</span>
+      <div style="display:flex;gap:10px;align-items:center">
+        <button class="replay" id="replayBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>Replay</button>
+        <div class="seg" data-demo="load"><div class="pill"></div><button aria-pressed="true" data-side="before">Before</button><button aria-pressed="false" data-side="after">After</button></div>
+      </div>
+    </div>
+    <div class="stage" id="stage-load"></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head rv"><span class="sec-num">05</span><h2>RTL, built in</h2></div>
+  <p class="sec-sub rv">Most agent output breaks the moment it meets Hebrew: unmirrored arrows, LTR phone numbers, wrong alignment. Finesse makes RTL structural - logical properties, mirrored icons, bidi-safe numbers, Hebrew typography. Flip the direction:</p>
+  <div class="demo rv">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>support-chat.tsx</span>
+      <div class="dir-seg" id="dirSeg"><button aria-pressed="false" data-dir="ltr">English LTR</button><button aria-pressed="true" data-dir="rtl">עברית RTL</button></div>
+    </div>
+    <div class="stage" id="stage-chat"></div>
   </div>
 </section>
 
@@ -772,6 +923,163 @@ if(magWrap&&magStage){
     });
     magStage.addEventListener("pointerleave",()=>{tx=0;ty=0;if(!raf)raf=requestAnimationFrame(loop);});
   }
+}
+})();
+</script>
+<script>
+(function(){
+"use strict";
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const CHECK='<svg class="dd-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>';
+
+/* ============ checkbox list ============ */
+const xcCount=$("#xcCount");
+if(xcCount){
+  const boxes=$$(".xcheck input");
+  const update=()=>{
+    const n=boxes.filter(b=>b.checked).length;
+    xcCount.innerHTML=`נבחרו <b>${n}</b> מתוך ${boxes.length}`;
+    const b=$("b",xcCount);
+    b.classList.remove("pop");void b.offsetWidth;b.classList.add("pop");
+  };
+  boxes.forEach(b=>b.addEventListener("change",update));
+}
+
+/* ============ dropdown ============ */
+const dd=$("#dd");
+if(dd){
+  const btn=$("#ddBtn",dd),panel=$("#ddPanel",dd),label=$("#ddLabel",dd);
+  const opts=["תל אביב - רוטשילד","חיפה - הכרמל","ירושלים - מרכז","באר שבע - צפון"];
+  let sel=-1;
+  const render=()=>{
+    panel.innerHTML=opts.map((o,i)=>`<button class="dd-item" role="option" style="--i:${i}" aria-selected="${i===sel}" data-i="${i}"><span>${o}</span>${CHECK}</button>`).join("");
+    $$(".dd-item",panel).forEach(it=>it.addEventListener("click",()=>{
+      sel=+it.dataset.i;
+      label.textContent=opts[sel];
+      render();
+      close();
+    }));
+  };
+  const open=()=>{dd.classList.add("open");btn.setAttribute("aria-expanded","true");};
+  const close=()=>{dd.classList.remove("open");btn.setAttribute("aria-expanded","false");};
+  btn.addEventListener("click",()=>dd.classList.contains("open")?close():open());
+  document.addEventListener("click",e=>{if(!dd.contains(e.target))close();});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape")close();});
+  render();
+}
+
+/* ============ combobox ============ */
+const cb=$("#cb");
+if(cb){
+  const input=$("#cbInput",cb),panel=$("#cbPanel",cb),chipWrap=$("#cbChipWrap",cb);
+  const cities=["תל אביב","ירושלים","חיפה","באר שבע","נתניה","הרצליה","רמת גן","אילת","אשדוד","פתח תקווה"];
+  let picked=null,timer=0;
+  const open=()=>{cb.classList.add("open");input.setAttribute("aria-expanded","true");};
+  const close=()=>{cb.classList.remove("open");input.setAttribute("aria-expanded","false");};
+  const render=list=>{
+    if(!list.length){panel.innerHTML='<div class="cb-empty">לא נמצאו ערים מתאימות (דמו)</div>';return;}
+    panel.innerHTML=list.map((c,i)=>`<button class="dd-item" role="option" style="--i:${i}" aria-selected="${c===picked}" data-c="${c}"><span>${c}</span>${CHECK}</button>`).join("");
+    $$(".dd-item",panel).forEach(it=>it.addEventListener("click",()=>{
+      picked=it.dataset.c;
+      chipWrap.innerHTML=`<span class="cb-chip">${picked}<button aria-label="הסרת הבחירה">×</button></span>`;
+      $("button",chipWrap).addEventListener("click",()=>{picked=null;chipWrap.innerHTML="";render(cities);});
+      input.value="";
+      render(cities);
+      close();
+    }));
+  };
+  input.addEventListener("focus",()=>{render(cities);open();});
+  input.addEventListener("input",()=>{
+    cb.classList.add("searching");
+    clearTimeout(timer);
+    timer=setTimeout(()=>{
+      cb.classList.remove("searching");
+      const q=input.value.trim();
+      render(cities.filter(c=>c.includes(q)));
+      open();
+    },reduce?40:380);
+  });
+  document.addEventListener("click",e=>{if(!cb.contains(e.target))close();});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape")close();});
+  render(cities);
+}
+
+/* ============ drawer (bottom sheet) ============ */
+const dStage=$("#drawerStage");
+if(dStage){
+  const sheet=$("#sheet",dStage),backdrop=$("#sheetBackdrop",dStage),handle=$("#sheetHandle",dStage);
+  let openSt=false,dragging=false,startY=0,curY=0,anim=null;
+  const setY=y=>{sheet.style.transform=`translateY(${y}px)`;};
+  const animateTo=(target,dur)=>{
+    if(anim)anim.cancel();
+    if(reduce){setY(target);return Promise.resolve();}
+    const from=curY;
+    return new Promise(res=>{
+      anim=sheet.animate(
+        [{transform:`translateY(${from}px)`},{transform:`translateY(${target}px)`}],
+        {duration:dur,easing:"cubic-bezier(.22,1,.36,1)",fill:"forwards"});
+      anim.onfinish=()=>{setY(target);curY=target;anim=null;res();};
+    });
+  };
+  const sheetH=()=>sheet.offsetHeight+8;
+  const openSheet=()=>{openSt=true;dStage.classList.add("open");curY=sheetH();setY(curY);animateTo(0,420);};
+  const closeSheet=()=>{openSt=false;dStage.classList.remove("open");animateTo(sheetH(),320);};
+  $("#openSheet",dStage).addEventListener("click",openSheet);
+  $("#sheetDone",dStage).addEventListener("click",closeSheet);
+  backdrop.addEventListener("click",closeSheet);
+  handle.addEventListener("pointerdown",e=>{
+    dragging=true;startY=e.clientY;
+    handle.setPointerCapture(e.pointerId);
+    if(anim){anim.cancel();anim=null;}
+    e.preventDefault();
+  });
+  handle.addEventListener("pointermove",e=>{
+    if(!dragging)return;
+    let dy=e.clientY-startY;
+    if(dy<0)dy*=0.25; // rubber-band upward
+    curY=dy;
+    setY(dy);
+    backdrop.style.opacity=String(Math.max(0,0.62*(1-dy/sheetH())));
+  });
+  handle.addEventListener("pointerup",e=>{
+    if(!dragging)return;
+    dragging=false;
+    backdrop.style.opacity="";
+    const dy=e.clientY-startY;
+    if(dy>90)closeSheet();else animateTo(0,300);
+  });
+}
+
+/* ============ progress ring ============ */
+const ringBtn=$("#ringBtn");
+if(ringBtn){
+  const fg=$("#ringFg"),val=$("#ringVal");
+  const C=226.2;
+  let st="idle";
+  ringBtn.addEventListener("click",()=>{
+    if(st==="pending")return; // double-click guard
+    st="pending";
+    ringBtn.disabled=true;
+    ringBtn.textContent="מעלה...";
+    const t0=performance.now(),dur=reduce?60:2200;
+    const tick=now=>{
+      const p=Math.min(1,(now-t0)/dur);
+      const e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
+      fg.style.strokeDashoffset=String(C*(1-e));
+      val.textContent=Math.round(e*100)+"%";
+      if(p<1){requestAnimationFrame(tick);return;}
+      st="done";
+      val.textContent="✓";
+      val.classList.add("checkpop");
+      ringBtn.disabled=false;
+      ringBtn.textContent="העלאה נוספת";
+      st="idle";
+      setTimeout(()=>{fg.style.strokeDashoffset=String(C);val.textContent="0%";val.classList.remove("checkpop");},2600);
+    };
+    requestAnimationFrame(tick);
+  });
 }
 })();
 </script>
