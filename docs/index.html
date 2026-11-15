@@ -318,6 +318,75 @@ footer a:hover{color:var(--accent)}
 .ring-bg{fill:none;stroke:var(--card-2);stroke-width:7}
 .ring-fg{fill:none;stroke:var(--accent);stroke-width:7;stroke-linecap:round}
 .ring-val{position:absolute;inset:0;display:grid;place-items:center;font-family:"JetBrains Mono",monospace;font-size:15px;font-weight:600;color:var(--text)}
+/* --- signature components round 5 --- */
+/* swipeable card stack */
+.swipe-stage{position:relative;width:100%;min-height:320px;display:grid;place-items:center}
+.sw-card{position:absolute;top:24px;left:50%;width:min(250px,78%);height:180px;border-radius:18px;background:linear-gradient(160deg,var(--card),var(--card-2));border:1px solid var(--border);box-shadow:0 16px 36px rgba(0,0,0,.4);padding:18px;display:flex;flex-direction:column;gap:8px;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none;color:var(--text);transition:transform .45s cubic-bezier(.2,1.3,.3,1),opacity .3s;will-change:transform}
+.sw-card.drag{transition:none;cursor:grabbing}
+.sw-tag{display:inline-block;font-size:10.5px;font-weight:700;padding:3px 10px;border-radius:99px;width:fit-content}
+.sw-title{font-size:15.5px;font-weight:700}
+.sw-sub{font-size:12px;color:var(--muted);line-height:1.6}
+/* liquid tabs */
+.ltabs-wrap{width:100%;max-width:380px}
+.ltabs{position:relative;display:flex;background:var(--card);border:1px solid var(--border-soft);border-radius:14px;padding:5px;gap:2px}
+.ltabs button{flex:1;position:relative;z-index:1;padding:10px 4px;border:0;background:transparent;color:var(--muted);font-family:inherit;font-size:13.5px;font-weight:600;border-radius:10px;cursor:pointer;transition:color .25s}
+.ltabs button.on{color:#04211d}
+.ltab-goo{position:absolute;top:5px;bottom:5px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-strong));z-index:0;will-change:left,width}
+.ltab-pane{margin-top:16px;font-size:14px;color:var(--muted);line-height:1.8;text-align:center;min-height:52px;transition:filter .18s,opacity .18s,transform .18s}
+.ltab-pane.swap{filter:blur(4px);opacity:0;transform:translateY(6px)}
+/* physics toasts */
+.toast-stage{position:relative;width:100%;min-height:300px;overflow:hidden;border-radius:12px;background:var(--bg);display:grid;place-items:center}
+.toast-zone{position:absolute;bottom:14px;inset-inline:0;display:grid;place-items:center;pointer-events:none}
+.toast{position:absolute;bottom:0;display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-inline-start:3px solid var(--accent);border-radius:12px;box-shadow:0 12px 30px rgba(0,0,0,.45);padding:12px 16px;font-size:13.5px;color:var(--text);pointer-events:auto;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;white-space:nowrap;transition:transform .4s cubic-bezier(.2,1.25,.3,1),opacity .3s;will-change:transform}
+.toast.drag{transition:none;cursor:grabbing}
+.toast .t-ic{width:26px;height:26px;border-radius:8px;background:var(--accent-soft);display:grid;place-items:center;color:var(--accent);flex-shrink:0}
+/* 3d tilt card */
+.tilt-wrap{perspective:900px}
+.tilt-card{position:relative;width:min(280px,82%);border-radius:18px;background:linear-gradient(160deg,var(--card),var(--card-2));border:1px solid var(--border);box-shadow:0 18px 40px rgba(0,0,0,.4);padding:24px;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.2,1.2,.3,1);will-change:transform;overflow:hidden;touch-action:pan-y}
+.tilt-card.live{transition:none}
+.tilt-glare{position:absolute;inset:0;background:radial-gradient(240px circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.17),transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none}
+.tilt-card.live .tilt-glare{opacity:1}
+.tilt-inner{transform:translateZ(34px)}
+.tilt-big{font-family:"JetBrains Mono",monospace;font-size:30px;font-weight:700;color:var(--accent)}
+/* text scramble */
+.scramble-wrap{text-align:center}
+.scramble{font-size:clamp(22px,6vw,30px);font-weight:800;color:var(--text);letter-spacing:.01em;min-height:1.4em}
+.scramble .dim{color:var(--faint)}
+/* otp input */
+.otp-wrap{display:flex;flex-direction:column;align-items:center;gap:16px}
+.otp-row{display:flex;gap:9px;direction:ltr}
+.otp-cell{width:44px;height:54px;border-radius:12px;background:var(--card);border:1.5px solid var(--border);display:grid;place-items:center;font-family:"JetBrains Mono",monospace;font-size:22px;font-weight:700;color:var(--text);transition:border-color .2s,background .2s;position:relative}
+.otp-cell.active{border-color:var(--accent)}
+.otp-cell.active::after{content:"";position:absolute;width:2px;height:24px;background:var(--accent);animation:otpCaret 1s steps(2) infinite}
+@keyframes otpCaret{50%{opacity:0}}
+.otp-cell.filled{border-color:var(--accent-strong);animation:otpPop .35s cubic-bezier(.34,1.8,.64,1)}
+@keyframes otpPop{0%{transform:scale(.7)}60%{transform:scale(1.12)}100%{transform:scale(1)}}
+.otp-row.err .otp-cell{border-color:var(--rose);color:var(--rose);animation:shakeX .4s var(--ease)}
+.otp-row.ok .otp-cell{border-color:var(--green);color:var(--green);animation:otpPop .4s cubic-bezier(.34,1.8,.64,1) calc(var(--i)*55ms) backwards}
+.otp-note{font-size:13px;color:var(--muted);min-height:20px;text-align:center}
+/* flip dialog */
+.flip-stage{position:relative;width:100%;min-height:400px;border-radius:12px;overflow:hidden;background:var(--bg);display:grid;place-items:center}
+.flip-card{width:min(240px,74%);background:linear-gradient(160deg,var(--card),var(--card-2));border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-1);padding:18px;cursor:pointer;color:var(--text);font-family:inherit;text-align:start;transition:transform .2s var(--ease),opacity .25s,border-color .2s}
+.flip-card:hover{border-color:var(--accent-strong)}
+.flip-card.gone{opacity:0;pointer-events:none;transform:scale(.9)}
+.flip-backdrop{position:absolute;inset:0;background:rgba(4,8,12,.6);opacity:0;pointer-events:none;transition:opacity .35s}
+.flip-stage.open .flip-backdrop{opacity:1;pointer-events:auto}
+.flip-dialog{position:absolute;inset:26px 14px;background:var(--card);border:1px solid var(--border);border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.55);padding:22px;opacity:0;pointer-events:none;transform-origin:0 0;will-change:transform}
+.flip-stage.open .flip-dialog{opacity:1;pointer-events:auto}
+.flip-dialog>*{opacity:0;transform:translateY(10px);transition:opacity .3s var(--ease),transform .35s var(--ease)}
+.flip-stage.open .flip-dialog>*{opacity:1;transform:none}
+.flip-stage.open .flip-dialog>*:nth-child(2){transition-delay:.12s}
+.flip-stage.open .flip-dialog>*:nth-child(3){transition-delay:.19s}
+.flip-stage.open .flip-dialog>*:nth-child(4){transition-delay:.26s}
+.flip-x{position:absolute;top:12px;inset-inline-end:12px;width:30px;height:30px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-size:14px}
+/* odometer */
+.odo-wrap{display:flex;flex-direction:column;align-items:center;gap:18px}
+.odo{display:flex;gap:4px;direction:ltr}
+.odo-reel{height:46px;overflow:hidden;border-radius:9px;background:var(--card);border:1px solid var(--border-soft)}
+.odo-col{display:flex;flex-direction:column;transition:transform .9s cubic-bezier(.22,1,.36,1);will-change:transform}
+.odo-col span{height:46px;line-height:46px;font-family:"JetBrains Mono",monospace;font-size:24px;font-weight:700;width:26px;text-align:center;color:var(--accent)}
+.odo-sep{line-height:46px;color:var(--faint);font-family:"JetBrains Mono",monospace;font-size:20px}
+
 .demo-note{font-size:12.5px;color:var(--faint);margin-top:14px;line-height:1.7}
 .demo-note a{color:var(--muted);border-bottom:1px solid var(--border)}
 .demo-note a:hover{color:var(--accent)}
@@ -544,6 +613,133 @@ footer a:hover{color:var(--accent)}
     <div class="stage" id="magnetStage"><div class="stage-inner" style="text-align:center">
       <span class="magnet" id="magnetWrap"><button class="btn primary lift-btn" id="magnetBtn" style="padding:16px 34px;font-size:16px">כפתור מרחף</button></span>
       <div class="es-state" style="margin-top:20px" id="magnetHint">לוחצים ומחזיקים - הכפתור ממריא עם צל; משחררים - הוא נופל חזרה עם קפיצה</div>
+    </div></div>
+  </div>
+
+  <div class="demo rv" style="margin-bottom:18px">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="6" width="16" height="14" rx="3"/><rect x="7" y="3" width="10" height="6" rx="2"/></svg><span dir="ltr">swipe-stack.tsx</span></span>
+    </div>
+    <div class="stage"><div class="stage-inner">
+      <div class="swipe-stage" id="swipeStage"></div>
+      <div class="es-state" style="text-align:center;margin-top:14px">ערימת קלפים: גוררים, זורקים עם מומנטום אמיתי - ומתחת לסף הקלף קופץ חזרה למקום. הערימה מחזורית</div>
+    </div></div>
+  </div>
+
+  <div class="demo rv" style="margin-bottom:18px">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span dir="ltr">liquid-tabs.tsx</span></span>
+    </div>
+    <div class="stage"><div class="stage-inner" style="display:grid;place-items:center">
+      <div class="ltabs-wrap">
+        <div class="ltabs" id="ltabs" role="tablist">
+          <div class="ltab-goo" id="ltabGoo"></div>
+          <button role="tab" class="on" data-pane="סקירה שבועית: 14 פגישות, 86% הגיעו בזמן, והנציגה המובילה היא מאיה עם 4.9 כוכבים.">סקירה</button>
+          <button role="tab" data-pane="הכנסות החודש: 48,300 שח - עלייה של 12% מחודש קודם. השיא נרשם בימי חמישי.">כספים</button>
+          <button role="tab" data-pane="3 משימות מחכות: אישור סל מבצע, תשובה ללקוח מחיפה, ועדכון תמונות באתר.">משימות</button>
+          <button role="tab" data-pane="התראה חדשה: נפתחה מכירת חיסול למלאי הקיץ - עד 40% הנחה על פריטים נבחרים.">התראות</button>
+        </div>
+        <div class="ltab-pane" id="ltabPane">סקירה שבועית: 14 פגישות, 86% הגיעו בזמן, והנציגה המובילה היא מאיה עם 4.9 כוכבים.</div>
+      </div>
+      <div class="es-state" style="text-align:center;margin-top:14px">הסמן נמתח כמו ג'לי לכיוון הטאב החדש ואז מתכווץ למקום - מדידת FLIP אמיתית בין המצבים</div>
+    </div></div>
+  </div>
+
+  <div class="demo rv" style="margin-bottom:18px">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M10.3 21a2 2 0 0 0 3.4 0"/></svg><span dir="ltr">toast-physics.tsx</span></span>
+    </div>
+    <div class="stage"><div class="stage-inner">
+      <div class="toast-stage" id="toastStage">
+        <button class="btn primary ripple-host" id="toastBtn">שלחו טוסט</button>
+        <div class="toast-zone" id="toastZone"></div>
+      </div>
+      <div class="es-state" style="text-align:center;margin-top:14px">טוסטים נכנסים בקפיץ ונערמים; סווייפ הצידה משליך אותם עם פיזיקת זריקה - או שהם נעלמים לבד אחרי כמה שניות</div>
+    </div></div>
+  </div>
+
+  <div class="demo rv" style="margin-bottom:18px">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3 3 8l9 5 9-5-9-5z"/><path d="m3 13 9 5 9-5"/></svg><span dir="ltr">tilt-card.tsx</span></span>
+    </div>
+    <div class="stage"><div class="stage-inner" style="display:grid;place-items:center">
+      <div class="tilt-wrap">
+        <div class="tilt-card" id="tiltCard">
+          <div class="tilt-glare"></div>
+          <div class="tilt-inner">
+            <div class="tilt-big">+38%</div>
+            <div style="font-weight:700;margin-top:4px">המרות השבוע</div>
+            <div style="font-size:12.5px;color:var(--muted);margin-top:6px">הכרטיס נטה בתלת-ממד לפי המגע, עם ברק שנע על פני השטח</div>
+          </div>
+        </div>
+      </div>
+      <div class="es-state" style="text-align:center;margin-top:14px">מושכים אותו לכל כיוון; בשחרור הוא מתיישר בקפיץ</div>
+    </div></div>
+  </div>
+
+  <div class="demo rv" style="margin-bottom:18px">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m4 17 6-6-6-6M12 19h8"/></svg><span dir="ltr">text-scramble.tsx</span></span>
+    </div>
+    <div class="stage"><div class="stage-inner">
+      <div class="scramble-wrap">
+        <div class="scramble" id="scrambleText" data-text="אנימציות שאנשים זוכרים"></div>
+        <button class="btn-ghost" id="scrambleBtn" style="margin-top:18px">נגנו שוב</button>
+      </div>
+      <div class="es-state" style="text-align:center;margin-top:14px">הטקסט מתפענח אות-אות מימין לשמאל כשנכנס למסך - עם תווים אקראיים לפני ההתייצבות</div>
+    </div></div>
+  </div>
+
+  <div class="demo rv" style="margin-bottom:18px">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="8" width="18" height="9" rx="2"/><path d="M7 12.5h.01M12 12.5h.01M17 12.5h.01"/></svg><span dir="ltr">otp-input.tsx</span></span>
+    </div>
+    <div class="stage"><div class="stage-inner">
+      <div class="otp-wrap">
+        <div class="otp-row" id="otpRow" role="group" aria-label="קוד אימות"></div>
+        <input id="otpInput" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" aria-label="קוד אימות" style="position:absolute;opacity:0;pointer-events:none">
+        <div class="otp-note" id="otpNote">הקלידו 6 ספרות (דמו: הניסיון הראשון נכשל, השני מצליח)</div>
+      </div>
+      <div class="es-state" style="text-align:center;margin-top:14px">כל ספרה קופצת פנימה באלסטיות, סמן מהבהב בתא הפעיל, קוד שגוי מנדנד את כל השורה באדום</div>
+    </div></div>
+  </div>
+
+  <div class="demo rv" style="margin-bottom:18px">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 4v16"/></svg><span dir="ltr">flip-dialog.tsx</span></span>
+    </div>
+    <div class="stage"><div class="stage-inner">
+      <div class="flip-stage" id="flipStage">
+        <button class="flip-card" id="flipCard">
+          <div style="display:flex;align-items:center;gap:10px"><span class="avatar">ש</span><div><b style="font-size:14px">שירה כהן</b><div style="font-size:11.5px;color:var(--muted)">נציגת זהב - זמינה</div></div></div>
+          <div style="font-size:12px;color:var(--muted);margin-top:10px">לחיצה פותחת פרופיל מלא במעבר אלמנט משותף</div>
+        </button>
+        <div class="flip-backdrop" id="flipBackdrop"></div>
+        <div class="flip-dialog" id="flipDialog" role="dialog" aria-label="פרופיל נציג">
+          <button class="flip-x" id="flipClose" aria-label="סגירה">×</button>
+          <div style="display:flex;align-items:center;gap:12px"><span class="avatar" style="width:48px;height:48px;font-size:16px">ש</span><div><b style="font-size:17px">שירה כהן</b><div style="font-size:12.5px;color:var(--muted)">נציגת זהב - זמינה עכשיו</div></div></div>
+          <div style="display:flex;gap:10px;margin-top:18px">
+            <div style="flex:1;background:var(--bg);border-radius:12px;padding:12px;text-align:center"><b style="color:var(--accent)">4.9</b><div style="font-size:11px;color:var(--muted)">דירוג</div></div>
+            <div style="flex:1;background:var(--bg);border-radius:12px;padding:12px;text-align:center"><b style="color:var(--accent)">312</b><div style="font-size:11px;color:var(--muted)">שיחות</div></div>
+            <div style="flex:1;background:var(--bg);border-radius:12px;padding:12px;text-align:center"><b style="color:var(--accent)">98%</b><div style="font-size:11px;color:var(--muted)">זמינות</div></div>
+          </div>
+          <button class="submit ripple-host" style="margin-top:18px" id="flipAction">פתיחת שיחה (דמו)</button>
+        </div>
+      </div>
+      <div class="es-state" style="text-align:center;margin-top:14px">הכרטיס עצמו מתרחב לדיאלוג (FLIP: מדידה, היפוך, ניגון) - לא פאנל קופץ משום מקום</div>
+    </div></div>
+  </div>
+
+  <div class="demo rv" style="margin-bottom:18px">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span dir="ltr">odometer.tsx</span></span>
+    </div>
+    <div class="stage"><div class="stage-inner">
+      <div class="odo-wrap">
+        <div class="odo" id="odo"></div>
+        <button class="btn-ghost" id="odoBtn">ערך אקראי</button>
+      </div>
+      <div class="es-state" style="text-align:center;margin-top:14px">מונה אודומטר: כל ספרה היא גלגלת שמתגלגלת לערך בסטאגר - כמו מונית מרחק אמיתית</div>
     </div></div>
   </div>
 </section>
@@ -783,6 +979,325 @@ $$(".seg[data-demo]").forEach(seg=>{
 Object.keys(R).forEach(n=>setDemo(n,"before"));
 addEventListener("resize",()=>{Object.keys(cur).forEach(n=>{const seg=$(`.seg[data-demo="${n}"]`);const on=$(`button[data-side="${cur[n]}"]`,seg);const pill=$(".pill",seg);if(on&&pill){pill.style.left=on.offsetLeft+"px";pill.style.width=on.offsetWidth+"px";}});});
 $("#replayBtn").addEventListener("click",()=>setDemo("load",cur.load));
+
+/* ============ swipeable card stack ============ */
+const swStage=$("#swipeStage");
+if(swStage){
+  const tasks=[
+    {t:"אישור סל מבצע קיץ",s:"מחכה לך מול ספק הדפסה",c:"var(--accent)"},
+    {t:"תשובה ללקוח מחיפה",s:"שאל על שינוי מועד משלוח",c:"var(--amber)"},
+    {t:"עדכון תמונות באתר",s:"4 תמונות חדשות מוכנות בדרייב",c:"var(--rose)"},
+    {t:"תזכורת: חשבונית 1042",s:"תשלום אמור להתקבל מחר",c:"var(--green)"},
+  ];
+  let order=[0,1,2,3],dragging=false,sx=0,sy=0,dx=0,dy=0,vx=0,lastX=0,lastT=0;
+  const cards=tasks.map((tk,i)=>{
+    const el=document.createElement("div");
+    el.className="sw-card";
+    el.innerHTML=`<span class="sw-tag" style="background:color-mix(in srgb,${tk.c} 18%,transparent);color:${tk.c}">משימה</span><span class="sw-title">${tk.t}</span><span class="sw-sub">${tk.s}</span>`;
+    swStage.appendChild(el);
+    return el;
+  });
+  const layout=()=>{
+    order.forEach((cardIdx,pos)=>{
+      const el=cards[cardIdx];
+      el.style.zIndex=String(10-pos);
+      el.style.transform=`translateX(-50%) translateY(${pos*10}px) scale(${(1-pos*.05).toFixed(2)})`;
+      el.style.opacity=pos>2?"0":"1";
+    });
+  };
+  layout();
+  const top=()=>cards[order[0]];
+  swStage.addEventListener("pointerdown",e=>{
+    const el=top();
+    dragging=true;sx=e.clientX;sy=e.clientY;dx=0;dy=0;vx=0;lastX=e.clientX;lastT=performance.now();
+    el.classList.add("drag");
+    swStage.setPointerCapture(e.pointerId);
+  });
+  swStage.addEventListener("pointermove",e=>{
+    if(!dragging)return;
+    const now=performance.now();
+    vx=(e.clientX-lastX)/Math.max(1,now-lastT);lastX=e.clientX;lastT=now;
+    dx=e.clientX-sx;dy=(e.clientY-sy)*.35;
+    top().style.transform=`translateX(calc(-50% + ${dx}px)) translateY(${dy}px) rotate(${(dx*.09).toFixed(1)}deg)`;
+  });
+  const release=()=>{
+    if(!dragging)return;
+    dragging=false;
+    const el=top();
+    el.classList.remove("drag");
+    const fling=Math.abs(dx)>110||Math.abs(vx)>.5;
+    if(fling&&!reduce){
+      const dir=(dx||vx)>=0?1:-1;
+      el.style.transition="transform .5s cubic-bezier(.3,.7,.4,1),opacity .5s";
+      el.style.transform=`translateX(calc(-50% + ${dir*420}px)) translateY(${dy}px) rotate(${dir*28}deg)`;
+      el.style.opacity="0";
+      const done=order.shift();order.push(done);
+      setTimeout(()=>{el.style.transition="";layout();},reduce?0:260);
+    }else{
+      layout();
+    }
+  };
+  swStage.addEventListener("pointerup",release);
+  swStage.addEventListener("pointercancel",release);
+}
+
+/* ============ liquid tabs ============ */
+const ltabs=$("#ltabs");
+if(ltabs){
+  const goo=$("#ltabGoo"),pane=$("#ltabPane"),btns=$$("button",ltabs);
+  const move=(btn,animate=true)=>{
+    const gr=ltabs.getBoundingClientRect(),br=btn.getBoundingClientRect();
+    const tx=br.left-gr.left,tw=br.width;
+    if(reduce||!animate){
+      goo.style.left=tx+"px";goo.style.width=tw+"px";return;
+    }
+    const curL=parseFloat(goo.style.left||tx),curW=parseFloat(goo.style.width||tw);
+    const dir=tx>curL?1:-1;
+    const midW=Math.abs(tx+tw-curL)*1.06,midL=dir>0?curL:tx-4;
+    goo.animate([
+      {left:curL+"px",width:curW+"px"},
+      {left:midL+"px",width:midW+"px",offset:.45},
+      {left:tx+"px",width:tw+"px"}
+    ],{duration:460,easing:"cubic-bezier(.2,1.25,.3,1)",fill:"forwards"});
+    goo.style.left=tx+"px";goo.style.width=tw+"px";
+  };
+  btns.forEach(b=>b.addEventListener("click",()=>{
+    btns.forEach(x=>x.classList.remove("on"));
+    b.classList.add("on");
+    move(b);
+    pane.classList.add("swap");
+    setTimeout(()=>{pane.textContent=b.dataset.pane;pane.classList.remove("swap");},reduce?0:180);
+  }));
+  const init=()=>move($("button.on",ltabs),false);
+  addEventListener("resize",()=>move($("button.on",ltabs),false));
+  new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){init();o.disconnect();}}).observe(ltabs);
+}
+
+/* ============ physics toasts ============ */
+const toastBtn=$("#toastBtn");
+if(toastBtn){
+  const zone=$("#toastZone");
+  const msgs=["הפגישה נקבעה ליום שלישי","התקבל תשלום של 1,240 שח","המבצע פורסם בהצלחה","תגובה חדשה מדוד לוי","הגיבוי הושלם"];
+  let n=0;
+  const stack=()=>{
+    [...zone.children].forEach((t,i)=>{
+      if(!t.classList.contains("drag"))t.style.transform=`translateY(${-(i*64)}px)`;
+    });
+  };
+  const dismiss=(t,fling=0)=>{
+    if(reduce||!fling){t.style.opacity="0";}
+    else{
+      t.style.transition="transform .45s cubic-bezier(.3,.7,.4,1),opacity .4s";
+      t.style.transform=`translateX(${fling*320}px) rotate(${fling*12}deg)`;
+      t.style.opacity="0";
+    }
+    setTimeout(()=>{t.remove();stack();},reduce?0:420);
+    stack();
+  };
+  toastBtn.addEventListener("click",()=>{
+    const t=document.createElement("div");
+    t.className="toast";
+    t.innerHTML=`<span class="t-ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg></span><span>${msgs[n++%msgs.length]} (דמו)</span>`;
+    zone.prepend(t);
+    stack();
+    if(!reduce){
+      t.animate([
+        {transform:"translateY(70px) scale(.8)",opacity:0},
+        {transform:"translateY(-4px) scale(1.03)",opacity:1,offset:.7},
+        {transform:"translateY(0) scale(1)",opacity:1}
+      ],{duration:480,easing:"cubic-bezier(.2,1.25,.3,1)"});
+    }
+    let dS=false,dx0=0,ddx=0,lvx=0,lx=0,lt=0;
+    t.addEventListener("pointerdown",e=>{dS=true;dx0=e.clientX;ddx=0;lx=e.clientX;lt=performance.now();lvx=0;t.classList.add("drag");t.setPointerCapture(e.pointerId);});
+    t.addEventListener("pointermove",e=>{
+      if(!dS)return;
+      const now=performance.now();
+      lvx=(e.clientX-lx)/Math.max(1,now-lt);lx=e.clientX;lt=now;
+      ddx=e.clientX-dx0;
+      const yIdx=[...zone.children].indexOf(t);
+      t.style.transform=`translateX(${ddx}px) translateY(${-(yIdx*64)}px) rotate(${(ddx*.03).toFixed(1)}deg)`;
+    });
+    const up=()=>{
+      if(!dS)return;dS=false;t.classList.remove("drag");
+      if(Math.abs(ddx)>80||Math.abs(lvx)>.5)dismiss(t,(ddx||lvx)>=0?1:-1);
+      else stack();
+    };
+    t.addEventListener("pointerup",up);
+    t.addEventListener("pointercancel",up);
+    setTimeout(()=>{if(t.isConnected&&!t.classList.contains("drag"))dismiss(t);},3800);
+  });
+}
+
+/* ============ 3d tilt card ============ */
+const tiltCard=$("#tiltCard");
+if(tiltCard){
+  let tRaf=null,tx=0,ty=0,cx=0,cy=0;
+  const loop=()=>{
+    cx+=(tx-cx)*.14;cy+=(ty-cy)*.14;
+    tiltCard.style.transform=`rotateY(${cx.toFixed(2)}deg) rotateX(${cy.toFixed(2)}deg)`;
+    if(Math.abs(tx-cx)>.05||Math.abs(ty-cy)>.05)tRaf=requestAnimationFrame(loop);
+    else{tRaf=null;tiltCard.style.transform=`rotateY(${tx}deg) rotateX(${cy}deg)`;}
+  };
+  const kick=()=>{if(!tRaf)tRaf=requestAnimationFrame(loop);};
+  tiltCard.addEventListener("pointermove",e=>{
+    if(reduce)return;
+    const r=tiltCard.getBoundingClientRect();
+    const px=(e.clientX-r.left)/r.width,py=(e.clientY-r.top)/r.height;
+    tiltCard.classList.add("live");
+    tiltCard.style.setProperty("--gx",(px*100).toFixed(1)+"%");
+    tiltCard.style.setProperty("--gy",(py*100).toFixed(1)+"%");
+    tx=(px-.5)*14;ty=-(py-.5)*12;
+    cx=tx;cy=ty;
+    tiltCard.style.transform=`rotateY(${tx.toFixed(1)}deg) rotateX(${ty.toFixed(1)}deg)`;
+  });
+  tiltCard.addEventListener("pointerleave",()=>{
+    tiltCard.classList.remove("live");
+    tx=0;ty=0;kick();
+  });
+}
+
+/* ============ text scramble ============ */
+const scrEl=$("#scrambleText");
+if(scrEl){
+  const target=scrEl.dataset.text;
+  const pool="אבגדהוזחטיכלמנסעפצקרשת";
+  let scrRaf=null;
+  const play=()=>{
+    if(scrRaf)cancelAnimationFrame(scrRaf);
+    if(reduce){scrEl.textContent=target;return;}
+    const chars=[...target];
+    const t0=performance.now(),per=52,total=chars.length*per+380;
+    const step=now=>{
+      const el=now-t0;
+      let out="";
+      chars.forEach((ch,i)=>{
+        if(ch===" "){out+=" ";return;}
+        if(el>i*per+380)out+=ch;
+        else if(el>i*per)out+=`<span class="dim">${pool[Math.floor(Math.random()*pool.length)]}</span>`;
+        else out+='<span class="dim">&nbsp;</span>';
+      });
+      scrEl.innerHTML=out;
+      if(el<total)scrRaf=requestAnimationFrame(step);
+      else scrEl.textContent=target;
+    };
+    scrRaf=requestAnimationFrame(step);
+  };
+  new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){play();o.disconnect();}},{threshold:.6}).observe(scrEl);
+  $("#scrambleBtn").addEventListener("click",play);
+}
+
+/* ============ otp input ============ */
+const otpRow=$("#otpRow");
+if(otpRow){
+  const input=$("#otpInput"),note=$("#otpNote");
+  const N=6;
+  const cells=Array.from({length:N},(_,i)=>{
+    const c=document.createElement("div");
+    c.className="otp-cell";c.style.setProperty("--i",i);
+    otpRow.appendChild(c);return c;
+  });
+  let attempts=0;
+  const paint=()=>{
+    const v=input.value.replace(/\D/g,"").slice(0,N);
+    if(v!==input.value)input.value=v;
+    cells.forEach((c,i)=>{
+      const had=c.textContent!=="";
+      c.textContent=v[i]||"";
+      c.classList.toggle("active",i===v.length&&document.activeElement===input);
+      if(!had&&v[i]){c.classList.remove("filled");void c.offsetWidth;c.classList.add("filled");}
+      if(!v[i])c.classList.remove("filled");
+    });
+    return v;
+  };
+  otpRow.addEventListener("click",()=>input.focus());
+  input.addEventListener("focus",paint);
+  input.addEventListener("blur",()=>cells.forEach(c=>c.classList.remove("active")));
+  input.addEventListener("input",()=>{
+    const v=paint();
+    if(v.length===N){
+      attempts++;
+      if(attempts%2===1){
+        otpRow.classList.add("err");
+        note.textContent="הקוד שגוי (דמו) - נסו שוב";
+        setTimeout(()=>{otpRow.classList.remove("err");input.value="";paint();},reduce?60:900);
+      }else{
+        otpRow.classList.add("ok");
+        note.textContent="אומת בהצלחה (דמו)";
+        setTimeout(()=>{otpRow.classList.remove("ok");input.value="";paint();note.textContent="הקלידו 6 ספרות (דמו: הניסיון הראשון נכשל, השני מצליח)";},2600);
+      }
+    }
+  });
+}
+
+/* ============ flip dialog (shared element) ============ */
+const flipStage=$("#flipStage");
+if(flipStage){
+  const card=$("#flipCard"),dlg=$("#flipDialog"),bd=$("#flipBackdrop");
+  let flipping=false;
+  const openFlip=()=>{
+    if(flipping)return;flipping=true;
+    const cr=card.getBoundingClientRect(),sr=flipStage.getBoundingClientRect();
+    const dr={w:sr.width-28,h:sr.height-52};
+    const sx=cr.width/dr.w,sy=cr.height/dr.h;
+    const ox=(cr.left-sr.left)-14,oy=(cr.top-sr.top)-26;
+    flipStage.classList.add("open");
+    card.classList.add("gone");
+    if(reduce){flipping=false;return;}
+    dlg.style.transition="none";
+    dlg.style.transform=`translate(${ox}px,${oy}px) scale(${sx.toFixed(3)},${sy.toFixed(3)})`;
+    void dlg.offsetWidth;
+    dlg.style.transition="transform .48s cubic-bezier(.22,1,.36,1)";
+    dlg.style.transform="translate(0,0) scale(1,1)";
+    setTimeout(()=>{flipping=false;},500);
+  };
+  const closeFlip=()=>{
+    if(flipping)return;flipping=true;
+    const cr=card.getBoundingClientRect(),sr=flipStage.getBoundingClientRect();
+    const dr={w:sr.width-28,h:sr.height-52};
+    const sx=cr.width/dr.w,sy=cr.height/dr.h;
+    const ox=(cr.left-sr.left)-14,oy=(cr.top-sr.top)-26;
+    if(!reduce){
+      dlg.style.transition="transform .4s cubic-bezier(.5,0,.75,0)";
+      dlg.style.transform=`translate(${ox}px,${oy}px) scale(${sx.toFixed(3)},${sy.toFixed(3)})`;
+    }
+    flipStage.classList.remove("open");
+    setTimeout(()=>{
+      card.classList.remove("gone");
+      dlg.style.transition="";dlg.style.transform="";
+      flipping=false;
+    },reduce?0:380);
+  };
+  card.addEventListener("click",openFlip);
+  $("#flipClose").addEventListener("click",closeFlip);
+  $("#flipAction").addEventListener("click",closeFlip);
+  bd.addEventListener("click",closeFlip);
+  document.addEventListener("keydown",e=>{if(e.key==="Escape")closeFlip();});
+}
+
+/* ============ odometer ============ */
+const odo=$("#odo");
+if(odo){
+  const DIGITS=5;
+  const cols=Array.from({length:DIGITS},(_,i)=>{
+    const reel=document.createElement("div");reel.className="odo-reel";
+    const col=document.createElement("div");col.className="odo-col";
+    for(let d=0;d<10;d++){const s=document.createElement("span");s.textContent=d;col.appendChild(s);}
+    reel.appendChild(col);odo.appendChild(reel);
+    if(i===1){const sep=document.createElement("div");sep.className="odo-sep";sep.textContent=",";odo.appendChild(sep);}
+    return col;
+  });
+  const setVal=(v,stagger=true)=>{
+    const s=String(v).padStart(DIGITS,"0");
+    cols.forEach((col,i)=>{
+      col.style.transitionDelay=stagger?`${i*70}ms`:"0ms";
+      col.style.transform=`translateY(${-(+s[i])*46}px)`;
+    });
+  };
+  setVal(0,false);
+  new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){setTimeout(()=>setVal(48317),350);o.disconnect();}},{threshold:.5}).observe(odo);
+  $("#odoBtn").addEventListener("click",()=>setVal(Math.floor(10000+Math.random()*89999)));
+}
+
 })();
 </script>
 <script>
