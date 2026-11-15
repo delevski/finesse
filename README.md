@@ -49,7 +49,7 @@ Or just say *"make this look designed"* in a project where the skill is installe
 
 ## Signature components - drop-in via shadcn registry
 
-Nine animated components from the gallery, installable straight into any shadcn/ui project:
+44 animated components from the three live galleries, installable straight into any shadcn/ui project:
 
 | fan-drawer | swipe-stack | liquid-tabs |
 | --- | --- | --- |
@@ -59,7 +59,7 @@ Nine animated components from the gallery, installable straight into any shadcn/
 npx shadcn@latest add https://finesse-demo.orworkdelevski.workers.dev/r/fan-drawer.json
 ```
 
-Available: `fan-drawer`, `swipe-stack`, `liquid-tabs`, `toast-physics`, `tilt-card`, `text-scramble`, `otp-input`, `flip-dialog`, `odometer`, `playground`, `pull-refresh`, `split-flap`, `empty-robot`, `cmd-palette`, `swipe-actions`, `step-walker`, `peel-skeleton`, `voice-note`, `sunset-toggle`. Sources live in `registry/finesse/` and are built into `docs/r/` by `scripts/build-registry.mjs`. Every component card in the live gallery also has a copy-TSX button.
+Available: `fan-drawer`, `swipe-stack`, `liquid-tabs`, `toast-physics`, `tilt-card`, `text-scramble`, `otp-input`, `flip-dialog`, `odometer`, `playground`, `pull-refresh`, `split-flap`, `empty-robot`, `cmd-palette`, `swipe-actions`, `step-walker`, `peel-skeleton`, `voice-note`, `sunset-toggle`, plus the motion gallery inspired by [designbookmark.com/motion](https://designbookmark.com/motion): `plan-switch`, `letter-limit`, `pull-cord`, `morph-tooltip`, `file-drop`, `morph-island`, `goo-menu`, `jelly-slider`, `hold-publish`, `rubber-dock`, `marker-text`, `word-roll`, `weight-wave`, `read-along`, `ghost-suggestion`, `goo-thinking`, `streaming-reply`, `like-burst`, `loading-success`, `star-rating`, `detent-dial`, `face-id`, `pagination-dots`, `tag-input`, `password-strength`. Sources live in `registry/finesse/` and are built into `docs/r/` by `scripts/build-registry.mjs`. Every component card in the live gallery also has a copy-TSX button.
 
 ## What's inside
 
@@ -78,6 +78,10 @@ AGENTS.md                       condensed rules for Codex and generic agents
 cursor/rules/finesse.mdc        always-on Cursor rule
 docs/                           the live gallery (GitHub Pages)
 ```
+
+## Site shaders
+
+The live gallery's hero runs two real-time WebGL shaders adapted from [MengTo/threeui](https://github.com/MengTo/threeui) (MIT): a teal "emerald horizon" rising-glow backdrop and an animated energy orb as the logo mark. Both are dependency-free raw WebGL with reduced-motion and offscreen-pause fallbacks.
 
 ## Different from hallmark?
 

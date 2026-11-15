@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "rubber-dock",
+  "type": "registry:component",
+  "title": "Rubber Dock",
+  "description": "הגדלה בסגנון macOS עם נפילה גאוסית סביב האצבע.",
+  "files": [
+    {
+      "path": "components/finesse/rubber-dock.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nconst ICONS = [\"🏠\", \"🔍\", \"📊\", \"💬\", \"⚙️\", \"👤\"];\n\n/**\n * RubberDock - macOS-style magnification. Icons scale with a gaussian falloff\n * around the pointer; works with a finger sliding across on touch.\n */\nexport function RubberDock({ className }: { className?: string }) {\n  const ref = React.useRef<HTMLDivElement>(null);\n  const icons = React.useRef<(HTMLDivElement | null)[]>([]);\n  const reduce = React.useMemo(\n    () => typeof matchMedia !== \"undefined\" && matchMedia(\"(prefers-reduced-motion: reduce)\").matches,\n    []\n  );\n\n  const magnify = (clientX: number | null) => {\n    icons.current.forEach((el) => {\n      if (!el) return;\n      let s = 1;\n      if (clientX !== null && !reduce) {\n        const r = el.getBoundingClientRect();\n        const d = clientX - (r.left + r.width / 2);\n        s = 1 + 0.85 * Math.exp(-((d / 72) ** 2));\n      }\n      el.style.transform = `translateY(${-(s - 1) * 26}px) scale(${s})`;\n    });\n  };\n\n  return (\n    <div\n      ref={ref}\n      dir=\"rtl\"\n      className={cn(\"flex items-end gap-2 rounded-2xl border border-neutral-200/60 bg-white/60 px-3 pb-2 pt-6 shadow-lg backdrop-blur dark:border-neutral-700 dark:bg-neutral-800/60\", className)}\n      onPointerMove={(e) => magnify(e.clientX)}\n      onPointerLeave={() => magnify(null)}\n      style={{ touchAction: \"pan-y\" }}\n    >\n      {ICONS.map((icon, i) => (\n        <div\n          key={i}\n          ref={(el) => { icons.current[i] = el; }}\n          className=\"grid h-11 w-11 cursor-pointer place-items-center rounded-xl bg-gradient-to-b from-neutral-100 to-neutral-200 text-xl shadow dark:from-neutral-700 dark:to-neutral-800\"\n          style={{ transition: \"transform .18s cubic-bezier(.2,1.2,.3,1)\", transformOrigin: \"bottom center\" }}\n        >\n          {icon}\n        </div>\n      ))}\n    </div>\n  );\n}\n"
+    }
+  ]
+}

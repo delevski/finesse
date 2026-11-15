@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "ghost-suggestion",
+  "type": "registry:component",
+  "title": "Ghost Suggestion",
+  "description": "השלמה אפורה צפה מול הסמן; קבלה ב-Tab מקפיצה את האותיות החדשות.",
+  "files": [
+    {
+      "path": "components/finesse/ghost-suggestion.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nconst OPTIONS = [\"חיפה - מרכז\", \"חיפה - קריות\", \"תל אביב - דרום\", \"תל אביב - צפון\", \"ירושלים - תלפיות\", \"באר שבע - הנגב\"];\n\n/**\n * GhostSuggestion - inline autocomplete: the completion floats ahead as a\n * ghost, and accepting it makes the added letters pop in one by one.\n */\nexport function GhostSuggestion({ className }: { className?: string }) {\n  const [value, setValue] = React.useState(\"\");\n  const [pop, setPop] = React.useState(0);\n  const inputRef = React.useRef<HTMLInputElement>(null);\n  const reduce = React.useMemo(\n    () => typeof matchMedia !== \"undefined\" && matchMedia(\"(prefers-reduced-motion: reduce)\").matches,\n    []\n  );\n\n  const match = value ? OPTIONS.find((o) => o.startsWith(value) && o !== value) : undefined;\n\n  const accept = () => {\n    if (!match) return;\n    setValue(match);\n    if (!reduce) {\n      setPop(0);\n      const added = match.length - value.length;\n      for (let k = 1; k <= added; k++) setTimeout(() => setPop(k), k * 45);\n      setTimeout(() => setPop(0), added * 45 + 300);\n    }\n  };\n\n  return (\n    <div dir=\"rtl\" className={cn(\"w-full max-w-xs\", className)}>\n      <div className=\"relative\">\n        <span aria-hidden className=\"pointer-events-none absolute inset-y-0 right-3 flex items-center text-sm\">\n          <span className=\"invisible\">{value}</span>\n          <span className=\"text-neutral-400\">{match ? match.slice(value.length) : \"\"}</span>\n        </span>\n        <input\n          ref={inputRef}\n          value={value}\n          onChange={(e) => setValue(e.target.value)}\n          onKeyDown={(e) => { if (e.key === \"Tab\" || e.key === \"Enter\" || e.key === \"ArrowLeft\") { if (match) { e.preventDefault(); accept(); } } }}\n          placeholder=\"חפשו סניף...\"\n          className=\"w-full rounded-xl border border-neutral-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-teal-500 dark:border-neutral-700 dark:bg-neutral-900\"\n        />\n      </div>\n      <p className=\"mt-2 text-xs text-neutral-500\">\n        {match ? \"חצים שמאלה או Tab להשלמה\" : \" \"}\n      </p>\n      {pop > 0 && <span className=\"sr-only\">הושלם אוטומטית</span>}\n    </div>\n  );\n}\n"
+    }
+  ]
+}

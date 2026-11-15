@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "weight-wave",
+  "type": "registry:component",
+  "title": "Weight Wave",
+  "description": "אותיות מתחמנות סביב האצבע בפונט וריאבילי; גל עצמאי במנוחה.",
+  "files": [
+    {
+      "path": "components/finesse/weight-wave.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * WeightWave - a variable-font weight wave. Letters fatten around the\n * pointer; untouched, a slow wave rolls through on its own.\n * Requires a variable font (Heebo wght 100..900 works great for Hebrew).\n */\nexport function WeightWave({ className, text = \"פינסה\" }: { className?: string; text?: string }) {\n  const ref = React.useRef<HTMLDivElement>(null);\n  const letters = React.useRef<(HTMLSpanElement | null)[]>([]);\n  const pointer = React.useRef<number | null>(null);\n  const weights = React.useRef<number[]>([]);\n  const reduce = React.useMemo(\n    () => typeof matchMedia !== \"undefined\" && matchMedia(\"(prefers-reduced-motion: reduce)\").matches,\n    []\n  );\n\n  React.useEffect(() => {\n    if (reduce) return;\n    let raf = 0;\n    const t0 = performance.now();\n    const loop = (t: number) => {\n      const els = letters.current;\n      els.forEach((el, i) => {\n        if (!el) return;\n        let target = 400;\n        if (pointer.current !== null) {\n          const r = el.getBoundingClientRect();\n          const d = pointer.current - (r.left + r.width / 2);\n          target = 400 + 450 * Math.exp(-((d / 60) ** 2));\n        } else {\n          target = 400 + 320 * (0.5 + 0.5 * Math.sin(t / 500 - i * 0.9));\n        }\n        weights.current[i] = (weights.current[i] ?? 400) + (target - (weights.current[i] ?? 400)) * 0.18;\n        el.style.fontVariationSettings = `\"wght\" ${Math.round(weights.current[i])}`;\n      });\n      raf = requestAnimationFrame(loop);\n    };\n    raf = requestAnimationFrame(loop);\n    return () => cancelAnimationFrame(raf);\n  }, [reduce]);\n\n  return (\n    <div\n      ref={ref}\n      dir=\"rtl\"\n      className={cn(\"cursor-crosshair select-none text-6xl\", className)}\n      style={{ fontFamily: '\"Heebo\", sans-serif' }}\n      onPointerMove={(e) => { pointer.current = e.clientX; }}\n      onPointerLeave={() => { pointer.current = null; }}\n    >\n      {text.split(\"\").map((ch, i) => (\n        <span key={i} ref={(el) => { letters.current[i] = el; }} className=\"inline-block\" style={{ fontVariationSettings: '\"wght\" 400' }}>\n          {ch === \" \" ? \" \" : ch}\n        </span>\n      ))}\n    </div>\n  );\n}\n"
+    }
+  ]
+}

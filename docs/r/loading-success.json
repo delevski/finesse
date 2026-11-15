@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "loading-success",
+  "type": "registry:component",
+  "title": "Loading to Success",
+  "description": "הכפתור מתכווץ לספינר עגול וקופץ חזרה ירוק עם V מצויר.",
+  "files": [
+    {
+      "path": "components/finesse/loading-success.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * LoadingSuccess - the submit button morphs into a circular spinner while\n * working, then springs back green with a drawn check.\n */\nexport function LoadingSuccess({ className, onSave }: { className?: string; onSave?: () => Promise<void> | void }) {\n  const [state, setState] = React.useState<\"idle\" | \"loading\" | \"done\">(\"idle\");\n  const reduce = React.useMemo(\n    () => typeof matchMedia !== \"undefined\" && matchMedia(\"(prefers-reduced-motion: reduce)\").matches,\n    []\n  );\n\n  const run = async () => {\n    if (state !== \"idle\") return;\n    setState(\"loading\");\n    try { await onSave?.(); } catch { /* demo keeps flowing */ }\n    await new Promise((r) => setTimeout(r, 1400));\n    setState(\"done\");\n    setTimeout(() => setState(\"idle\"), 2200);\n  };\n\n  return (\n    <button\n      type=\"button\"\n      dir=\"rtl\"\n      onClick={run}\n      disabled={state !== \"idle\"}\n      className={cn(\n        \"relative grid place-items-center overflow-hidden font-bold text-white shadow-lg\",\n        state === \"done\" ? \"bg-emerald-500\" : \"bg-teal-600\"\n      )}\n      style={{\n        width: state === \"loading\" ? 48 : 170,\n        height: 48,\n        borderRadius: state === \"loading\" ? 999 : 12,\n        transition: reduce ? \"none\" : \"width .45s cubic-bezier(.2,1.2,.3,1), border-radius .45s, background .3s\",\n      }}\n    >\n      {state === \"idle\" && <span className=\"text-sm\">שמירת שינויים</span>}\n      {state === \"loading\" && (\n        <svg viewBox=\"0 0 24 24\" className=\"h-6 w-6 animate-spin\" fill=\"none\" aria-label=\"טוען\">\n          <circle cx=\"12\" cy=\"12\" r=\"9\" stroke=\"rgba(255,255,255,.3)\" strokeWidth=\"3\" />\n          <path d=\"M21 12a9 9 0 0 0-9-9\" stroke=\"#fff\" strokeWidth=\"3\" strokeLinecap=\"round\" />\n        </svg>\n      )}\n      {state === \"done\" && (\n        <svg viewBox=\"0 0 24 24\" className=\"h-6 w-6\" fill=\"none\" aria-label=\"נשמר\">\n          <path d=\"m5 12 5 5 9-11\" stroke=\"#fff\" strokeWidth=\"3\" strokeLinecap=\"round\" strokeLinejoin=\"round\" strokeDasharray=\"24\" strokeDashoffset=\"24\">\n            <animate attributeName=\"stroke-dashoffset\" from=\"24\" to=\"0\" dur=\"0.4s\" fill=\"freeze\" />\n          </path>\n        </svg>\n      )}\n    </button>\n  );\n}\n"
+    }
+  ]
+}

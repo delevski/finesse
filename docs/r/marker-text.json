@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "marker-text",
+  "type": "registry:component",
+  "title": "Marker Text",
+  "description": "הדגשות מרקר נמרחות אחת אחרי השנייה כמו בעט פוסקה אמיתי.",
+  "files": [
+    {
+      "path": "components/finesse/marker-text.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * MarkerText - key phrases get swept with a hand-drawn marker highlight,\n * one after another, like someone marking a printout.\n */\nexport function MarkerText({ className }: { className?: string }) {\n  const [swept, setSwept] = React.useState(0);\n  const reduce = React.useMemo(\n    () => typeof matchMedia !== \"undefined\" && matchMedia(\"(prefers-reduced-motion: reduce)\").matches,\n    []\n  );\n\n  const sweep = () => {\n    setSwept(0);\n    if (reduce) { setSwept(3); return; }\n    [1, 2, 3].forEach((n, i) => setTimeout(() => setSwept(n), 350 + i * 480));\n  };\n\n  const mark = (i: number, kids: React.ReactNode) => (\n    <span className=\"relative inline-block px-0.5 font-semibold\">\n      <span\n        aria-hidden\n        className=\"absolute inset-0 -skew-x-6 rounded-sm bg-amber-300/70 dark:bg-amber-400/50\"\n        style={{\n          transform: swept >= i ? \"skewX(-6deg) scaleX(1)\" : \"skewX(-6deg) scaleX(0)\",\n          transformOrigin: \"right\",\n          transition: \"transform .45s cubic-bezier(.3,1.1,.4,1)\",\n        }}\n      />\n      <span className=\"relative\">{kids}</span>\n    </span>\n  );\n\n  return (\n    <div dir=\"rtl\" className={cn(\"max-w-md\", className)}>\n      <p className=\"text-lg leading-9\">\n        אנחנו בונים {mark(1, \"ממשקים שאנשים זוכרים\")}, עם תשומת לב לכל {mark(2, \"מיקרו־אינטראקציה\")} ועם {mark(3, \"פיזיקה אמיתית\")} בכל תנועה.\n      </p>\n      <button type=\"button\" onClick={sweep} className=\"mt-4 rounded-lg bg-neutral-900 px-4 py-2 text-sm font-semibold text-white dark:bg-neutral-100 dark:text-neutral-900\">\n        סמנו שוב\n      </button>\n    </div>\n  );\n}\n"
+    }
+  ]
+}

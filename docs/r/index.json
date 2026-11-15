@@ -10,11 +10,25 @@
       "url": "/r/cmd-palette.json"
     },
     {
+      "name": "detent-dial",
+      "title": "Detent Dial",
+      "titleHe": "חוגת דטנט",
+      "description": "חוגה סיבובית עם נעילות מדורגות, קפיצה לסימון הקרוב וסימון דולק.",
+      "url": "/r/detent-dial.json"
+    },
+    {
       "name": "empty-robot",
       "title": "Empty Robot",
       "titleHe": "רובוט אמפטי־סטייט",
       "description": "רובוט עצוב למצב ריק שמתאושש וקופץ כשמגיע הפריט הראשון.",
       "url": "/r/empty-robot.json"
+    },
+    {
+      "name": "face-id",
+      "title": "Face ID",
+      "titleHe": "פתיחת פייס־איידי",
+      "description": "סריקת פנים: סוגריים נצבעים, קו סורק, ונעילה ירוקה בסוף.",
+      "url": "/r/face-id.json"
     },
     {
       "name": "fan-drawer",
@@ -24,6 +38,13 @@
       "url": "/r/fan-drawer.json"
     },
     {
+      "name": "file-drop",
+      "title": "File Drop",
+      "titleHe": "זריקת קובץ",
+      "description": "גוררים שבבית קובץ לתיקייה; המכסה נפתח, הקובץ שולחף פנימה והתיקייה מבצעת קפיצת שמחה.",
+      "url": "/r/file-drop.json"
+    },
+    {
       "name": "flip-dialog",
       "title": "FLIP Dialog",
       "titleHe": "דיאלוג מתרחב",
@@ -31,11 +52,88 @@
       "url": "/r/flip-dialog.json"
     },
     {
+      "name": "ghost-suggestion",
+      "title": "Ghost Suggestion",
+      "titleHe": "השלמת רפאים",
+      "description": "השלמה אפורה צפה מול הסמן; קבלה ב-Tab מקפיצה את האותיות החדשות.",
+      "url": "/r/ghost-suggestion.json"
+    },
+    {
+      "name": "goo-menu",
+      "title": "Goo Menu",
+      "titleHe": "תפריט גאו",
+      "description": "פעולות נוזליות שבוקעות מה-FAB ומתמזגות איתו בפילטר גאו.",
+      "url": "/r/goo-menu.json"
+    },
+    {
+      "name": "goo-thinking",
+      "title": "Goo Thinking",
+      "titleHe": "מחשבה נוזלית",
+      "description": "שלוש נקודות מתמזגות ונפרדות בגאו עד שהתשובה נולדת מהן.",
+      "url": "/r/goo-thinking.json"
+    },
+    {
+      "name": "hold-publish",
+      "title": "Hold to Publish",
+      "titleHe": "החזיקו לפרסום",
+      "description": "מילוי מתקדם רק כשמחזיקים; שחרור מוקדם מרוקן עם רעידה, השלמה מסיימת בפיצוץ.",
+      "url": "/r/hold-publish.json"
+    },
+    {
+      "name": "jelly-slider",
+      "title": "Jelly Slider",
+      "titleHe": "סליידר ג׳לי",
+      "description": "הידית נמתחת עם מהירות הגרירה ומתנדנדת חזרה לעיגול בשחרור.",
+      "url": "/r/jelly-slider.json"
+    },
+    {
+      "name": "letter-limit",
+      "title": "Letter Limit",
+      "titleHe": "גבול אותיות",
+      "description": "תקציב אותיות שמרגישים: האריחים נושרים פיזית ככל שמתקרבים לגבול.",
+      "url": "/r/letter-limit.json"
+    },
+    {
+      "name": "like-burst",
+      "title": "Like Burst",
+      "titleHe": "לייק מתפוצץ",
+      "description": "לב קופץ בקפיץ, זורק טבעת ו־12 חלקיקים, והמונה מתגלגל.",
+      "url": "/r/like-burst.json"
+    },
+    {
       "name": "liquid-tabs",
       "title": "Liquid Tabs",
       "titleHe": "טאבים נוזליים",
       "description": "מחוון שנמתח כמו ג׳לי לעבר הטאב החדש ומתייצב (FLIP אמיתי בין מצבים).",
       "url": "/r/liquid-tabs.json"
+    },
+    {
+      "name": "loading-success",
+      "title": "Loading to Success",
+      "titleHe": "טעינה להצלחה",
+      "description": "הכפתור מתכווץ לספינר עגול וקופץ חזרה ירוק עם V מצויר.",
+      "url": "/r/loading-success.json"
+    },
+    {
+      "name": "marker-text",
+      "title": "Marker Text",
+      "titleHe": "מרקר סימון",
+      "description": "הדגשות מרקר נמרחות אחת אחרי השנייה כמו בעט פוסקה אמיתי.",
+      "url": "/r/marker-text.json"
+    },
+    {
+      "name": "morph-island",
+      "title": "Morph Island",
+      "titleHe": "איילנד דינמי",
+      "description": "פיל בסגנון Dynamic Island שנפתח בקפיץ לנגן מיני ונסגר באותו מורף פיזי.",
+      "url": "/r/morph-island.json"
+    },
+    {
+      "name": "morph-tooltip",
+      "title": "Morph Tooltip",
+      "titleHe": "טולטיפ מתהווה",
+      "description": "כפתור ה-? עצמו גדל לתוך הטולטיפ במורפולוגיית FLIP מלאה.",
+      "url": "/r/morph-tooltip.json"
     },
     {
       "name": "odometer",
@@ -52,11 +150,32 @@
       "url": "/r/otp-input.json"
     },
     {
+      "name": "pagination-dots",
+      "title": "Pagination Dots",
+      "titleHe": "דפדוף נוזלי",
+      "description": "תולעת נוזלית שנמתחת לעבר הנקודה הפעילה במקום נקודה שגדלה.",
+      "url": "/r/pagination-dots.json"
+    },
+    {
+      "name": "password-strength",
+      "title": "Password Strength",
+      "titleHe": "מטר סיסמה",
+      "description": "מקטעים נקפצים אחד־אחד עם צבע עולה והפרצוף מגיב לכל שינוי.",
+      "url": "/r/password-strength.json"
+    },
+    {
       "name": "peel-skeleton",
       "title": "Peel Skeleton",
       "titleHe": "סקלטון מדבקה",
       "description": "השלד נקלף כמו מדבקה באלכסון ומגלה את התוכן במקום פייד.",
       "url": "/r/peel-skeleton.json"
+    },
+    {
+      "name": "plan-switch",
+      "title": "Plan Switch",
+      "titleHe": "מתכנן מחירון",
+      "description": "טוגל חודשי/שנתי עם פיל שקופץ והמחיר מתהפך כמו לוח יציאות.",
+      "url": "/r/plan-switch.json"
     },
     {
       "name": "playground",
@@ -66,11 +185,32 @@
       "url": "/r/playground.json"
     },
     {
+      "name": "pull-cord",
+      "title": "Pull Cord",
+      "titleHe": "חבל הדלקה",
+      "description": "מושכים את החבל עד הסף, הוא נקלע חזרה מתנדנד והמנורה נדלקת.",
+      "url": "/r/pull-cord.json"
+    },
+    {
       "name": "pull-refresh",
       "title": "Pull Refresh",
       "titleHe": "משיכה לרענון עם מטפס",
       "description": "מושכים את הרשימה ומטפס יורד על חבל; שחרור מעבר לסף קולע אותו למעלה ומרענן.",
       "url": "/r/pull-refresh.json"
+    },
+    {
+      "name": "read-along",
+      "title": "Read Along",
+      "titleHe": "קריאה מודגשת",
+      "description": "הדגשת קריוקי שקופצת מילה־מילה בקצב קריאה עם קו התקדמות.",
+      "url": "/r/read-along.json"
+    },
+    {
+      "name": "rubber-dock",
+      "title": "Rubber Dock",
+      "titleHe": "דוק גומי",
+      "description": "הגדלה בסגנון macOS עם נפילה גאוסית סביב האצבע.",
+      "url": "/r/rubber-dock.json"
     },
     {
       "name": "split-flap",
@@ -80,11 +220,25 @@
       "url": "/r/split-flap.json"
     },
     {
+      "name": "star-rating",
+      "title": "Star Rating",
+      "titleHe": "דירוג כוכבים",
+      "description": "כוכבים מתמלאים בסטאגר קפיצי עם סיבוב קטן ותווית תגובה מתחלפת.",
+      "url": "/r/star-rating.json"
+    },
+    {
       "name": "step-walker",
       "title": "Step Walker",
       "titleHe": "סטפר נקודה מהלכת",
       "description": "נקודה שקופצת בין שלבים בסקווש בזמן שהקו נצבע אחריה.",
       "url": "/r/step-walker.json"
+    },
+    {
+      "name": "streaming-reply",
+      "title": "Streaming Reply",
+      "titleHe": "תשובה זורמת",
+      "description": "תשובת סוכן זורמת בנתחים עם סמן בלוק מהבהב.",
+      "url": "/r/streaming-reply.json"
     },
     {
       "name": "sunset-toggle",
@@ -106,6 +260,13 @@
       "titleHe": "ערימת החלקה",
       "description": "קלפים שנזרקים ימינה ושמאלה עם מהירות זריקה אמיתית וסיבוב פיזי, שכבות עמוקות מתקדמות.",
       "url": "/r/swipe-stack.json"
+    },
+    {
+      "name": "tag-input",
+      "title": "Tag Input",
+      "titleHe": "תגיות קופצות",
+      "description": "צ׳יפים נקפצים פנימה עם הטיה אקראית ומתכווצים למרכז במחיקה.",
+      "url": "/r/tag-input.json"
     },
     {
       "name": "text-scramble",
@@ -134,6 +295,20 @@
       "titleHe": "הודעה קולית",
       "description": "בועת הקלטה עם ווייבפורם חי שמתמלא ומקפץ בזמן נגינה.",
       "url": "/r/voice-note.json"
+    },
+    {
+      "name": "weight-wave",
+      "title": "Weight Wave",
+      "titleHe": "גל משקל",
+      "description": "אותיות מתחמנות סביב האצבע בפונט וריאבילי; גל עצמאי במנוחה.",
+      "url": "/r/weight-wave.json"
+    },
+    {
+      "name": "word-roll",
+      "title": "Word Roll",
+      "titleHe": "מילים מתגלגלות",
+      "description": "הפועל בכותרת מתגלגל החוצה והבא נקלע פנימה בקפיץ.",
+      "url": "/r/word-roll.json"
     }
   ]
 }

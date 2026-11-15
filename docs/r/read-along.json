@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "read-along",
+  "type": "registry:component",
+  "title": "Read Along",
+  "description": "הדגשת קריוקי שקופצת מילה־מילה בקצב קריאה עם קו התקדמות.",
+  "files": [
+    {
+      "path": "components/finesse/read-along.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nconst TEXT = \"בבוקר הלכנו לים, הרוח הייתה עדינה והמים היו שקופים לגמרי, ואז הילדים בנו טירת חול ענקית עם חפיר וגשר.\";\n\n/**\n * ReadAlong - karaoke-style reading: a pill highlight hops word to word at\n * reading pace, with a progress line underneath.\n */\nexport function ReadAlong({ className }: { className?: string }) {\n  const words = React.useMemo(() => TEXT.split(\" \"), []);\n  const [idx, setIdx] = React.useState(-1);\n  const [playing, setPlaying] = React.useState(false);\n  const timer = React.useRef<ReturnType<typeof setInterval> | null>(null);\n\n  const stop = () => { if (timer.current) clearInterval(timer.current); timer.current = null; setPlaying(false); };\n\n  const play = () => {\n    if (playing) { stop(); return; }\n    setPlaying(true);\n    setIdx((v) => (v >= words.length - 1 ? 0 : v));\n    timer.current = setInterval(() => {\n      setIdx((v) => {\n        if (v + 1 >= words.length) { stop(); return v; }\n        return v + 1;\n      });\n    }, 380);\n  };\n\n  React.useEffect(() => stop, []);\n\n  return (\n    <div dir=\"rtl\" className={cn(\"max-w-md\", className)}>\n      <p className=\"text-xl leading-10\">\n        {words.map((w, i) => (\n          <span\n            key={i}\n            className=\"mx-0.5 inline-block rounded-md px-1 transition-all duration-200\"\n            style={\n              i === idx\n                ? { background: \"#14b8a6\", color: \"#fff\", transform: \"translateY(-2px) scale(1.06)\" }\n                : i < idx\n                  ? { color: \"#14b8a6\" }\n                  : undefined\n            }\n          >\n            {w}\n          </span>\n        ))}\n      </p>\n      <div className=\"mt-3 h-1 overflow-hidden rounded-full bg-neutral-200 dark:bg-neutral-700\">\n        <div className=\"h-full rounded-full bg-teal-500 transition-all duration-300\" style={{ width: `${((idx + 1) / words.length) * 100}%` }} />\n      </div>\n      <button type=\"button\" onClick={play} className=\"mt-3 rounded-lg bg-teal-600 px-4 py-2 text-sm font-semibold text-white\">\n        {playing ? \"עצירה\" : idx >= 0 ? \"המשך קריאה\" : \"קראו לי\"}\n      </button>\n    </div>\n  );\n}\n"
+    }
+  ]
+}

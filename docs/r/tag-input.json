@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tag-input",
+  "type": "registry:component",
+  "title": "Tag Input",
+  "description": "צ׳יפים נקפצים פנימה עם הטיה אקראית ומתכווצים למרכז במחיקה.",
+  "files": [
+    {
+      "path": "components/finesse/tag-input.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * TagInput - chips pop in with a spring and a random little tilt; removing\n * one shrinks it into its own center.\n */\nexport function TagInput({ className }: { className?: string }) {\n  const [tags, setTags] = React.useState<string[]>([\"עיצוב\", \"אנימציה\"]);\n  const [value, setValue] = React.useState(\"\");\n  const reduce = React.useMemo(\n    () => typeof matchMedia !== \"undefined\" && matchMedia(\"(prefers-reduced-motion: reduce)\").matches,\n    []\n  );\n\n  const add = () => {\n    const t = value.trim();\n    if (!t || tags.includes(t) || tags.length >= 6) return;\n    setTags((v) => [...v, t]);\n    setValue(\"\");\n  };\n\n  const remove = (t: string, el: HTMLElement) => {\n    if (reduce) { setTags((v) => v.filter((x) => x !== t)); return; }\n    el.animate(\n      [{ transform: \"scale(1)\", opacity: 1 }, { transform: \"scale(.3)\", opacity: 0 }],\n      { duration: 220, easing: \"ease-in\", fill: \"forwards\" }\n    ).onfinish = () => setTags((v) => v.filter((x) => x !== t));\n  };\n\n  return (\n    <div dir=\"rtl\" className={cn(\"w-full max-w-sm rounded-xl border border-neutral-300 bg-white p-2 dark:border-neutral-700 dark:bg-neutral-900\", className)}>\n      <div className=\"flex flex-wrap items-center gap-1.5\">\n        {tags.map((t, i) => (\n          <span\n            key={t}\n            className=\"flex items-center gap-1 rounded-full bg-teal-600/10 px-3 py-1 text-sm font-semibold text-teal-700 dark:text-teal-300\"\n            style={{ animation: reduce ? undefined : `tagPop .4s ${i === tags.length - 1 ? \"0\" : \"0\"}ms cubic-bezier(.2,1.5,.3,1) both`, rotate: `${(i % 2 ? -1 : 1) * 1.5}deg` }}\n          >\n            {t}\n            <button type=\"button\" aria-label={`הסרת ${t}`} onClick={(e) => remove(t, (e.target as HTMLElement).closest(\"span\")!)} className=\"text-teal-500 hover:text-teal-800\">×</button>\n          </span>\n        ))}\n        <input\n          value={value}\n          onChange={(e) => setValue(e.target.value)}\n          onKeyDown={(e) => { if (e.key === \"Enter\" || e.key === \",\") { e.preventDefault(); add(); } }}\n          placeholder={tags.length ? \"\" : \"הוסיפו תגית ו-Enter...\"}\n          className=\"min-w-24 flex-1 bg-transparent p-1 text-sm outline-none\"\n        />\n      </div>\n      <style>{`@keyframes tagPop{from{opacity:0;transform:scale(.4) rotate(-8deg)}to{opacity:1;transform:scale(1) rotate(0deg)}}`}</style>\n    </div>\n  );\n}\n"
+    }
+  ]
+}

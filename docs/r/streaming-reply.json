@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "streaming-reply",
+  "type": "registry:component",
+  "title": "Streaming Reply",
+  "description": "תשובת סוכן זורמת בנתחים עם סמן בלוק מהבהב.",
+  "files": [
+    {
+      "path": "components/finesse/streaming-reply.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nconst FULL = \"היי! סקרתי את הבקשה שלך - הוספתי שלוש אנימציות חדשות לגלריה, תיקנתי את הריווח במובייל, והכול עבר בדיקה נקייה. רוצה שאעלה גרסה?\";\n\n/**\n * StreamingReply - an AI answer that streams in chunk by chunk with a block\n * cursor, the bubble growing with a soft spring under the text.\n */\nexport function StreamingReply({ className }: { className?: string }) {\n  const [shown, setShown] = React.useState(0);\n  const [streaming, setStreaming] = React.useState(false);\n  const timer = React.useRef<ReturnType<typeof setInterval> | null>(null);\n  const reduce = React.useMemo(\n    () => typeof matchMedia !== \"undefined\" && matchMedia(\"(prefers-reduced-motion: reduce)\").matches,\n    []\n  );\n\n  const start = () => {\n    if (streaming) return;\n    if (reduce) { setShown(FULL.length); return; }\n    setShown(0);\n    setStreaming(true);\n    timer.current = setInterval(() => {\n      setShown((v) => {\n        const next = v + 2 + Math.floor(Math.random() * 4);\n        if (next >= FULL.length) {\n          if (timer.current) clearInterval(timer.current);\n          setStreaming(false);\n          return FULL.length;\n        }\n        return next;\n      });\n    }, 70);\n  };\n\n  React.useEffect(() => () => { if (timer.current) clearInterval(timer.current); }, []);\n\n  return (\n    <div dir=\"rtl\" className={cn(\"flex w-full max-w-sm flex-col items-start gap-3\", className)}>\n      <div className=\"min-h-[72px] w-full rounded-2xl rounded-tr-sm bg-neutral-100 p-4 text-sm leading-7 transition-all dark:bg-neutral-800\">\n        {FULL.slice(0, shown)}\n        {streaming && <span className=\"mx-0.5 inline-block h-4 w-2 animate-pulse rounded-[2px] bg-teal-500 align-middle\" />}\n        {!streaming && shown === 0 && <span className=\"text-neutral-400\">התשובה תופיע כאן...</span>}\n      </div>\n      <button type=\"button\" onClick={start} disabled={streaming} className=\"rounded-lg bg-teal-600 px-4 py-2 text-sm font-semibold text-white disabled:opacity-50\">\n        {shown > 0 && !streaming ? \"הזרימו שוב\" : \"שאלו את הסוכן\"}\n      </button>\n    </div>\n  );\n}\n"
+    }
+  ]
+}
