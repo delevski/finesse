@@ -3349,10 +3349,10 @@ void main(){
 (function(){
   const fab=q("#gooFab"); if(!fab) return;
   const layer=q("#gooLayer"),labels=q("#gooLabels");
-  const items=[["✏️","עריכה"],["📎","שיתוף"],["🗑️","מחיקה"]];
+  const items=[[`' + ICONS["edit"] + '`,"עריכה"],[`' + ICONS["link"] + '`,"שיתוף"],[`' + ICONS["trash"] + '`,"מחיקה"]];
   const btns=items.map(([ic,lb],i)=>{
     const b=document.createElement("button");
-    b.type="button";b.className="goo-ball goo-item";b.textContent=ic;b.setAttribute("aria-label",lb);b.tabIndex=-1;
+    b.type="button";b.className="goo-ball goo-item";b.innerHTML=ic;b.setAttribute("aria-label",lb);b.tabIndex=-1;
     layer.appendChild(b);
     b.addEventListener("click",()=>fab.click());
     return b;

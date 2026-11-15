@@ -7,10 +7,12 @@ import { cn } from "@/lib/utils";
  * GooMenu - a FAB whose actions emerge as liquid blobs: an SVG goo filter
  * makes the circles merge with the trigger while they spring out.
  */
+const ICON_PROPS = { width: 19, height: 19, fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round", viewBox: "0 0 24 24" } as const;
+
 const ITEMS = [
-  { icon: "✏️", label: "עריכה" },
-  { icon: "📎", label: "שיתוף" },
-  { icon: "🗑️", label: "מחיקה" },
+  { icon: <svg {...ICON_PROPS}><path d="M17 3a2.8 2.8 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" /></svg>, label: "עריכה" },
+  { icon: <svg {...ICON_PROPS}><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7" /><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7" /></svg>, label: "שיתוף" },
+  { icon: <svg {...ICON_PROPS}><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /></svg>, label: "מחיקה" },
 ];
 
 export function GooMenu({ className }: { className?: string }) {
