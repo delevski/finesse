@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "odometer",
+  "type": "registry:component",
+  "title": "Odometer",
+  "description": "מונה שמתגלגל ספרה־ספרה כמו קילומטראז׳ אמיתי, עם סטגר לכל טור.",
+  "files": [
+    {
+      "path": "components/finesse/odometer.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nconst DIGIT_H = 46;\n\n/**\n * Odometer - each digit is a reel that rolls to its value with a per-column\n * stagger, like a real mileage counter. Animates when scrolled into view.\n */\nexport function Odometer({\n  value,\n  digits = 5,\n  groupAfter = 2,\n  className,\n}: {\n  value: number;\n  digits?: number;\n  /** show a comma separator after this many digit reels */\n  groupAfter?: number;\n  className?: string;\n}) {\n  const [display, setDisplay] = React.useState(0);\n  const rootRef = React.useRef<HTMLDivElement>(null);\n  const shown = React.useRef(false);\n\n  React.useEffect(() => {\n    const el = rootRef.current;\n    if (!el) return;\n    const io = new IntersectionObserver(\n      (entries) => {\n        if (entries[0].isIntersecting && !shown.current) {\n          shown.current = true;\n          setTimeout(() => setDisplay(value), 350);\n          io.disconnect();\n        }\n      },\n      { threshold: 0.5 }\n    );\n    io.observe(el);\n    return () => io.disconnect();\n  }, [value]);\n\n  React.useEffect(() => {\n    if (shown.current) setDisplay(value);\n  }, [value]);\n\n  const str = String(display).padStart(digits, \"0\").slice(-digits);\n\n  return (\n    <div ref={rootRef} className={cn(\"flex gap-1\", className)} dir=\"ltr\" aria-label={String(display)}>\n      {Array.from({ length: digits }).map((_, i) => (\n        <React.Fragment key={i}>\n          <div className=\"h-[46px] overflow-hidden rounded-lg border bg-card\">\n            <div\n              className=\"flex flex-col transition-transform duration-1000 [transition-timing-function:cubic-bezier(.22,1,.36,1)] will-change-transform\"\n              style={{\n                transform: `translateY(${-Number(str[i]) * DIGIT_H}px)`,\n                transitionDelay: `${i * 70}ms`,\n              }}\n            >\n              {Array.from({ length: 10 }).map((_, d) => (\n                <span\n                  key={d}\n                  className=\"h-[46px] w-[26px] text-center font-mono text-2xl font-bold leading-[46px] text-primary\"\n                >\n                  {d}\n                </span>\n              ))}\n            </div>\n          </div>\n          {groupAfter > 0 && i === groupAfter - 1 && (\n            <span className=\"font-mono text-xl leading-[46px] text-muted-foreground\">,</span>\n          )}\n        </React.Fragment>\n      ))}\n    </div>\n  );\n}\n"
+    }
+  ]
+}

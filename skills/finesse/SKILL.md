@@ -2,7 +2,7 @@
 name: finesse
 description: "Design skill for Next.js + shadcn/ui + Tailwind app interfaces. Use when building or refactoring React components, pages, dashboards, forms, chats or settings screens so they come out polished, animated and RTL-aware instead of default-looking. Trigger when the user asks to build a UI, says 'finesse', 'make it look designed', 'polish this', or when a component looks like library defaults."
 argument-hint: "[component or page path] | audit <path>"
-version: 1.0.0
+version: 1.5.0
 metadata:
   opencode/slash: "true"
 ---
@@ -20,7 +20,7 @@ Binds every component and page, none of it waivable:
 1. **Every action shows feedback.** Any submit, save, delete or fetch shows a pending state (spinner or skeleton), guards against double submit, and on failure shows an inline error with retry. A button that silently does nothing is a bug. See `references/states.md`.
 2. **Never a blank screen.** First load, tab switches and route changes render a skeleton or cached content immediately. An empty list gets a designed empty state with one clear next action, not a void.
 3. **Tokens only.** Every color, radius, shadow and font comes from the theme tokens (`hsl(var(--...))` in shadcn, CSS variables otherwise). No hex literals, no `font-family` outside the token block, no one-off Tailwind grays when a semantic token exists (`muted-foreground`, not `text-gray-500`).
-4. **Motion has a reason.** Entrance stagger for lists, layout transitions when elements move, micro-feedback on press. Never `transition: all`. Never animate `width`, `height`, `top` or `left` - use `transform` and `opacity`. Every animation has a `prefers-reduced-motion` fallback. See `references/motion-recipes.md`.
+4. **Motion has a reason.** Entrance stagger for lists, layout transitions when elements move, micro-feedback on press. Never `transition: all`. Never animate `width`, `height`, `top` or `left` - use `transform` and `opacity`. Every animation has a `prefers-reduced-motion` fallback. See `references/motion-recipes.md`. Above that layer, one signature animation per screen - a Three.js scene, a character control like the eyeball switch, pointer-true ripple - from `references/advanced-motion.md`, always with its fallback.
 5. **RTL is structural, not an afterthought.** Logical properties everywhere (`ms-`, `me-`, `ps-`, `pe-`, `start-`, `end-` - never `ml/mr/pl/pr/left/right` for layout). Directional icons mirror. Numbers, phones and dates stay LTR inside RTL text. Hebrew gets a font built for it (Heebo, Assistant). Full rules: `references/rtl.md`.
 6. **Every interactive element has a visible `:focus-visible` state** and a real `aria-label` when its label is an icon.
 7. **Never invented content.** No fake metrics, testimonials, avatars of "real" people, or placeholder copy that reads as fact in a production UI. Demo content is labelled as demo.
@@ -45,6 +45,7 @@ Any other change to an existing design is not a finesse run: do it as asked, in 
 
 - `references/states.md` - loading, empty, error, retry, double-submit guard, with copy-paste React patterns.
 - `references/motion-recipes.md` - Framer Motion and CSS recipes: staggered lists, page transitions, press feedback, skeleton shimmer, count-up numbers.
+- `references/advanced-motion.md` - the signature layer: Three.js scenes (aurora blob, particle morphs) with cleanup and fallbacks, the eyeball switch, the drag-the-glass day/night switch, pointer-true ripple, magnetic hover, success bursts, standard controls at signature level (checkbox, dropdown, combobox, drawer, loaders), the gallery component set (fan drawer, swipe stack, liquid tabs, physics toasts, tilt card, text scramble, OTP input, FLIP dialog, odometer - sources in `registry/finesse/`), and the performance checklist that keeps them at 60fps.
 - `references/rtl.md` - the complete RTL checklist: logical properties, icon mirroring, bidi text, Hebrew fonts, number and date formatting.
 - `references/shadcn-theme.md` - building a real token system on shadcn/ui: semantic colors, radius and elevation scale, dark mode.
 - `examples/before-after/` - pairs of components: the default-looking version an agent produces, and the same component after finesse.

@@ -1,0 +1,139 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "finesse",
+  "items": [
+    {
+      "name": "cmd-palette",
+      "title": "Command Palette",
+      "titleHe": "פלטת פקודות",
+      "description": "Cmd+K עם סטאגר בפתיחה, חיפוש חי והדגשה שקופצת עם החיצים.",
+      "url": "/r/cmd-palette.json"
+    },
+    {
+      "name": "empty-robot",
+      "title": "Empty Robot",
+      "titleHe": "רובוט אמפטי־סטייט",
+      "description": "רובוט עצוב למצב ריק שמתאושש וקופץ כשמגיע הפריט הראשון.",
+      "url": "/r/empty-robot.json"
+    },
+    {
+      "name": "fan-drawer",
+      "title": "Fan Drawer",
+      "titleHe": "מגירת מניפה",
+      "description": "כפתור שהופך למניפת קלפים שמתגלגלים מהצד - בחירה עפה בקשת אל הכפתור ומתקבעת שם.",
+      "url": "/r/fan-drawer.json"
+    },
+    {
+      "name": "flip-dialog",
+      "title": "FLIP Dialog",
+      "titleHe": "דיאלוג מתרחב",
+      "description": "כרטיס הקטנה עצמו מתרחב לדיאלוג - FLIP מלא, לא פאנל שצץ משום מקום.",
+      "url": "/r/flip-dialog.json"
+    },
+    {
+      "name": "liquid-tabs",
+      "title": "Liquid Tabs",
+      "titleHe": "טאבים נוזליים",
+      "description": "מחוון שנמתח כמו ג׳לי לעבר הטאב החדש ומתייצב (FLIP אמיתי בין מצבים).",
+      "url": "/r/liquid-tabs.json"
+    },
+    {
+      "name": "odometer",
+      "title": "Odometer",
+      "titleHe": "מונה קילומטראז׳",
+      "description": "מונה שמתגלגל ספרה־ספרה כמו קילומטראז׳ אמיתי, עם סטגר לכל טור.",
+      "url": "/r/odometer.json"
+    },
+    {
+      "name": "otp-input",
+      "title": "OTP Input",
+      "titleHe": "קלט קוד חד־פעמי",
+      "description": "תאי ספרות עם קפיצה אלסטית, סימון שגיאה ברעידה ואישור ירוק בגל מדורג.",
+      "url": "/r/otp-input.json"
+    },
+    {
+      "name": "peel-skeleton",
+      "title": "Peel Skeleton",
+      "titleHe": "סקלטון מדבקה",
+      "description": "השלד נקלף כמו מדבקה באלכסון ומגלה את התוכן במקום פייד.",
+      "url": "/r/peel-skeleton.json"
+    },
+    {
+      "name": "playground",
+      "title": "Motion Playground",
+      "titleHe": "פלייגראונד תנועה",
+      "description": "סליידרים לקשיחות קפיץ ומשך שמכוונים אנימציה בלייב, עם העתקת ערכים מכוונים ללוח.",
+      "url": "/r/playground.json"
+    },
+    {
+      "name": "pull-refresh",
+      "title": "Pull Refresh",
+      "titleHe": "משיכה לרענון עם מטפס",
+      "description": "מושכים את הרשימה ומטפס יורד על חבל; שחרור מעבר לסף קולע אותו למעלה ומרענן.",
+      "url": "/r/pull-refresh.json"
+    },
+    {
+      "name": "split-flap",
+      "title": "Split Flap",
+      "titleHe": "מונה ספליט־פלאפ",
+      "description": "ספרות מתהפכות כמו שלט שדה תעופה ישן, חצי עליון מתקפל ונפתח מחדש.",
+      "url": "/r/split-flap.json"
+    },
+    {
+      "name": "step-walker",
+      "title": "Step Walker",
+      "titleHe": "סטפר נקודה מהלכת",
+      "description": "נקודה שקופצת בין שלבים בסקווש בזמן שהקו נצבע אחריה.",
+      "url": "/r/step-walker.json"
+    },
+    {
+      "name": "sunset-toggle",
+      "title": "Sunset Toggle",
+      "titleHe": "מעבר שקיעה",
+      "description": "שמש שוקעת, שמי גרדיאנט מתחשכים וכוכבים נדלקים - במקום סוויץ.",
+      "url": "/r/sunset-toggle.json"
+    },
+    {
+      "name": "swipe-actions",
+      "title": "Swipe Actions",
+      "titleHe": "פעולות שורה בסווייפ",
+      "description": "שורה נחשפת לפעולות עם צמצום; האייקון מתנדנד כשמחושק.",
+      "url": "/r/swipe-actions.json"
+    },
+    {
+      "name": "swipe-stack",
+      "title": "Swipe Stack",
+      "titleHe": "ערימת החלקה",
+      "description": "קלפים שנזרקים ימינה ושמאלה עם מהירות זריקה אמיתית וסיבוב פיזי, שכבות עמוקות מתקדמות.",
+      "url": "/r/swipe-stack.json"
+    },
+    {
+      "name": "text-scramble",
+      "title": "Text Scramble",
+      "titleHe": "טקסט מתפענח",
+      "description": "כותרת שמתפענחת אות אחר אות בגלילה לתצוגה - גליפים אקראיים לפני התייצבות.",
+      "url": "/r/text-scramble.json"
+    },
+    {
+      "name": "tilt-card",
+      "title": "Tilt Card",
+      "titleHe": "כרטיס הטייה",
+      "description": "כרטיס תלת־ממדי שעוקב אחרי האצבע עם ברק ספקולרי, וקופץ חזרה לשטוח.",
+      "url": "/r/tilt-card.json"
+    },
+    {
+      "name": "toast-physics",
+      "title": "Toast Physics",
+      "titleHe": "התראות עם פיזיקה",
+      "description": "טוסטים שקופצים פנימה, נערמים, ואפשר לזרוק אותם הצידה במחיאה.",
+      "url": "/r/toast-physics.json"
+    },
+    {
+      "name": "voice-note",
+      "title": "Voice Note",
+      "titleHe": "הודעה קולית",
+      "description": "בועת הקלטה עם ווייבפורם חי שמתמלא ומקפץ בזמן נגינה.",
+      "url": "/r/voice-note.json"
+    }
+  ]
+}

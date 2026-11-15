@@ -18,7 +18,7 @@ finesse is a set of hard rules and copy-paste patterns the agent reads before it
 
 1. **States first** - every action shows a pending state, guards double submits, and recovers with an inline error + retry. First load and every tab switch render a skeleton, never a blank screen.
 2. **Tokens only** - no hex literals, no one-off grays; a real semantic theme, radius and elevation scale.
-3. **Motion with intent** - staggered entrances, layout transitions, press feedback. Transform/opacity only, reduced-motion fallbacks everywhere.
+3. **Motion with intent** - staggered entrances, layout transitions, press feedback. Transform/opacity only, reduced-motion fallbacks everywhere. Plus a signature layer: Three.js scenes (aurora blob, particle fields), the eyeball switch, pointer-true ripple and magnetic hover - each with its fallback and performance budget.
 4. **RTL native** - logical properties, mirrored directional icons, LTR islands for numbers and phones, Hebrew typography (Heebo/Assistant), Intl formatting. Built in from the first commit, not retrofitted.
 5. **No dead controls, no invented content** - every rendered button works; demo data is labelled as demo.
 
@@ -47,6 +47,20 @@ The installer drops the skill into `~/.claude/skills/finesse` and `~/.agents/ski
 
 Or just say *"make this look designed"* in a project where the skill is installed.
 
+## Signature components - drop-in via shadcn registry
+
+Nine animated components from the gallery, installable straight into any shadcn/ui project:
+
+| fan-drawer | swipe-stack | liquid-tabs |
+| --- | --- | --- |
+| ![fan drawer](docs/assets/fan.gif) | ![swipe stack](docs/assets/swipe.gif) | ![liquid tabs](docs/assets/tabs.gif) |
+
+```bash
+npx shadcn@latest add https://finesse-demo.orworkdelevski.workers.dev/r/fan-drawer.json
+```
+
+Available: `fan-drawer`, `swipe-stack`, `liquid-tabs`, `toast-physics`, `tilt-card`, `text-scramble`, `otp-input`, `flip-dialog`, `odometer`, `playground`, `pull-refresh`, `split-flap`, `empty-robot`, `cmd-palette`, `swipe-actions`, `step-walker`, `peel-skeleton`, `voice-note`, `sunset-toggle`. Sources live in `registry/finesse/` and are built into `docs/r/` by `scripts/build-registry.mjs`. Every component card in the live gallery also has a copy-TSX button.
+
 ## What's inside
 
 ```
@@ -55,6 +69,7 @@ skills/finesse/
   references/
     states.md                   pending / empty / error / retry patterns (copy-paste React)
     motion-recipes.md           Framer Motion + CSS recipes with a timing vocabulary
+    advanced-motion.md          signature animations: Three.js scenes, eyeball switch, ripple, magnetic hover
     rtl.md                      the complete RTL checklist: logical props, icon mirroring, bidi, Hebrew fonts
     shadcn-theme.md             semantic tokens, elevation scale, dark mode done right
     review-checklist.md         pre-ship self-review

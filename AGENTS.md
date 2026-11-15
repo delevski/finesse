@@ -9,7 +9,7 @@ The short version that binds every UI change:
 1. Every action shows feedback: pending state, double-submit guard, error with retry.
 2. Never a blank screen: skeletons on first load and tab switches, designed empty states.
 3. Tokens only: no hex colors or font stacks outside the theme.
-4. Motion with intent: transform/opacity only, reduced-motion fallback, no `transition: all`.
+4. Motion with intent: transform/opacity only, reduced-motion fallback, no `transition: all`. One signature animation per screen (Three.js, eyeball switch, ripple) - `skills/finesse/references/advanced-motion.md`.
 5. RTL is structural: logical properties, mirrored directional icons, LTR islands for numbers/phones, Hebrew-capable fonts.
 6. Every rendered control works. No dead buttons, no "ready to use" cards.
 7. No invented content; demo data is labelled.

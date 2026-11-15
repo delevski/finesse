@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sunset-toggle",
+  "type": "registry:component",
+  "title": "Sunset Toggle",
+  "description": "שמש שוקעת, שמי גרדיאנט מתחשכים וכוכבים נדלקים - במקום סוויץ.",
+  "files": [
+    {
+      "path": "components/finesse/sunset-toggle.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * SunsetToggle - a mini landscape: the sun sinks, the sky gradient sweeps to\n * dusk, and stars come out. A sunset instead of a switch.\n */\nexport function SunsetToggle({ className }: { className?: string }) {\n  const [dusk, setDusk] = React.useState(false);\n  const stars = React.useMemo(\n    () => Array.from({ length: 14 }).map((_, i) => ({ top: 6 + ((i * 37) % 44), left: 4 + ((i * 61) % 92), delay: (i % 7) * 0.1 })),\n    []\n  );\n\n  return (\n    <div className={cn(\"grid w-full max-w-sm justify-items-center gap-4\", className)} dir=\"rtl\">\n      <div className=\"relative h-[220px] w-full overflow-hidden rounded-2xl border\">\n        <div\n          className={cn(\n            \"absolute inset-0 bg-gradient-to-b from-sky-300 via-amber-200 to-amber-300 transition-all duration-1000\",\n            dusk && \"brightness-[.32] hue-rotate-180 saturate-150\"\n          )}\n        />\n        <div\n          className={cn(\n            \"absolute left-1/2 top-[18%] -ms-[26px] h-[52px] w-[52px] rounded-full bg-[radial-gradient(circle_at_35%_35%,#fff7d6,#fbbf24_70%)] shadow-[0_0_34px_10px_rgba(251,191,36,.55)] transition-all duration-1000 [transition-timing-function:cubic-bezier(.4,0,.6,1)]\",\n            dusk && \"translate-y-[150px] bg-[radial-gradient(circle_at_35%_35%,#e2e8f0,#94a3b8_70%)] shadow-[0_0_22px_6px_rgba(148,163,184,.35)]\"\n          )}\n        />\n        <div\n          className={cn(\n            \"absolute -bottom-1 -inset-x-[6%] h-[44%] bg-[radial-gradient(120%_130%_at_50%_130%,#14532d_60%,transparent_61%),radial-gradient(140%_150%_at_18%_135%,#166534_58%,transparent_59%)] transition-all duration-1000\",\n            dusk && \"brightness-[.35]\"\n          )}\n        />\n        {stars.map((s, i) => (\n          <span\n            key={i}\n            style={{ top: s.top + \"%\", left: s.left + \"%\", transitionDelay: s.delay + \"s\" }}\n            className={cn(\"absolute h-[3px] w-[3px] rounded-full bg-white opacity-0 transition-opacity duration-700\", dusk && \"opacity-90\")}\n          />\n        ))}\n      </div>\n      <button\n        type=\"button\"\n        onClick={() => setDusk((d) => !d)}\n        className=\"rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground\"\n      >\n        {dusk ? \"האירו\" : \"החשכה\"}\n      </button>\n    </div>\n  );\n}\n"
+    }
+  ]
+}
