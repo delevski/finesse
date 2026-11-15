@@ -47,6 +47,20 @@ The installer drops the skill into `~/.claude/skills/finesse` and `~/.agents/ski
 
 Or just say *"make this look designed"* in a project where the skill is installed.
 
+## Signature components - drop-in via shadcn registry
+
+Nine animated components from the gallery, installable straight into any shadcn/ui project:
+
+| fan-drawer | swipe-stack | liquid-tabs |
+| --- | --- | --- |
+| ![fan drawer](docs/assets/fan.gif) | ![swipe stack](docs/assets/swipe.gif) | ![liquid tabs](docs/assets/tabs.gif) |
+
+```bash
+npx shadcn@latest add https://finesse-demo.orworkdelevski.workers.dev/r/fan-drawer.json
+```
+
+Available: `fan-drawer`, `swipe-stack`, `liquid-tabs`, `toast-physics`, `tilt-card`, `text-scramble`, `otp-input`, `flip-dialog`, `odometer`. Sources live in `registry/finesse/` and are built into `docs/r/` by `scripts/build-registry.mjs`. Every component card in the live gallery also has a copy-TSX button.
+
 ## What's inside
 
 ```

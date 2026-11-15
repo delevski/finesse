@@ -1,0 +1,69 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "finesse",
+  "items": [
+    {
+      "name": "fan-drawer",
+      "title": "Fan Drawer",
+      "titleHe": "מגירת מניפה",
+      "description": "כפתור שהופך למניפת קלפים שמתגלגלים מהצד - בחירה עפה בקשת אל הכפתור ומתקבעת שם.",
+      "url": "/r/fan-drawer.json"
+    },
+    {
+      "name": "flip-dialog",
+      "title": "FLIP Dialog",
+      "titleHe": "דיאלוג מתרחב",
+      "description": "כרטיס הקטנה עצמו מתרחב לדיאלוג - FLIP מלא, לא פאנל שצץ משום מקום.",
+      "url": "/r/flip-dialog.json"
+    },
+    {
+      "name": "liquid-tabs",
+      "title": "Liquid Tabs",
+      "titleHe": "טאבים נוזליים",
+      "description": "מחוון שנמתח כמו ג׳לי לעבר הטאב החדש ומתייצב (FLIP אמיתי בין מצבים).",
+      "url": "/r/liquid-tabs.json"
+    },
+    {
+      "name": "odometer",
+      "title": "Odometer",
+      "titleHe": "מונה קילומטראז׳",
+      "description": "מונה שמתגלגל ספרה־ספרה כמו קילומטראז׳ אמיתי, עם סטגר לכל טור.",
+      "url": "/r/odometer.json"
+    },
+    {
+      "name": "otp-input",
+      "title": "OTP Input",
+      "titleHe": "קלט קוד חד־פעמי",
+      "description": "תאי ספרות עם קפיצה אלסטית, סימון שגיאה ברעידה ואישור ירוק בגל מדורג.",
+      "url": "/r/otp-input.json"
+    },
+    {
+      "name": "swipe-stack",
+      "title": "Swipe Stack",
+      "titleHe": "ערימת החלקה",
+      "description": "קלפים שנזרקים ימינה ושמאלה עם מהירות זריקה אמיתית וסיבוב פיזי, שכבות עמוקות מתקדמות.",
+      "url": "/r/swipe-stack.json"
+    },
+    {
+      "name": "text-scramble",
+      "title": "Text Scramble",
+      "titleHe": "טקסט מתפענח",
+      "description": "כותרת שמתפענחת אות אחר אות בגלילה לתצוגה - גליפים אקראיים לפני התייצבות.",
+      "url": "/r/text-scramble.json"
+    },
+    {
+      "name": "tilt-card",
+      "title": "Tilt Card",
+      "titleHe": "כרטיס הטייה",
+      "description": "כרטיס תלת־ממדי שעוקב אחרי האצבע עם ברק ספקולרי, וקופץ חזרה לשטוח.",
+      "url": "/r/tilt-card.json"
+    },
+    {
+      "name": "toast-physics",
+      "title": "Toast Physics",
+      "titleHe": "התראות עם פיזיקה",
+      "description": "טוסטים שקופצים פנימה, נערמים, ואפשר לזרוק אותם הצידה במחיאה.",
+      "url": "/r/toast-physics.json"
+    }
+  ]
+}

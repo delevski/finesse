@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tilt-card",
+  "type": "registry:component",
+  "title": "Tilt Card",
+  "description": "כרטיס תלת־ממדי שעוקב אחרי האצבע עם ברק ספקולרי, וקופץ חזרה לשטוח.",
+  "files": [
+    {
+      "path": "components/finesse/tilt-card.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * TiltCard - pointer-tracked 3D tilt with a specular glare that follows the\n * touch/cursor; springs back to flat on release/leave.\n */\nexport function TiltCard({\n  children,\n  className,\n  maxTilt = 14,\n}: {\n  children: React.ReactNode;\n  className?: string;\n  maxTilt?: number;\n}) {\n  const ref = React.useRef<HTMLDivElement>(null);\n  const [live, setLive] = React.useState(false);\n  const reduce = React.useMemo(\n    () => typeof matchMedia !== \"undefined\" && matchMedia(\"(prefers-reduced-motion: reduce)\").matches,\n    []\n  );\n\n  return (\n    <div className=\"[perspective:900px]\" dir=\"rtl\">\n      <div\n        ref={ref}\n        className={cn(\n          \"relative overflow-hidden rounded-2xl border bg-card p-6 shadow-xl [transform-style:preserve-3d]\",\n          live ? \"transition-none\" : \"transition-transform duration-500 [transition-timing-function:cubic-bezier(.2,1.2,.3,1)]\",\n          className\n        )}\n        onPointerMove={(e) => {\n          if (reduce) return;\n          const el = ref.current;\n          if (!el) return;\n          const r = el.getBoundingClientRect();\n          const px = (e.clientX - r.left) / r.width;\n          const py = (e.clientY - r.top) / r.height;\n          el.style.setProperty(\"--gx\", `${px * 100}%`);\n          el.style.setProperty(\"--gy\", `${py * 100}%`);\n          el.style.transform = `rotateY(${((px - 0.5) * maxTilt).toFixed(1)}deg) rotateX(${(-(py - 0.5) * (maxTilt - 2)).toFixed(1)}deg)`;\n          setLive(true);\n        }}\n        onPointerLeave={() => {\n          if (ref.current) ref.current.style.transform = \"rotateY(0deg) rotateX(0deg)\";\n          setLive(false);\n        }}\n      >\n        <div\n          aria-hidden\n          className={cn(\n            \"pointer-events-none absolute inset-0 transition-opacity duration-300\",\n            live ? \"opacity-100\" : \"opacity-0\"\n          )}\n          style={{\n            background:\n              \"radial-gradient(240px circle at var(--gx,50%) var(--gy,50%), rgba(255,255,255,.17), transparent 60%)\",\n          }}\n        />\n        <div className=\"[transform:translateZ(34px)]\">{children}</div>\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ]
+}

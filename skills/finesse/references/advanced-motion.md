@@ -438,3 +438,34 @@ All of these are demoed live in the gallery (`docs/index.html`, the signature-mo
 - [ ] WebGL unavailable or CDN blocked: styled fallback or error + retry, never an empty canvas or a black screen.
 - [ ] No layout reads (`getBoundingClientRect` etc.) inside per-frame loops - read once on pointer/resize events, animate from cached values (ripple and magnetic read per event, which is fine; per-frame is not).
 - [ ] RTL pass: travel directions match logical meaning; pointer effects untouched; Hebrew labels on the control itself.
+
+## 8. Gallery components (registry/finesse/)
+
+Nine drop-in components, each a single self-contained TSX file in `registry/finesse/` (also served as a shadcn registry from the demo's `/r/*.json`). Copy them as-is; each depends only on `cn` from `@/lib/utils`. All are RTL-aware and respect `prefers-reduced-motion`.
+
+### fan-drawer
+A trigger button that blooms into a fan of choice cards rolling in from the side; picking a card flies it along an arc (measured delta between card and button centers) and locks it into the button. Cards are absolutely positioned at the trigger's center bottom with `transform-origin: 50% 175%`, rotated by per-card `--a` with a staggered `--i` delay. Keep cards slim (~88px) so the rotated bounding boxes stay inside the stage on 390px. Close on backdrop click and Escape.
+
+### swipe-stack
+A deck of cards with real throw physics: pointer drag tracks with rotation (`dx * 0.06` deg), velocity is sampled over the last few pointer moves, and release beyond a distance or velocity threshold flings the card off with an inertia animation; deeper layers step up a slot. Keep a hard discard pile (index counter), and rebuild the deck only when empty.
+
+### liquid-tabs
+The active-tab pill stretches like jelly toward the new tab, then settles. Measure current pill left/width against the target button's rect, then WAAPI through three keyframes: current rect -> stretched rect covering both ends (x6% overshoot) -> target rect, easing `cubic-bezier(.2,1.25,.3,1)`. Pane content swaps with a translate+blur fade. Set inline left/width (never transform) so the measurement base stays readable.
+
+### toast-physics
+Toasts spring in (translateY 70px -> -4px -> 0), stack upward, auto-dismiss, and can be flung away sideways with pointer-throw velocity (`|dx|>80` or `|vx|>0.5px/ms`). Keep the stack offset (`-index * 64px`) in the same transform as the drag delta so the two never fight. Cap the visible stack.
+
+### tilt-card
+Pointer-tracked 3D tilt: perspective on the wrapper, rotateY/rotateX from normalized pointer position (max ~14deg), a specular radial-gradient glare layer following `--gx/--gy`, and content lifted with `translateZ(34px)`. Remove the transition while tracking, restore it for the spring-back on leave.
+
+### text-scramble
+The heading decodes letter by letter when scrolled into view (IntersectionObserver, threshold 0.6): each character resolves after `i * speed + 380ms`, showing random Hebrew glyphs at low opacity before settling. Use a monotonic rAF loop over `[...text]` so RTL order stays intact, and render through innerHTML only during the scramble (final frame writes plain textContent).
+
+### otp-input
+Per-digit cells fed by one visually-hidden input (`inputMode="numeric"`, `autoComplete="one-time-code"` so SMS autofill works). Each filled cell pops with `scale(.7 -> 1.12 -> 1)`; a wrong code shakes the row (`shakeX`) in destructive color and clears; success pops the cells green with a 55ms stagger. The caret is a blinking pseudo-bar on the active cell.
+
+### flip-dialog
+The trigger card itself expands into the dialog - true FLIP: measure the card rect and dialog rect, invert with `translate(dx,dy) scale(sx,sy)` from `origin: top left`, play to identity with `cubic-bezier(.22,1,.36,1)`. Reverse the measurement on close. The card fades out only after the dialog starts, so the eye tracks one continuous object.
+
+### odometer
+Each digit is a reel of 0-9 translated by `-digit * rowHeight` with a per-column `transition-delay` stagger - a real mileage counter. Trigger the first roll when scrolled into view, pad to a fixed width, and keep the strip `dir="ltr"` even in RTL layouts.

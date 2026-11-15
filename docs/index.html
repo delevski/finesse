@@ -57,6 +57,11 @@ h2{font-size:clamp(24px,3.4vw,34px);font-weight:700;letter-spacing:-.02em}
 .sec-sub{color:var(--muted);font-size:15px;line-height:1.65;max-width:660px;margin-bottom:26px}
 .demo{border:1px solid var(--border-soft);border-radius:var(--radius);background:var(--bg-soft);overflow:hidden;box-shadow:var(--shadow-2)}
 .demo-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;border-bottom:1px solid var(--border-soft);flex-wrap:wrap}
+.tsx-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:9px;border:1px solid var(--border);background:var(--bg-soft);color:var(--muted);font:600 12.5px inherit;cursor:pointer;transition:all .2s;flex-shrink:0}
+.tsx-btn:hover{border-color:var(--primary);color:var(--primary)}
+.tsx-btn.ok{border-color:#34d399;color:#34d399}
+.tsx-btn.err{border-color:#f87171;color:#f87171}
+.tsx-btn svg{width:13px;height:13px}
 .demo-title{font-size:14px;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:9px}
 .demo-title svg{width:15px;height:15px;color:var(--faint)}
 .seg{display:inline-flex;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:3px;position:relative}
@@ -393,6 +398,12 @@ footer a:hover{color:var(--accent)}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}html{scroll-behavior:auto}}
 @media (max-width:560px){.stage{padding:24px 14px}header{padding:52px 0 30px}}
 </style>
+<meta property="og:title" content="finesse. - a design skill for coding agents">
+<meta property="og:description" content="Polished, animated, RTL-aware interfaces in Next.js + shadcn/ui - instead of library defaults.">
+<meta property="og:image" content="https://finesse-demo.orworkdelevski.workers.dev/og.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://finesse-demo.orworkdelevski.workers.dev/">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
 <div class="bg-fx"></div>
@@ -566,6 +577,7 @@ footer a:hover{color:var(--accent)}
   <div class="demo rv" style="margin-bottom:18px">
     <div class="demo-bar">
       <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 20h18"/><path d="M6 20V8m6 12V4m6 16v-8"/></svg><span dir="ltr">fan-drawer.tsx</span></span>
+      <button class="tsx-btn" data-tsx="fan-drawer" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
     </div>
     <div class="stage"><div class="stage-inner">
       <div class="fan-stage" id="fanStage">
@@ -619,6 +631,7 @@ footer a:hover{color:var(--accent)}
   <div class="demo rv" style="margin-bottom:18px">
     <div class="demo-bar">
       <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="6" width="16" height="14" rx="3"/><rect x="7" y="3" width="10" height="6" rx="2"/></svg><span dir="ltr">swipe-stack.tsx</span></span>
+      <button class="tsx-btn" data-tsx="swipe-stack" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
     </div>
     <div class="stage"><div class="stage-inner">
       <div class="swipe-stage" id="swipeStage"></div>
@@ -629,6 +642,7 @@ footer a:hover{color:var(--accent)}
   <div class="demo rv" style="margin-bottom:18px">
     <div class="demo-bar">
       <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span dir="ltr">liquid-tabs.tsx</span></span>
+      <button class="tsx-btn" data-tsx="liquid-tabs" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
     </div>
     <div class="stage"><div class="stage-inner" style="display:grid;place-items:center">
       <div class="ltabs-wrap">
@@ -648,6 +662,7 @@ footer a:hover{color:var(--accent)}
   <div class="demo rv" style="margin-bottom:18px">
     <div class="demo-bar">
       <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M10.3 21a2 2 0 0 0 3.4 0"/></svg><span dir="ltr">toast-physics.tsx</span></span>
+      <button class="tsx-btn" data-tsx="toast-physics" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
     </div>
     <div class="stage"><div class="stage-inner">
       <div class="toast-stage" id="toastStage">
@@ -661,6 +676,7 @@ footer a:hover{color:var(--accent)}
   <div class="demo rv" style="margin-bottom:18px">
     <div class="demo-bar">
       <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3 3 8l9 5 9-5-9-5z"/><path d="m3 13 9 5 9-5"/></svg><span dir="ltr">tilt-card.tsx</span></span>
+      <button class="tsx-btn" data-tsx="tilt-card" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
     </div>
     <div class="stage"><div class="stage-inner" style="display:grid;place-items:center">
       <div class="tilt-wrap">
@@ -680,6 +696,7 @@ footer a:hover{color:var(--accent)}
   <div class="demo rv" style="margin-bottom:18px">
     <div class="demo-bar">
       <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m4 17 6-6-6-6M12 19h8"/></svg><span dir="ltr">text-scramble.tsx</span></span>
+      <button class="tsx-btn" data-tsx="text-scramble" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
     </div>
     <div class="stage"><div class="stage-inner">
       <div class="scramble-wrap">
@@ -693,6 +710,7 @@ footer a:hover{color:var(--accent)}
   <div class="demo rv" style="margin-bottom:18px">
     <div class="demo-bar">
       <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="8" width="18" height="9" rx="2"/><path d="M7 12.5h.01M12 12.5h.01M17 12.5h.01"/></svg><span dir="ltr">otp-input.tsx</span></span>
+      <button class="tsx-btn" data-tsx="otp-input" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
     </div>
     <div class="stage"><div class="stage-inner">
       <div class="otp-wrap">
@@ -707,6 +725,7 @@ footer a:hover{color:var(--accent)}
   <div class="demo rv" style="margin-bottom:18px">
     <div class="demo-bar">
       <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 4v16"/></svg><span dir="ltr">flip-dialog.tsx</span></span>
+      <button class="tsx-btn" data-tsx="flip-dialog" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
     </div>
     <div class="stage"><div class="stage-inner">
       <div class="flip-stage" id="flipStage">
@@ -733,6 +752,7 @@ footer a:hover{color:var(--accent)}
   <div class="demo rv" style="margin-bottom:18px">
     <div class="demo-bar">
       <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span dir="ltr">odometer.tsx</span></span>
+      <button class="tsx-btn" data-tsx="odometer" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
     </div>
     <div class="stage"><div class="stage-inner">
       <div class="odo-wrap">
@@ -1817,6 +1837,24 @@ if(stage){
   document.getElementById("threeRetry").addEventListener("click",()=>init());
   init();
 }
+</script>
+<script>
+document.addEventListener("click",async e=>{
+  const b=e.target.closest(".tsx-btn");
+  if(!b||b.disabled)return;
+  b.disabled=true;
+  const orig=b.innerHTML;
+  try{
+    const r=await fetch("/r/"+b.dataset.tsx+".json");
+    if(!r.ok)throw 0;
+    const item=await r.json();
+    await navigator.clipboard.writeText(item.files[0].content);
+    b.classList.add("ok");b.textContent="הועתק!";
+  }catch(_){
+    b.classList.add("err");b.textContent="נכשל - נסו שוב";
+  }
+  setTimeout(()=>{b.classList.remove("ok","err");b.innerHTML=orig;b.disabled=false;},1700);
+});
 </script>
 </body>
 </html>

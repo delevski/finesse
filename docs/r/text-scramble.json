@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-scramble",
+  "type": "registry:component",
+  "title": "Text Scramble",
+  "description": "כותרת שמתפענחת אות אחר אות בגלילה לתצוגה - גליפים אקראיים לפני התייצבות.",
+  "files": [
+    {
+      "path": "components/finesse/text-scramble.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nconst HEBREW_POOL = \"אבגדהוזחטיכלמנסעפצקרשת\";\n\n/**\n * TextScramble - the text decodes letter by letter when it scrolls into view,\n * random glyphs before each character settles. Hebrew-aware (RTL).\n */\nexport function TextScramble({\n  text,\n  className,\n  speed = 52,\n}: {\n  text: string;\n  className?: string;\n  speed?: number;\n}) {\n  const ref = React.useRef<HTMLSpanElement>(null);\n  const raf = React.useRef<number>(0);\n  const reduce = React.useMemo(\n    () => typeof matchMedia !== \"undefined\" && matchMedia(\"(prefers-reduced-motion: reduce)\").matches,\n    []\n  );\n\n  const play = React.useCallback(() => {\n    const el = ref.current;\n    if (!el) return;\n    cancelAnimationFrame(raf.current);\n    if (reduce) { el.textContent = text; return; }\n    const chars = [...text];\n    const t0 = performance.now();\n    const total = chars.length * speed + 380;\n    const step = (now: number) => {\n      const t = now - t0;\n      let out = \"\";\n      chars.forEach((ch, i) => {\n        if (ch === \" \") { out += \" \"; return; }\n        if (t > i * speed + 380) out += ch;\n        else if (t > i * speed)\n          out += `<span class=\"opacity-40\">${HEBREW_POOL[Math.floor(Math.random() * HEBREW_POOL.length)]}</span>`;\n        else out += '<span class=\"opacity-0\">_</span>';\n      });\n      el.innerHTML = out;\n      if (t < total) raf.current = requestAnimationFrame(step);\n      else el.textContent = text;\n    };\n    raf.current = requestAnimationFrame(step);\n  }, [text, speed, reduce]);\n\n  React.useEffect(() => {\n    const el = ref.current;\n    if (!el) return;\n    const io = new IntersectionObserver(\n      (entries) => {\n        if (entries[0].isIntersecting) { play(); io.disconnect(); }\n      },\n      { threshold: 0.6 }\n    );\n    io.observe(el);\n    return () => { io.disconnect(); cancelAnimationFrame(raf.current); };\n  }, [play]);\n\n  return (\n    <span\n      ref={ref}\n      dir=\"rtl\"\n      onClick={play}\n      className={cn(\"inline-block min-h-[1.4em] cursor-pointer font-extrabold\", className)}\n      aria-label={text}\n    >\n      {text}\n    </span>\n  );\n}\n"
+    }
+  ]
+}
