@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dynamic-menu",
+  "type": "registry:component",
+  "title": "Dynamic Menu",
+  "description": "פריטים שבחרת עולים לראש עם FLIP - התפריט לומד הרגלים.",
+  "files": [
+    {
+      "path": "components/finesse/dynamic-menu.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * DynamicMenu - items you pick get promoted to the top with a FLIP\n * animation, so the menu learns your habits.\n */\nconst BASE = [\"העתקה\", \"הדבקה\", \"שיתוף\", \"שמירה\", \"מחיקה\"];\n\nexport function DynamicMenu({ className }: { className?: string }) {\n  const [items, setItems] = React.useState(BASE);\n  const refs = React.useRef(new Map<string, HTMLElement>());\n  const promote = (it: string) => {\n    const prev = new Map([...refs.current].map(([k, el]) => [k, el.getBoundingClientRect().top]));\n    setItems((arr) => [it, ...arr.filter((x) => x !== it)]);\n    requestAnimationFrame(() => {\n      refs.current.forEach((el, k) => {\n        const before = prev.get(k);\n        if (before === undefined) return;\n        const dy = before - el.getBoundingClientRect().top;\n        if (dy) {\n          el.animate([{ transform: `translateY(${dy}px)` }, { transform: \"translateY(0)\" }], {\n            duration: 450, easing: \"cubic-bezier(.2,1.3,.3,1)\",\n          });\n        }\n      });\n    });\n  };\n  return (\n    <div dir=\"rtl\" className={cn(\"w-52 space-y-1.5\", className)}>\n      {items.map((it, i) => (\n        <button\n          key={it}\n          ref={(el) => { if (el) refs.current.set(it, el); }}\n          type=\"button\"\n          onClick={() => promote(it)}\n          className=\"flex w-full items-center justify-between rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-2.5 text-sm text-zinc-200 hover:border-teal-600\"\n        >\n          {it}\n          {i === 0 && <span className=\"rounded-full bg-teal-500/15 px-2 py-0.5 text-[10px] font-bold text-teal-300\">שכיח</span>}\n        </button>\n      ))}\n    </div>\n  );\n}\n"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "magnetic-button",
+  "type": "registry:component",
+  "title": "Magnetic Button",
+  "description": "כפתור שנמשך אל הסמן ברדיוס וקופץ חזרה למנוחה.",
+  "files": [
+    {
+      "path": "components/finesse/magnetic-button.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * MagneticButton - the button leans toward the pointer inside its field\n * and springs back to rest when the pointer leaves.\n */\nexport function MagneticButton({ className, children = \"לחצו עליי\" }: { className?: string; children?: React.ReactNode }) {\n  const ref = React.useRef<HTMLButtonElement>(null);\n  const [t, setT] = React.useState({ x: 0, y: 0, hot: false });\n  return (\n    <div className={cn(\"grid h-32 w-56 place-items-center\", className)}\n      onPointerMove={(e) => {\n        const r = ref.current!.getBoundingClientRect();\n        const cx = r.left + r.width / 2, cy = r.top + r.height / 2;\n        const dx = e.clientX - cx, dy = e.clientY - cy;\n        const dist = Math.hypot(dx, dy);\n        if (dist < 110) setT({ x: dx * 0.35, y: dy * 0.35, hot: true });\n        else setT({ x: 0, y: 0, hot: false });\n      }}\n      onPointerLeave={() => setT({ x: 0, y: 0, hot: false })}\n    >\n      <button\n        ref={ref}\n        type=\"button\"\n        className=\"rounded-full bg-teal-500 px-7 py-3 text-sm font-bold text-zinc-950 shadow-lg shadow-teal-500/30\"\n        style={{\n          transform: `translate(${t.x}px, ${t.y}px)`,\n          transition: t.hot ? \"transform .08s linear\" : \"transform .55s cubic-bezier(.2,1.6,.3,1)\",\n        }}\n      >\n        {children}\n      </button>\n    </div>\n  );\n}\n"
+    }
+  ]
+}

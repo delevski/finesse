@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "signature-pad",
+  "type": "registry:component",
+  "title": "Signature Pad",
+  "description": "חתימה על קנבס עם קו שנהנה כמו עט אמיתי, וניקוי בדעיכה.",
+  "files": [
+    {
+      "path": "components/finesse/signature-pad.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * SignaturePad - draw a signature on the canvas; strokes taper like a\n * real pen, and clear wipes with a fade.\n */\nexport function SignaturePad({ className }: { className?: string }) {\n  const ref = React.useRef<HTMLCanvasElement>(null);\n  const drawing = React.useRef(false);\n  const [empty, setEmpty] = React.useState(true);\n  const pos = (e: React.PointerEvent) => {\n    const r = ref.current!.getBoundingClientRect();\n    return { x: e.clientX - r.left, y: e.clientY - r.top };\n  };\n  return (\n    <div dir=\"rtl\" className={cn(\"w-72\", className)}>\n      <canvas\n        ref={ref}\n        width={560} height={260}\n        className=\"h-32 w-full touch-none rounded-2xl border border-zinc-700 bg-zinc-950\"\n        style={{ cursor: \"crosshair\", opacity: empty ? 0.92 : 1, transition: \"opacity .3s\" }}\n        onPointerDown={(e) => {\n          drawing.current = true;\n          const ctx = ref.current!.getContext(\"2d\")!;\n          const p = pos(e);\n          ctx.strokeStyle = \"#2dd4bf\"; ctx.lineCap = \"round\"; ctx.lineJoin = \"round\";\n          ctx.beginPath(); ctx.moveTo(p.x, p.y);\n        }}\n        onPointerMove={(e) => {\n          if (!drawing.current) return;\n          const ctx = ref.current!.getContext(\"2d\")!;\n          const p = pos(e);\n          ctx.lineWidth = 3 + (e.pressure || 0.4) * 5;\n          ctx.lineTo(p.x, p.y); ctx.stroke();\n          setEmpty(false);\n        }}\n        onPointerUp={() => (drawing.current = false)}\n      />\n      <div className=\"mt-2 flex items-center justify-between\">\n        <span className=\"text-[11px] text-zinc-500\">חתמו כאן</span>\n        <button\n          type=\"button\"\n          onClick={() => { const c = ref.current!; c.getContext(\"2d\")!.clearRect(0, 0, c.width, c.height); setEmpty(true); }}\n          className=\"rounded-lg border border-zinc-700 px-3 py-1 text-[11px] font-bold text-zinc-300 hover:border-rose-500 hover:text-rose-400\"\n        >\n          ניקוי\n        </button>\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ]
+}

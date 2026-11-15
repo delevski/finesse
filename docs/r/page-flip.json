@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "page-flip",
+  "type": "registry:component",
+  "title": "Page Flip",
+  "description": "כרטיס שמתהפך כמו עמוד בספר בתלת-ממד, עם צד אחורי.",
+  "files": [
+    {
+      "path": "components/finesse/page-flip.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * PageFlip - a card whose corner peels like a real page, revealing the\n * back face with a 3D flip.\n */\nexport function PageFlip({ className }: { className?: string }) {\n  const [flip, setFlip] = React.useState(false);\n  return (\n    <button\n      type=\"button\"\n      onClick={() => setFlip((v) => !v)}\n      className={cn(\"relative h-44 w-40 [perspective:800px]\", className)}\n      aria-label=\"הפיכת עמוד\"\n    >\n      <span\n        className=\"absolute inset-0 transition-transform [transform-style:preserve-3d]\"\n        style={{ transform: flip ? \"rotateY(-180deg)\" : \"none\", transitionDuration: \".8s\", transitionTimingFunction: \"cubic-bezier(.3,1.2,.3,1)\" }}\n      >\n        <span dir=\"rtl\" className=\"absolute inset-0 grid place-items-center rounded-2xl border border-zinc-700 bg-zinc-900 p-4 text-sm font-bold text-zinc-100 [backface-visibility:hidden]\">\n          עמוד 1<br /><span className=\"text-xs font-normal text-zinc-500\">לחצו להפיכה</span>\n        </span>\n        <span dir=\"rtl\" className=\"absolute inset-0 grid place-items-center rounded-2xl border border-teal-700 bg-teal-950 p-4 text-sm font-bold text-teal-200 [backface-visibility:hidden]\" style={{ transform: \"rotateY(180deg)\" }}>\n          עמוד 2<br /><span className=\"text-xs font-normal text-teal-500\">הצד השני!</span>\n        </span>\n      </span>\n    </button>\n  );\n}\n"
+    }
+  ]
+}

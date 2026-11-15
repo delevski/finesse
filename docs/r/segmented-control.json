@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "segmented-control",
+  "type": "registry:component",
+  "title": "Segmented Control",
+  "description": "בקר ארבע-דרך עם גלולה קפיצית שחורגת ומתייצבת.",
+  "files": [
+    {
+      "path": "components/finesse/segmented-control.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * SegmentedControl - a four-way segmented control with a spring pill\n * that overshoots then settles.\n */\nconst SEGS = [\"יומי\", \"שבועי\", \"חודשי\", \"שנתי\"];\n\nexport function SegmentedControl({ className }: { className?: string }) {\n  const [i, setI] = React.useState(0);\n  return (\n    <div dir=\"rtl\" className={cn(\"relative flex rounded-2xl border border-zinc-700 bg-zinc-900 p-1\", className)}>\n      <span\n        aria-hidden\n        className=\"absolute top-1 bottom-1 rounded-xl bg-teal-500 transition-all\"\n        style={{\n          right: `calc(${i} * 25% + 4px)`,\n          width: \"calc(25% - 8px)\",\n          transitionDuration: \".55s\",\n          transitionTimingFunction: \"cubic-bezier(.2,1.5,.3,1)\",\n        }}\n      />\n      {SEGS.map((s, k) => (\n        <button\n          key={s}\n          type=\"button\"\n          onClick={() => setI(k)}\n          className=\"relative z-10 w-16 py-2 text-xs font-bold transition-colors\"\n          style={{ color: i === k ? \"#04211d\" : \"#a1a1aa\" }}\n        >\n          {s}\n        </button>\n      ))}\n    </div>\n  );\n}\n"
+    }
+  ]
+}

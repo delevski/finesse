@@ -3,11 +3,81 @@
   "name": "finesse",
   "items": [
     {
+      "name": "agent-steps",
+      "title": "Agent Steps",
+      "titleHe": "צעדי סוכן",
+      "description": "ציר צעדים של ריצת סוכן: ספינר שהופך ל-V מצויר, צעד אחר צעד.",
+      "url": "/r/agent-steps.json"
+    },
+    {
+      "name": "bell-button",
+      "title": "Bell Button",
+      "titleHe": "כפתור פעמון",
+      "description": "הפעמון מצלצל בקשת אמיתית עם ניצוצות, והבאדג' מתאפס.",
+      "url": "/r/bell-button.json"
+    },
+    {
+      "name": "boarding-pass",
+      "title": "Boarding Pass",
+      "titleHe": "כרטיס עלייה",
+      "description": "כרטיס טיסה עם שורת קריעה, הטיית תלת-ממד וברקוד מרקד.",
+      "url": "/r/boarding-pass.json"
+    },
+    {
+      "name": "bottom-bar",
+      "title": "Bottom Bar",
+      "titleHe": "סרגל תחתון",
+      "description": "סרגל טאבים בסגנון טלפון עם מחוון נוזלי שנמתח אל הטאב.",
+      "url": "/r/bottom-bar.json"
+    },
+    {
+      "name": "card-field",
+      "title": "Card Field",
+      "titleHe": "שדה כרטיס",
+      "description": "שדה תשלום שמקבץ ספרות בלייב ומהפך כרטיס מיני לצד CVV.",
+      "url": "/r/card-field.json"
+    },
+    {
+      "name": "cart-button",
+      "title": "Cart Button",
+      "titleHe": "כפתור סל",
+      "description": "הוספה לסל שולחת פריט מעופף לסמל והבאדג' קופץ עם הספירה.",
+      "url": "/r/cart-button.json"
+    },
+    {
+      "name": "checkbox-list",
+      "title": "Checkbox List",
+      "titleHe": "רשימת צ'קבוקסים",
+      "description": "סימון מצייר V, קו חוצה את התווית באנימציה, והפריט צונח לבוצעו.",
+      "url": "/r/checkbox-list.json"
+    },
+    {
       "name": "cmd-palette",
       "title": "Command Palette",
       "titleHe": "פלטת פקודות",
       "description": "Cmd+K עם סטאגר בפתיחה, חיפוש חי והדגשה שקופצת עם החיצים.",
       "url": "/r/cmd-palette.json"
+    },
+    {
+      "name": "command-button",
+      "title": "Command Button",
+      "titleHe": "כפתור פקודה",
+      "description": "כפתור בסגנון Cmd+K עם צ'יפים נוצצים שפועם כשלוחצים על הקיצור האמיתי.",
+      "url": "/r/command-button.json"
+    },
+    {
+      "name": "copy-button",
+      "title": "Copy Button",
+      "titleHe": "כפתור העתקה",
+      "description": "אייקון ההעתקה הופך ל-V נצייר עם אישור קופץ, ואז חוזר בשקט.",
+      "url": "/r/copy-button.json"
+    },
+    {
+      "name": "crt-text",
+      "title": "CRT Text",
+      "titleHe": "טקסט CRT",
+      "description": "(threeui, MIT) טקסט נדלק כמו מסך CRT ישן: קו נפתח, סריקות ופליקר.",
+      "url": "/r/crt-text.json"
     },
     {
       "name": "detent-dial",
@@ -17,11 +87,46 @@
       "url": "/r/detent-dial.json"
     },
     {
+      "name": "dot-matrix-text",
+      "title": "Dot Matrix Text",
+      "titleHe": "טקסט מטריצת-נקודות",
+      "description": "(threeui, MIT) המילה מרכיבה את עצמה מרשת נקודות, תא אחר תא.",
+      "url": "/r/dot-matrix-text.json"
+    },
+    {
+      "name": "dynamic-menu",
+      "title": "Dynamic Menu",
+      "titleHe": "תפריט דינמי",
+      "description": "פריטים שבחרת עולים לראש עם FLIP - התפריט לומד הרגלים.",
+      "url": "/r/dynamic-menu.json"
+    },
+    {
+      "name": "dynamic-text",
+      "title": "Dynamic Text",
+      "titleHe": "טקסט דינמי",
+      "description": "כותרת שמחליפה מילת מפתח במעבר טשטוש+גלילה בלולאה.",
+      "url": "/r/dynamic-text.json"
+    },
+    {
       "name": "empty-robot",
       "title": "Empty Robot",
       "titleHe": "רובוט אמפטי־סטייט",
       "description": "רובוט עצוב למצב ריק שמתאושש וקופץ כשמגיע הפריט הראשון.",
       "url": "/r/empty-robot.json"
+    },
+    {
+      "name": "expand-card",
+      "title": "Expand Card",
+      "titleHe": "כרטיס מתרחב",
+      "description": "כרטיס קומפקטי שנפתח במקום בקפיץ וחושף שורות פרטים מדורגות.",
+      "url": "/r/expand-card.json"
+    },
+    {
+      "name": "exposure-slider",
+      "title": "Exposure Slider",
+      "titleHe": "סליידר חשיפה",
+      "description": "סליידר שמשחית בין לילה ליום בסצנה, עם שמש/ירח מסתובבים.",
+      "url": "/r/exposure-slider.json"
     },
     {
       "name": "face-id",
@@ -59,6 +164,20 @@
       "url": "/r/ghost-suggestion.json"
     },
     {
+      "name": "glass-lens",
+      "title": "Glass Lens",
+      "titleHe": "עדשת זכוכית",
+      "description": "עדשה שעוקבת אחרי הסמן ומגדילה את התוכן מתחתיה.",
+      "url": "/r/glass-lens.json"
+    },
+    {
+      "name": "glass-player",
+      "title": "Glass Player",
+      "titleHe": "נגן זכוכית",
+      "description": "מיני-נגן זכוכית מט: עמודות אקולייזר רוקדות וקופאות בפאוז.",
+      "url": "/r/glass-player.json"
+    },
+    {
       "name": "goo-menu",
       "title": "Goo Menu",
       "titleHe": "תפריט גאו",
@@ -66,11 +185,25 @@
       "url": "/r/goo-menu.json"
     },
     {
+      "name": "goo-morph",
+      "title": "Goo Morph",
+      "titleHe": "מורפ נוזלי",
+      "description": "שתי בועות מתמזגות דרך פילטר goo וממירות פליי לפאוז.",
+      "url": "/r/goo-morph.json"
+    },
+    {
       "name": "goo-thinking",
       "title": "Goo Thinking",
       "titleHe": "מחשבה נוזלית",
       "description": "שלוש נקודות מתמזגות ונפרדות בגאו עד שהתשובה נולדת מהן.",
       "url": "/r/goo-thinking.json"
+    },
+    {
+      "name": "hold-button",
+      "title": "Hold Button",
+      "titleHe": "כפתור החזקה",
+      "description": "החזקה ממלאה טבעת מסביב לכפתור; רק החזקה מלאה מאשרת.",
+      "url": "/r/hold-button.json"
     },
     {
       "name": "hold-publish",
@@ -87,6 +220,13 @@
       "url": "/r/jelly-slider.json"
     },
     {
+      "name": "laser-border",
+      "title": "Laser Border",
+      "titleHe": "מסגרת לייזר",
+      "description": "(threeui, MIT) כרטיס שקרן לייזר סורקת את מסגרתו ברציפות.",
+      "url": "/r/laser-border.json"
+    },
+    {
       "name": "letter-limit",
       "title": "Letter Limit",
       "titleHe": "גבול אותיות",
@@ -99,6 +239,13 @@
       "titleHe": "לייק מתפוצץ",
       "description": "לב קופץ בקפיץ, זורק טבעת ו־12 חלקיקים, והמונה מתגלגל.",
       "url": "/r/like-burst.json"
+    },
+    {
+      "name": "liquid-metal-button",
+      "title": "Liquid Metal Button",
+      "titleHe": "כפתור מתכת נוזלית",
+      "description": "(threeui, MIT) כפתור כרום עם ברק מתכתי זורם ופיזיקת לחיצה.",
+      "url": "/r/liquid-metal-button.json"
     },
     {
       "name": "liquid-tabs",
@@ -115,6 +262,13 @@
       "url": "/r/loading-success.json"
     },
     {
+      "name": "magnetic-button",
+      "title": "Magnetic Button",
+      "titleHe": "כפתור מגנטי",
+      "description": "כפתור שנמשך אל הסמן ברדיוס וקופץ חזרה למנוחה.",
+      "url": "/r/magnetic-button.json"
+    },
+    {
       "name": "marker-text",
       "title": "Marker Text",
       "titleHe": "מרקר סימון",
@@ -129,11 +283,39 @@
       "url": "/r/morph-island.json"
     },
     {
+      "name": "morph-popover",
+      "title": "Morph Popover",
+      "titleHe": "פופאובר מתמורפ",
+      "description": "כפתור ההדק עצמו גדל לפאנל פופאובר עם אינטרפולציית פינות.",
+      "url": "/r/morph-popover.json"
+    },
+    {
       "name": "morph-tooltip",
       "title": "Morph Tooltip",
       "titleHe": "טולטיפ מתהווה",
       "description": "כפתור ה-? עצמו גדל לתוך הטולטיפ במורפולוגיית FLIP מלאה.",
       "url": "/r/morph-tooltip.json"
+    },
+    {
+      "name": "music-toggle",
+      "title": "Music Toggle",
+      "titleHe": "טוגל מוזיקה",
+      "description": "כפתור פליי/פאוז שהאייקון שלו עובר מורפ ועמודות רוקדות לידו.",
+      "url": "/r/music-toggle.json"
+    },
+    {
+      "name": "notification-stack",
+      "title": "Notification Stack",
+      "titleHe": "ערימת התראות",
+      "description": "התראות מוערמות; ריחוף פורס אותן ומחיאה זורקת את העליונה.",
+      "url": "/r/notification-stack.json"
+    },
+    {
+      "name": "number-stepper",
+      "title": "Number Stepper",
+      "titleHe": "סטפר מספרים",
+      "description": "פלוס/מינוס עם ספרות שמתגלגלות כמו אודומטר וקופצות.",
+      "url": "/r/number-stepper.json"
     },
     {
       "name": "odometer",
@@ -148,6 +330,13 @@
       "titleHe": "קלט קוד חד־פעמי",
       "description": "תאי ספרות עם קפיצה אלסטית, סימון שגיאה ברעידה ואישור ירוק בגל מדורג.",
       "url": "/r/otp-input.json"
+    },
+    {
+      "name": "page-flip",
+      "title": "Page Flip",
+      "titleHe": "דפדוף עמוד",
+      "description": "כרטיס שמתהפך כמו עמוד בספר בתלת-ממד, עם צד אחורי.",
+      "url": "/r/page-flip.json"
     },
     {
       "name": "pagination-dots",
@@ -185,6 +374,20 @@
       "url": "/r/playground.json"
     },
     {
+      "name": "profile-card",
+      "title": "Profile Card",
+      "titleHe": "כרטיס פרופיל",
+      "description": "ריחוף מגליד פאנל סטטיסטיקות מעל כרטיס פרופיל, פסים גדלים בקסקדה.",
+      "url": "/r/profile-card.json"
+    },
+    {
+      "name": "prompt-box",
+      "title": "Prompt Box",
+      "titleHe": "תיבת פרומפט",
+      "description": "שדה פרומפט לסוכן שגדל בפוקוס, סופר תווים, וכפתור שליחה שהופך לעצירה.",
+      "url": "/r/prompt-box.json"
+    },
+    {
       "name": "pull-cord",
       "title": "Pull Cord",
       "titleHe": "חבל הדלקה",
@@ -199,11 +402,25 @@
       "url": "/r/pull-refresh.json"
     },
     {
+      "name": "range-slider",
+      "title": "Range Slider",
+      "titleHe": "סליידר טווח",
+      "description": "סליידר עם בועת ערך קפיצית, מילוי גרדיאנט ונעילה על טיקים.",
+      "url": "/r/range-slider.json"
+    },
+    {
       "name": "read-along",
       "title": "Read Along",
       "titleHe": "קריאה מודגשת",
       "description": "הדגשת קריוקי שקופצת מילה־מילה בקצב קריאה עם קו התקדמות.",
       "url": "/r/read-along.json"
+    },
+    {
+      "name": "roll-links",
+      "title": "Roll Links",
+      "titleHe": "קישורים מתגלגלים",
+      "description": "קישורי ניווט שהטקסט שלהם מתגלגל למעלה וחושף תאום בצבע מבטא.",
+      "url": "/r/roll-links.json"
     },
     {
       "name": "rubber-dock",
@@ -213,11 +430,81 @@
       "url": "/r/rubber-dock.json"
     },
     {
+      "name": "scrubber",
+      "title": "Scrubber",
+      "titleHe": "סקראבר מדיה",
+      "description": "סקראבר וידאו עם בועת תצוגה קפיצית שעוקבת אחרי הגרירה.",
+      "url": "/r/scrubber.json"
+    },
+    {
+      "name": "segmented-control",
+      "title": "Segmented Control",
+      "titleHe": "בקר מקטעים",
+      "description": "בקר ארבע-דרך עם גלולה קפיצית שחורגת ומתייצבת.",
+      "url": "/r/segmented-control.json"
+    },
+    {
+      "name": "sidebar-collapse",
+      "title": "Sidebar Collapse",
+      "titleHe": "סיידבר מתכווץ",
+      "description": "סיידבר מיני שמתקפל לפס אייקונים בקפיץ, תוויות דועכות.",
+      "url": "/r/sidebar-collapse.json"
+    },
+    {
+      "name": "signature-pad",
+      "title": "Signature Pad",
+      "titleHe": "פד חתימה",
+      "description": "חתימה על קנבס עם קו שנהנה כמו עט אמיתי, וניקוי בדעיכה.",
+      "url": "/r/signature-pad.json"
+    },
+    {
+      "name": "siri-orb",
+      "title": "Siri Orb",
+      "titleHe": "כדור סירי",
+      "description": "כדור גרדיאנט שכבתי שנושם, ומתלקח כשמחזיקים אותו.",
+      "url": "/r/siri-orb.json"
+    },
+    {
+      "name": "slide-confirm",
+      "title": "Slide to Confirm",
+      "titleHe": "החלקה לאישור",
+      "description": "ידית שנגררת לאורך מסילה עם שימר; שחרור מוקדם מחזיר בקפיץ.",
+      "url": "/r/slide-confirm.json"
+    },
+    {
+      "name": "spark-badge",
+      "title": "Spark Badge",
+      "titleHe": "באדג' ניצוצות",
+      "description": "(threeui, MIT) באדג' עם ניצוצות שחגים סביבו על קנבס זעיר.",
+      "url": "/r/spark-badge.json"
+    },
+    {
       "name": "split-flap",
       "title": "Split Flap",
       "titleHe": "מונה ספליט־פלאפ",
       "description": "ספרות מתהפכות כמו שלט שדה תעופה ישן, חצי עליון מתקפל ונפתח מחדש.",
       "url": "/r/split-flap.json"
+    },
+    {
+      "name": "spring-dropdown",
+      "title": "Spring Dropdown",
+      "titleHe": "דרופדאון קפיצי",
+      "description": "תפריט שנפתח בקסקדה עם אוברשוט קפיצי, פריט אחר פריט.",
+      "url": "/r/spring-dropdown.json"
+    },
+    {
+      "name": "springy-input",
+      "title": "Springy Input",
+      "titleHe": "שדה קפיצי",
+      "description": "אינפוט שקופץ בפוקוס, תווית צפה, ורעידה פיזית על קלט שגוי.",
+      "url": "/r/springy-input.json"
+    },
+    {
+      "name": "stack-panel",
+      "title": "Stack Panel",
+      "titleHe": "פאנלים מוערמים",
+      "description": "פאנלים מוערמים נפרשים כמו חבילת קלפים בריחוף.",
+      "url": "/r/stack-panel.json"
     },
     {
       "name": "star-rating",
@@ -269,11 +556,25 @@
       "url": "/r/tag-input.json"
     },
     {
+      "name": "task-list",
+      "title": "Task List",
+      "titleHe": "רשימת משימות",
+      "description": "סימון משימה קופץ עם קונפטי ומעדכן פס התקדמות בקפיץ.",
+      "url": "/r/task-list.json"
+    },
+    {
       "name": "text-scramble",
       "title": "Text Scramble",
       "titleHe": "טקסט מתפענח",
       "description": "כותרת שמתפענחת אות אחר אות בגלילה לתצוגה - גליפים אקראיים לפני התייצבות.",
       "url": "/r/text-scramble.json"
+    },
+    {
+      "name": "thinking-text",
+      "title": "Thinking Text",
+      "titleHe": "טקסט חושב",
+      "description": "שורת טעינת-סוכן סטנדרטית: שימר על הטקסט ונקודות קופצות.",
+      "url": "/r/thinking-text.json"
     },
     {
       "name": "tilt-card",
@@ -290,6 +591,48 @@
       "url": "/r/toast-physics.json"
     },
     {
+      "name": "tool-approval",
+      "title": "Tool Approval",
+      "titleHe": "אישור כלי",
+      "description": "כרטיס בקשת הרצה של סוכן: אישור מחליק טיל, דחייה מחליקה רוז.",
+      "url": "/r/tool-approval.json"
+    },
+    {
+      "name": "toolbar",
+      "title": "Toolbar",
+      "titleHe": "סרגל כלים צף",
+      "description": "כדור כלים צף: אייקונים קופצים פנימה בקסקדה עם בועות תווית.",
+      "url": "/r/toolbar.json"
+    },
+    {
+      "name": "typewriter",
+      "title": "Typewriter",
+      "titleHe": "מכונת כתיבה",
+      "description": "מקליד משפט, עוצר, מוחק ומקליד את הבא, עם סמן מהבהב.",
+      "url": "/r/typewriter.json"
+    },
+    {
+      "name": "undo-button",
+      "title": "Undo Button",
+      "titleHe": "כפתור ביטול",
+      "description": "אחרי פעולה צץ כפתור ביטול עם ספירה לאחור מעגלית.",
+      "url": "/r/undo-button.json"
+    },
+    {
+      "name": "uplink-loader",
+      "title": "Uplink Loader",
+      "titleHe": "טוען אפלינק",
+      "description": "(threeui, MIT) חבילות אור עולות בקורה אל רכזת, עם טקסט התקדמות.",
+      "url": "/r/uplink-loader.json"
+    },
+    {
+      "name": "voice-input",
+      "title": "Voice Input",
+      "titleHe": "קלט קולי",
+      "description": "החזקת מיקרופון: עמודות צורת-גל חיות, ואז התמליל מקליד את עצמו.",
+      "url": "/r/voice-input.json"
+    },
+    {
       "name": "voice-note",
       "title": "Voice Note",
       "titleHe": "הודעה קולית",
@@ -302,6 +645,13 @@
       "titleHe": "גל משקל",
       "description": "אותיות מתחמנות סביב האצבע בפונט וריאבילי; גל עצמאי במנוחה.",
       "url": "/r/weight-wave.json"
+    },
+    {
+      "name": "wheel-picker",
+      "title": "Wheel Picker",
+      "titleHe": "גלגל בחירה",
+      "description": "תוף בסגנון iOS עם סיבוב תלת-ממדי ודטנטים בגלילה.",
+      "url": "/r/wheel-picker.json"
     },
     {
       "name": "word-roll",

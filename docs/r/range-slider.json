@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "range-slider",
+  "type": "registry:component",
+  "title": "Range Slider",
+  "description": "סליידר עם בועת ערך קפיצית, מילוי גרדיאנט ונעילה על טיקים.",
+  "files": [
+    {
+      "path": "components/finesse/range-slider.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * RangeSlider - a slider with a spring tooltip bubble, gradient fill and\n * snapping ticks every 25.\n */\nexport function RangeSlider({ className }: { className?: string }) {\n  const [v, setV] = React.useState(40);\n  const snap = (x: number) => Math.round(x / 25) * 25 === x ? x : x;\n  return (\n    <div dir=\"ltr\" className={cn(\"w-64\", className)}>\n      <div className=\"relative\">\n        <input\n          type=\"range\" min={0} max={100} value={v}\n          onChange={(e) => setV(Number(e.target.value))}\n          onMouseUp={() => setV((x) => Math.round(x / 25) * 25)}\n          onTouchEnd={() => setV((x) => Math.round(x / 25) * 25)}\n          className=\"h-2 w-full cursor-pointer appearance-none rounded-full outline-none\"\n          style={{ background: `linear-gradient(90deg, #2dd4bf ${v}%, #3f3f46 ${v}%)` }}\n          aria-label=\"טווח\"\n        />\n        <span\n          className=\"pointer-events-none absolute -top-9 rounded-lg bg-teal-500 px-2 py-1 text-[11px] font-black text-zinc-950 transition-all\"\n          style={{ left: `calc(${v}% - 14px)`, transform: `scale(${1 + Math.abs(v % 25) / 200})` }}\n          dir=\"ltr\"\n        >\n          {snap(v)}\n        </span>\n      </div>\n      <div className=\"mt-1.5 flex justify-between px-0.5\">\n        {[0, 25, 50, 75, 100].map((t) => (\n          <span key={t} className=\"h-1.5 w-0.5 rounded bg-zinc-600\" style={{ background: v >= t ? \"#2dd4bf\" : \"#3f3f46\" }} />\n        ))}\n      </div>\n      <style>{`input[type=range]::-webkit-slider-thumb{appearance:none;width:18px;height:18px;border-radius:50%;background:#f4f4f5;border:3px solid #0d9488;box-shadow:0 2px 8px rgba(0,0,0,.5);cursor:grab}`}</style>\n    </div>\n  );\n}\n"
+    }
+  ]
+}

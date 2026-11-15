@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "typewriter",
+  "type": "registry:component",
+  "title": "Typewriter",
+  "description": "מקליד משפט, עוצר, מוחק ומקליד את הבא, עם סמן מהבהב.",
+  "files": [
+    {
+      "path": "components/finesse/typewriter.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * Typewriter - types a sentence, pauses, deletes it and types the next,\n * with a blinking block caret.\n */\nconst LINES = [\"בונים ממשקים שמרגישים חיים.\", \"אנימציה היא לא קישוט - היא שפה.\", \"RTL מהקו הראשון.\"];\n\nexport function Typewriter({ className }: { className?: string }) {\n  const [i, setI] = React.useState(0);\n  const [len, setLen] = React.useState(0);\n  React.useEffect(() => {\n    const full = LINES[i];\n    let t: ReturnType<typeof setTimeout>;\n    if (len < full.length) t = setTimeout(() => setLen(len + 1), 55);\n    else t = setTimeout(() => setLen(0), 1800);\n    if (len === 0 && full.length === 0) setI((i + 1) % LINES.length);\n    if (len === 0) t = setTimeout(() => { setI((i + 1) % LINES.length); }, 250);\n    return () => clearTimeout(t);\n  }, [len, i]);\n  return (\n    <p dir=\"rtl\" className={cn(\"min-h-7 text-lg font-bold text-zinc-100\", className)}>\n      {LINES[i].slice(0, len)}\n      <span aria-hidden className=\"mr-0.5 inline-block h-5 w-2.5 translate-y-0.5 bg-teal-400\" style={{ animation: \"twBlink 1s steps(1) infinite\" }} />\n      <style>{`@keyframes twBlink{50%{opacity:0}}`}</style>\n    </p>\n  );\n}\n"
+    }
+  ]
+}

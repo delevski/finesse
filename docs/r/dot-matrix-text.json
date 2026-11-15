@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dot-matrix-text",
+  "type": "registry:component",
+  "title": "Dot Matrix Text",
+  "description": "(threeui, MIT) המילה מרכיבה את עצמה מרשת נקודות, תא אחר תא.",
+  "files": [
+    {
+      "path": "components/finesse/dot-matrix-text.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * DotMatrixText (adapted from threeui's dot-matrix, MIT) - the word\n * assembles itself from a grid of dots that fade in cell by cell.\n */\nexport function DotMatrixText({ className, text = \"finesse\" }: { className?: string; text?: string }) {\n  const ref = React.useRef<HTMLCanvasElement>(null);\n  React.useEffect(() => {\n    const c = ref.current!;\n    const ctx = c.getContext(\"2d\")!;\n    const off = document.createElement(\"canvas\");\n    off.width = c.width; off.height = c.height;\n    const octx = off.getContext(\"2d\")!;\n    octx.fillStyle = \"#fff\";\n    octx.font = \"900 44px Inter, sans-serif\";\n    octx.textAlign = \"center\"; octx.textBaseline = \"middle\";\n    octx.fillText(text, c.width / 2, c.height / 2);\n    const img = octx.getImageData(0, 0, c.width, c.height).data;\n    const G = 7;\n    const cells: { x: number; y: number; d: number }[] = [];\n    for (let y = 0; y < c.height; y += G)\n      for (let x = 0; x < c.width; x += G)\n        if (img[(y * c.width + x) * 4 + 3] > 128) cells.push({ x, y, d: Math.random() * 1.2 });\n    let raf = 0, t0 = performance.now();\n    const draw = (t: number) => {\n      const el = (t - t0) / 1000;\n      ctx.clearRect(0, 0, c.width, c.height);\n      cells.forEach((p) => {\n        const a = Math.max(0, Math.min(1, (el - p.d) * 2.4));\n        const pulse = 0.85 + 0.15 * Math.sin(el * 2 + p.x * 0.05);\n        ctx.globalAlpha = a;\n        ctx.fillStyle = \"#5eead4\";\n        ctx.beginPath(); ctx.arc(p.x, p.y, 2.1 * pulse * (0.3 + 0.7 * a), 0, 7); ctx.fill();\n      });\n      raf = requestAnimationFrame(draw);\n    };\n    raf = requestAnimationFrame(draw);\n    return () => cancelAnimationFrame(raf);\n  }, [text]);\n  return <canvas ref={ref} width={280} height={80} className={className} aria-label={text} role=\"img\" />;\n}\n"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "siri-orb",
+  "type": "registry:component",
+  "title": "Siri Orb",
+  "description": "כדור גרדיאנט שכבתי שנושם, ומתלקח כשמחזיקים אותו.",
+  "files": [
+    {
+      "path": "components/finesse/siri-orb.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * SiriOrb - a layered gradient orb that breathes, and flares up while\n * you hold it (like speaking to Siri).\n */\nexport function SiriOrb({ className }: { className?: string }) {\n  const [hot, setHot] = React.useState(false);\n  const blob = (c1: string, c2: string, dur: string, delay = \"0s\"): React.CSSProperties => ({\n    position: \"absolute\", inset: 0, borderRadius: \"50%\",\n    background: `radial-gradient(circle at 35% 35%, ${c1}, ${c2})`,\n    filter: \"blur(6px)\", mixBlendMode: \"screen\",\n    animation: `siriSpin ${dur} linear infinite`, animationDelay: delay,\n    transformOrigin: \"58% 42%\",\n  });\n  return (\n    <button\n      type=\"button\"\n      aria-label=\"דברו אליי\"\n      onPointerDown={() => setHot(true)}\n      onPointerUp={() => setHot(false)}\n      onPointerLeave={() => setHot(false)}\n      className={cn(\"relative h-28 w-28 cursor-pointer select-none\", className)}\n      style={{ transform: hot ? \"scale(1.12)\" : \"scale(1)\", transition: \"transform .4s cubic-bezier(.2,1.4,.3,1)\" }}\n    >\n      <span style={blob(\"#2dd4bf\", \"transparent 65%\", \"7s\")} />\n      <span style={blob(\"#818cf8\", \"transparent 65%\", \"5s\", \"-2s\")} />\n      <span style={blob(\"#f472b6\", \"transparent 62%\", \"9s\", \"-4s\")} />\n      <span\n        className=\"absolute inset-0 rounded-full\"\n        style={{ boxShadow: hot ? \"0 0 44px rgba(45,212,191,.55)\" : \"0 0 22px rgba(129,140,248,.3)\", transition: \"box-shadow .3s\" }}\n      />\n      <style>{`@keyframes siriSpin{to{transform:rotate(1turn) scale(1.08)}}`}</style>\n    </button>\n  );\n}\n"
+    }
+  ]
+}

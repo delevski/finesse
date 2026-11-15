@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "command-button",
+  "type": "registry:component",
+  "title": "Command Button",
+  "description": "כפתור בסגנון Cmd+K עם צ'יפים נוצצים שפועם כשלוחצים על הקיצור האמיתי.",
+  "files": [
+    {
+      "path": "components/finesse/command-button.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * CommandButton - a ⌘K button whose key chips shimmer, and which pulses\n * when the real shortcut is pressed.\n */\nexport function CommandButton({ className }: { className?: string }) {\n  const [pulse, setPulse] = React.useState(false);\n  React.useEffect(() => {\n    const onKey = (e: KeyboardEvent) => {\n      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === \"k\") {\n        e.preventDefault();\n        setPulse(true);\n        setTimeout(() => setPulse(false), 650);\n      }\n    };\n    window.addEventListener(\"keydown\", onKey);\n    return () => window.removeEventListener(\"keydown\", onKey);\n  }, []);\n  return (\n    <button\n      type=\"button\"\n      onClick={() => { setPulse(true); setTimeout(() => setPulse(false), 650); }}\n      className={cn(\n        \"relative flex items-center gap-2 overflow-hidden rounded-xl border border-zinc-700 bg-zinc-900 px-4 py-2.5 text-sm text-zinc-300 shadow-lg transition-transform\",\n        className\n      )}\n      style={{ transform: pulse ? \"scale(1.06)\" : \"scale(1)\", transitionTimingFunction: \"cubic-bezier(.2,1.6,.3,1)\" }}\n    >\n      <svg width=\"15\" height=\"15\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" strokeWidth=\"2\" strokeLinecap=\"round\"><circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"m21 21-4.3-4.3\"/></svg>\n      חיפוש מהיר\n      <span className=\"flex gap-1\" dir=\"ltr\">\n        {[\"⌘\", \"K\"].map((k) => (\n          <kbd key={k} className=\"rounded-md border border-zinc-600 bg-zinc-800 px-1.5 py-0.5 text-[11px] font-bold text-zinc-200\">{k}</kbd>\n        ))}\n      </span>\n      <span\n        aria-hidden\n        className=\"pointer-events-none absolute inset-0\"\n        style={{\n          background: \"linear-gradient(105deg, transparent 40%, rgba(45,212,191,.25) 50%, transparent 60%)\",\n          backgroundSize: \"250% 100%\",\n          animation: \"cmdShimmer 2.8s linear infinite\",\n        }}\n      />\n      <style>{`@keyframes cmdShimmer{0%{background-position:130% 0}100%{background-position:-130% 0}}`}</style>\n    </button>\n  );\n}\n"
+    }
+  ]
+}

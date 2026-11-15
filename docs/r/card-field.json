@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "card-field",
+  "type": "registry:component",
+  "title": "Card Field",
+  "description": "שדה תשלום שמקבץ ספרות בלייב ומהפך כרטיס מיני לצד CVV.",
+  "files": [
+    {
+      "path": "components/finesse/card-field.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * CardField - a payment input that groups digits live, detects the brand\n * and flips the mini card to the CVV side when you focus the code.\n */\nexport function CardField({ className }: { className?: string }) {\n  const [num, setNum] = React.useState(\"\");\n  const [cvv, setCvv] = React.useState(false);\n  const grouped = num.replace(/(.{4})/g, \"$& \").trim();\n  const brand = num.startsWith(\"4\") ? \"Visa\" : num.startsWith(\"5\") ? \"Mastercard\" : \"כרטיס\";\n  return (\n    <div dir=\"rtl\" className={cn(\"w-72\", className)}>\n      <div className=\"mb-3 h-28 [perspective:700px]\">\n        <div className=\"relative h-full transition-transform [transform-style:preserve-3d]\"\n          style={{ transform: cvv ? \"rotateY(180deg)\" : \"none\", transitionDuration: \".6s\", transitionTimingFunction: \"cubic-bezier(.3,1.2,.3,1)\" }}>\n          <div className=\"absolute inset-0 rounded-2xl bg-gradient-to-br from-teal-600 to-teal-900 p-4 [backface-visibility:hidden]\">\n            <p className=\"text-[10px] text-teal-200\">{brand}</p>\n            <p className=\"mt-5 font-mono text-lg tracking-widest text-white\" dir=\"ltr\">{grouped || \"•••• •••• •••• ••••\"}</p>\n          </div>\n          <div className=\"absolute inset-0 rounded-2xl bg-gradient-to-br from-zinc-700 to-zinc-900 p-4 [backface-visibility:hidden]\" style={{ transform: \"rotateY(180deg)\" }}>\n            <div className=\"h-6 rounded bg-zinc-950/70\" />\n            <p className=\"mt-3 text-left font-mono text-white\" dir=\"ltr\">CVV</p>\n          </div>\n        </div>\n      </div>\n      <div className=\"flex gap-2\" dir=\"ltr\">\n        <input\n          inputMode=\"numeric\"\n          placeholder=\"4580 1234 5678 9012\"\n          value={grouped}\n          onChange={(e) => setNum(e.target.value.replace(/\\D/g, \"\").slice(0, 16))}\n          onFocus={() => setCvv(false)}\n          className=\"flex-1 rounded-xl border border-zinc-700 bg-zinc-900 px-3 py-2.5 font-mono text-sm text-zinc-100 outline-none focus:border-teal-500\"\n        />\n        <input\n          inputMode=\"numeric\" placeholder=\"CVV\" maxLength={4}\n          onFocus={() => setCvv(true)}\n          className=\"w-16 rounded-xl border border-zinc-700 bg-zinc-900 px-3 py-2.5 text-center font-mono text-sm text-zinc-100 outline-none focus:border-teal-500\"\n        />\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ]
+}

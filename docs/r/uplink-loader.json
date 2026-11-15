@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "uplink-loader",
+  "type": "registry:component",
+  "title": "Uplink Loader",
+  "description": "(threeui, MIT) חבילות אור עולות בקורה אל רכזת, עם טקסט התקדמות.",
+  "files": [
+    {
+      "path": "components/finesse/uplink-loader.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * UplinkLoader (adapted from threeui's uplink-loader, MIT) - packets of\n * light rise up a beam into a hub, with progress text.\n */\nexport function UplinkLoader({ className, label = \"מעלה נתונים\" }: { className?: string; label?: string }) {\n  return (\n    <span className={cn(\"relative grid h-32 w-24 place-items-center\", className)} dir=\"rtl\">\n      <span aria-hidden className=\"absolute bottom-6 top-2 w-px bg-gradient-to-t from-teal-500/60 to-transparent\" />\n      {[0, 1, 2, 3].map((i) => (\n        <span key={i} aria-hidden className=\"absolute bottom-6 h-1.5 w-1.5 rounded-full bg-teal-300\"\n          style={{ animation: `upRise 1.6s ${i * 0.4}s cubic-bezier(.4,0,.6,1) infinite` }} />\n      ))}\n      <span aria-hidden className=\"absolute top-0 h-3 w-3 rounded-full bg-teal-400\"\n        style={{ boxShadow: \"0 0 14px rgba(45,212,191,.9)\", animation: \"upHub 1.6s ease-in-out infinite\" }} />\n      <span className=\"absolute -bottom-1 text-[10px] font-semibold text-zinc-400\">{label}...</span>\n      <style>{`@keyframes upRise{0%{transform:translateY(0) scale(1);opacity:0}15%{opacity:1}85%{opacity:1}100%{transform:translateY(-92px) scale(.4);opacity:0}}\n@keyframes upHub{0%,100%{transform:scale(1)}50%{transform:scale(1.35)}}`}</style>\n    </span>\n  );\n}\n"
+    }
+  ]
+}

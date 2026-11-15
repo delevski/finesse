@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "laser-border",
+  "type": "registry:component",
+  "title": "Laser Border",
+  "description": "(threeui, MIT) כרטיס שקרן לייזר סורקת את מסגרתו ברציפות.",
+  "files": [
+    {
+      "path": "components/finesse/laser-border.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * LaserBorder (adapted from threeui's laser, MIT) - a card outlined by a\n * laser beam that continuously traces its rounded border.\n */\nexport function LaserBorder({ className, children }: { className?: string; children?: React.ReactNode }) {\n  return (\n    <div className={cn(\"relative w-64 overflow-hidden rounded-2xl p-[2px]\", className)}>\n      <span\n        aria-hidden\n        className=\"absolute inset-[-40%]\"\n        style={{\n          background: \"conic-gradient(from 0deg, transparent 0deg, transparent 300deg, #2dd4bf 340deg, #a5f3fc 355deg, transparent 360deg)\",\n          animation: \"laserSpin 3s linear infinite\",\n        }}\n      />\n      <div dir=\"rtl\" className=\"relative rounded-[14px] bg-zinc-950 p-4\">\n        {children ?? (\n          <>\n            <p className=\"text-sm font-bold text-zinc-100\">כרטיס מוגן</p>\n            <p className=\"mt-1 text-xs text-zinc-500\">הלייזר סורק את ההיקף ללא הפסקה.</p>\n          </>\n        )}\n      </div>\n      <style>{`@keyframes laserSpin{to{transform:rotate(1turn)}}`}</style>\n    </div>\n  );\n}\n"
+    }
+  ]
+}

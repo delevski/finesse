@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "glass-lens",
+  "type": "registry:component",
+  "title": "Glass Lens",
+  "description": "עדשה שעוקבת אחרי הסמן ומגדילה את התוכן מתחתיה.",
+  "files": [
+    {
+      "path": "components/finesse/glass-lens.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * GlassLens - a lens that follows the pointer over a card and magnifies\n * the content underneath it.\n */\nconst LINES = [\"מבט מקרוב על הדו״ח השבועי\", \"הכנסות: ₪48,200 (+12%)\", \"משתמשים פעילים: 8,431\", \"המרה: 3.8% ← 4.2%\"];\n\nexport function GlassLens({ className }: { className?: string }) {\n  const ref = React.useRef<HTMLDivElement>(null);\n  const [pos, setPos] = React.useState<{ x: number; y: number } | null>(null);\n  const Z = 1.8, R = 52;\n  return (\n    <div\n      ref={ref}\n      dir=\"rtl\"\n      onPointerMove={(e) => {\n        const r = ref.current!.getBoundingClientRect();\n        setPos({ x: e.clientX - r.left, y: e.clientY - r.top });\n      }}\n      onPointerLeave={() => setPos(null)}\n      className={cn(\"relative w-72 cursor-none overflow-hidden rounded-2xl border border-zinc-700 bg-zinc-900 p-5\", className)}\n    >\n      <div className=\"space-y-2\">\n        {LINES.map((l, i) => (\n          <p key={i} className={i === 0 ? \"text-sm font-bold text-zinc-100\" : \"text-xs text-zinc-400\"}>{l}</p>\n        ))}\n      </div>\n      {pos && (\n        <>\n          <div\n            aria-hidden\n            className=\"pointer-events-none absolute space-y-2 p-5\"\n            style={{\n              inset: 0,\n              transform: `scale(${Z})`,\n              transformOrigin: `${pos.x}px ${pos.y}px`,\n              clipPath: `circle(${R}px at ${pos.x}px ${pos.y}px)`,\n              background: \"#27272a\",\n            }}\n          >\n            {LINES.map((l, i) => (\n              <p key={i} className={i === 0 ? \"text-sm font-bold text-teal-300\" : \"text-xs text-zinc-300\"}>{l}</p>\n            ))}\n          </div>\n          <div\n            aria-hidden\n            className=\"pointer-events-none absolute rounded-full border-2 border-teal-400/70 shadow-2xl\"\n            style={{ width: R * 2, height: R * 2, left: pos.x - R, top: pos.y - R, boxShadow: \"inset 0 0 24px rgba(45,212,191,.15), 0 12px 32px rgba(0,0,0,.5)\" }}\n          />\n        </>\n      )}\n    </div>\n  );\n}\n"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "profile-card",
+  "type": "registry:component",
+  "title": "Profile Card",
+  "description": "ריחוף מגליד פאנל סטטיסטיקות מעל כרטיס פרופיל, פסים גדלים בקסקדה.",
+  "files": [
+    {
+      "path": "components/finesse/profile-card.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * ProfileCard - hover (or tap) slides a stats panel up over the avatar\n * card, bars growing with a stagger.\n */\nconst STATS = [[\"עוקבים\", 86], [\"פרויקטים\", 64], [\"השפעה\", 92]];\n\nexport function ProfileCard({ className }: { className?: string }) {\n  const [on, setOn] = React.useState(false);\n  return (\n    <div\n      dir=\"rtl\"\n      onPointerEnter={(e) => { if (e.pointerType !== \"touch\") setOn(true); }}\n      onPointerLeave={(e) => { if (e.pointerType !== \"touch\") setOn(false); }}\n      onClick={() => setOn((v) => !v)}\n      className={cn(\"relative w-56 cursor-pointer overflow-hidden rounded-2xl border border-zinc-700 bg-zinc-900\", className)}\n    >\n      <div className=\"flex items-center gap-3 p-4\">\n        <span className=\"grid h-12 w-12 place-items-center rounded-full bg-gradient-to-br from-teal-400 to-teal-700 text-lg font-black text-zinc-950\">א</span>\n        <div>\n          <p className=\"text-sm font-bold text-zinc-100\">אבי כהן</p>\n          <p className=\"text-xs text-zinc-500\">מעצב מוצר</p>\n        </div>\n      </div>\n      <div\n        className=\"space-y-2 bg-zinc-800/95 p-4 backdrop-blur transition-transform\"\n        style={{ transform: on ? \"translateY(0)\" : \"translateY(101%)\", transitionDuration: \".45s\", transitionTimingFunction: \"cubic-bezier(.2,1.3,.3,1)\" }}\n      >\n        {STATS.map(([k, v], i) => (\n          <div key={k as string}>\n            <div className=\"flex justify-between text-[11px] text-zinc-400\"><span>{k}</span><span dir=\"ltr\">{v}%</span></div>\n            <div className=\"mt-1 h-1.5 overflow-hidden rounded-full bg-zinc-700\">\n              <div className=\"h-full rounded-full bg-teal-400 transition-all\"\n                style={{ width: on ? `${v}%` : \"0%\", transitionDuration: \".6s\", transitionDelay: `${i * 90}ms`, transitionTimingFunction: \"cubic-bezier(.2,1.2,.3,1)\" }} />\n            </div>\n          </div>\n        ))}\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ]
+}

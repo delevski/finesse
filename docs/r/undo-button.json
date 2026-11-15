@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "undo-button",
+  "type": "registry:component",
+  "title": "Undo Button",
+  "description": "אחרי פעולה צץ כפתור ביטול עם ספירה לאחור מעגלית.",
+  "files": [
+    {
+      "path": "components/finesse/undo-button.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * UndoButton - after an action, an undo button appears with a circular\n * countdown; letting it lapse \"locks in\" the change.\n */\nexport function UndoButton({ className }: { className?: string }) {\n  const [state, setState] = React.useState<\"idle\" | \"undo\" | \"gone\">(\"idle\");\n  const C = 2 * Math.PI * 9;\n  return (\n    <div dir=\"rtl\" className={cn(\"flex items-center gap-3\", className)}>\n      <button\n        type=\"button\"\n        onClick={() => { setState(\"undo\"); setTimeout(() => setState((s) => (s === \"undo\" ? \"gone\" : s)), 4000); }}\n        className=\"rounded-xl bg-teal-500 px-4 py-2.5 text-sm font-bold text-zinc-950 transition-transform active:scale-95\"\n      >\n        מחיקת פריט\n      </button>\n      {state === \"undo\" && (\n        <button\n          type=\"button\"\n          onClick={() => setState(\"idle\")}\n          className=\"flex items-center gap-2 rounded-xl border border-zinc-700 bg-zinc-900 px-3 py-2 text-xs font-bold text-zinc-200\"\n          style={{ animation: \"undoIn .4s cubic-bezier(.2,1.5,.3,1) both\" }}\n        >\n          <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\">\n            <circle cx=\"12\" cy=\"12\" r=\"9\" fill=\"none\" stroke=\"#3f3f46\" strokeWidth=\"2.5\" />\n            <circle cx=\"12\" cy=\"12\" r=\"9\" fill=\"none\" stroke=\"#2dd4bf\" strokeWidth=\"2.5\" strokeLinecap=\"round\"\n              strokeDasharray={C} transform=\"rotate(-90 12 12)\">\n              <animate attributeName=\"stroke-dashoffset\" from=\"0\" to={String(C)} dur=\"4s\" fill=\"freeze\" />\n            </circle>\n            <path d=\"M9 10V7l-3 3 3 3v-3h6\" fill=\"none\" stroke=\"#e4e4e7\" strokeWidth=\"1.8\" strokeLinecap=\"round\" strokeLinejoin=\"round\" />\n          </svg>\n          ביטול\n        </button>\n      )}\n      {state === \"gone\" && <span className=\"text-xs text-zinc-500\" style={{ animation: \"undoIn .3s both\" }}>הפריט נמחק לצמיתות</span>}\n      <style>{`@keyframes undoIn{from{opacity:0;transform:translateX(10px) scale(.85)}to{opacity:1;transform:none}}`}</style>\n    </div>\n  );\n}\n"
+    }
+  ]
+}

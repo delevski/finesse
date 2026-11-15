@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "glass-player",
+  "type": "registry:component",
+  "title": "Glass Player",
+  "description": "מיני-נגן זכוכית מט: עמודות אקולייזר רוקדות וקופאות בפאוז.",
+  "files": [
+    {
+      "path": "components/finesse/glass-player.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * GlassPlayer - a frosted-glass mini player: equalizer bars dance while\n * playing and freeze mid-air on pause.\n */\nexport function GlassPlayer({ className }: { className?: string }) {\n  const [play, setPlay] = React.useState(true);\n  return (\n    <div dir=\"rtl\" className={cn(\"flex w-72 items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-3 shadow-2xl backdrop-blur-xl\", className)}>\n      <button\n        type=\"button\"\n        onClick={() => setPlay((v) => !v)}\n        aria-label={play ? \"השהיה\" : \"ניגון\"}\n        className=\"grid h-11 w-11 shrink-0 place-items-center rounded-full bg-teal-400 text-zinc-950 shadow-lg transition-transform active:scale-90\"\n      >\n        <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"currentColor\">\n          {play ? <><rect x=\"6\" y=\"5\" width=\"4\" height=\"14\" rx=\"1\"/><rect x=\"14\" y=\"5\" width=\"4\" height=\"14\" rx=\"1\"/></> : <path d=\"M7 4.8v14.4c0 .8.9 1.3 1.6.9l11-7.2c.6-.4.6-1.4 0-1.8l-11-7.2c-.7-.4-1.6.1-1.6.9z\"/>}\n        </svg>\n      </button>\n      <div className=\"min-w-0 flex-1\">\n        <p className=\"truncate text-sm font-bold text-zinc-100\">צלילי לילה בגלילה</p>\n        <div className=\"mt-1.5 flex h-5 items-end gap-[3px]\" dir=\"ltr\" aria-hidden>\n          {Array.from({ length: 24 }, (_, i) => (\n            <span\n              key={i}\n              className=\"w-1 flex-none rounded-full bg-teal-300/80\"\n              style={{\n                height: 4 + ((i * 37) % 14),\n                animation: play ? `gpBar ${0.6 + (i % 4) * 0.13}s ${i * 0.05}s ease-in-out infinite alternate` : \"none\",\n              }}\n            />\n          ))}\n        </div>\n      </div>\n      <style>{`@keyframes gpBar{from{transform:scaleY(.3)}to{transform:scaleY(1)}}`}</style>\n    </div>\n  );\n}\n"
+    }
+  ]
+}

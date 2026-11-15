@@ -1,5 +1,7 @@
 # finesse
 
+![finesse - 94 animated RTL Hebrew components for shadcn/ui](docs/social-preview.png)
+
 **A design skill pack that makes coding agents ship polished, animated, RTL-aware interfaces - instead of library defaults.**
 
 Works with Claude Code, Cursor, Codex and any agent that reads skill files. Built for app UI (dashboards, forms, lists, chats) on **Next.js + shadcn/ui + Tailwind + Framer Motion**.
@@ -49,7 +51,7 @@ Or just say *"make this look designed"* in a project where the skill is installe
 
 ## Signature components - drop-in via shadcn registry
 
-44 animated components in the registry (58 live demos across the three galleries), installable straight into any shadcn/ui project:
+94 animated components in the registry (108 live demos across the four galleries), installable straight into any shadcn/ui project:
 
 | fan-drawer | swipe-stack | liquid-tabs |
 | --- | --- | --- |
@@ -59,7 +61,7 @@ Or just say *"make this look designed"* in a project where the skill is installe
 npx shadcn@latest add https://finesse-demo.orworkdelevski.workers.dev/r/fan-drawer.json
 ```
 
-Available: `fan-drawer`, `swipe-stack`, `liquid-tabs`, `toast-physics`, `tilt-card`, `text-scramble`, `otp-input`, `flip-dialog`, `odometer`, `playground`, `pull-refresh`, `split-flap`, `empty-robot`, `cmd-palette`, `swipe-actions`, `step-walker`, `peel-skeleton`, `voice-note`, `sunset-toggle`, plus the motion gallery inspired by [designbookmark.com/motion](https://designbookmark.com/motion): `plan-switch`, `letter-limit`, `pull-cord`, `morph-tooltip`, `file-drop`, `morph-island`, `goo-menu`, `jelly-slider`, `hold-publish`, `rubber-dock`, `marker-text`, `word-roll`, `weight-wave`, `read-along`, `ghost-suggestion`, `goo-thinking`, `streaming-reply`, `like-burst`, `loading-success`, `star-rating`, `detent-dial`, `face-id`, `pagination-dots`, `tag-input`, `password-strength`. Sources live in `registry/finesse/` and are built into `docs/r/` by `scripts/build-registry.mjs`. Every component card in the live gallery also has a copy-TSX button.
+Available: `fan-drawer`, `swipe-stack`, `liquid-tabs`, `toast-physics`, `tilt-card`, `text-scramble`, `otp-input`, `flip-dialog`, `odometer`, `playground`, `pull-refresh`, `split-flap`, `empty-robot`, `cmd-palette`, `swipe-actions`, `step-walker`, `peel-skeleton`, `voice-note`, `sunset-toggle`, plus the motion gallery inspired by [designbookmark.com/motion](https://designbookmark.com/motion): `plan-switch`, `letter-limit`, `pull-cord`, `morph-tooltip`, `file-drop`, `morph-island`, `goo-menu`, `jelly-slider`, `hold-publish`, `rubber-dock`, `marker-text`, `word-roll`, `weight-wave`, `read-along`, `ghost-suggestion`, `goo-thinking`, `streaming-reply`, `like-burst`, `loading-success`, `star-rating`, `detent-dial`, `face-id`, `pagination-dots`, `tag-input`, `password-strength`. The fourth gallery adds 50 more, including spring dropdowns, hold and slide confirmation, a Siri orb, notification stacks, a wheel picker, a signature pad, a dot-matrix canvas, a liquid-metal button and a laser border, inspired by [threeui](https://github.com/MengTo/threeui) and designbookmark. Sources live in `registry/finesse/` and are built into `docs/r/` by `scripts/build-registry.mjs`. Every component card in the live gallery also has a copy-TSX button.
 
 ## What's inside
 

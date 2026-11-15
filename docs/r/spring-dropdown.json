@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "spring-dropdown",
+  "type": "registry:component",
+  "title": "Spring Dropdown",
+  "description": "תפריט שנפתח בקסקדה עם אוברשוט קפיצי, פריט אחר פריט.",
+  "files": [
+    {
+      "path": "components/finesse/spring-dropdown.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * SpringDropdown - a menu whose items cascade in with spring overshoot,\n * each item trailing the one above it.\n */\nconst ITEMS = [\"עריכה\", \"שכפול\", \"העברה לארכיון\", \"מחיקה\"];\n\nexport function SpringDropdown({ className }: { className?: string }) {\n  const [open, setOpen] = React.useState(false);\n  const [picked, setPicked] = React.useState<string | null>(null);\n  return (\n    <div dir=\"rtl\" className={cn(\"relative w-56\", className)}>\n      <button\n        type=\"button\"\n        aria-expanded={open}\n        onClick={() => setOpen((v) => !v)}\n        className=\"flex w-full items-center justify-between rounded-xl border border-zinc-700 bg-zinc-900 px-4 py-2.5 text-sm font-semibold text-zinc-100\"\n      >\n        {picked ?? \"בחרו פעולה\"}\n        <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" strokeWidth=\"2\" strokeLinecap=\"round\"\n          style={{ transform: open ? \"rotate(180deg)\" : \"none\", transition: \"transform .35s cubic-bezier(.2,1.4,.3,1)\" }}>\n          <path d=\"m6 9 6 6 6-6\" />\n        </svg>\n      </button>\n      <div className=\"absolute inset-x-0 top-full z-10 mt-2\" style={{ pointerEvents: open ? \"auto\" : \"none\" }}>\n        {ITEMS.map((it, i) => (\n          <button\n            key={it}\n            type=\"button\"\n            tabIndex={open ? 0 : -1}\n            onClick={() => { setPicked(it); setOpen(false); }}\n            className=\"block w-full rounded-lg border border-zinc-800 bg-zinc-900 px-4 py-2.5 text-right text-sm text-zinc-200 shadow-lg first:rounded-t-xl last:rounded-b-xl hover:bg-zinc-800 hover:text-teal-300\"\n            style={{\n              transform: open ? \"translateY(0) scale(1)\" : \"translateY(-14px) scale(.92)\",\n              opacity: open ? 1 : 0,\n              transition: \"transform .5s cubic-bezier(.2,1.5,.3,1), opacity .25s, background .15s\",\n              transitionDelay: open ? `${i * 55}ms` : \"0ms\",\n            }}\n          >\n            {it}\n          </button>\n        ))}\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ]
+}

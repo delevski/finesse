@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "liquid-metal-button",
+  "type": "registry:component",
+  "title": "Liquid Metal Button",
+  "description": "(threeui, MIT) כפתור כרום עם ברק מתכתי זורם ופיזיקת לחיצה.",
+  "files": [
+    {
+      "path": "components/finesse/liquid-metal-button.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * LiquidMetalButton (adapted from threeui's liquid-metal-button, MIT) -\n * a chrome button with a flowing metallic sheen and press physics.\n */\nexport function LiquidMetalButton({ className, children = \"שידרוג\" }: { className?: string; children?: React.ReactNode }) {\n  return (\n    <button\n      type=\"button\"\n      className={cn(\"relative overflow-hidden rounded-full px-8 py-3 text-sm font-black text-zinc-900 transition-transform active:scale-95\", className)}\n      style={{\n        background: \"linear-gradient(135deg,#e5e7eb 0%,#9ca3af 25%,#f9fafb 50%,#6b7280 75%,#e5e7eb 100%)\",\n        backgroundSize: \"220% 220%\",\n        animation: \"lmFlow 3.2s ease-in-out infinite\",\n        boxShadow: \"0 10px 26px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.7)\",\n      }}\n    >\n      <span className=\"relative z-10\">{children}</span>\n      <span aria-hidden className=\"absolute inset-0\"\n        style={{ background: \"linear-gradient(105deg,transparent 42%,rgba(255,255,255,.85) 50%,transparent 58%)\", backgroundSize: \"260% 100%\", animation: \"lmSheen 2.4s linear infinite\", mixBlendMode: \"screen\" }} />\n      <style>{`@keyframes lmFlow{0%,100%{background-position:0% 40%}50%{background-position:100% 60%}}\n@keyframes lmSheen{0%{background-position:160% 0}100%{background-position:-160% 0}}`}</style>\n    </button>\n  );\n}\n"
+    }
+  ]
+}

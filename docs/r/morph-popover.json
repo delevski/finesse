@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "morph-popover",
+  "type": "registry:component",
+  "title": "Morph Popover",
+  "description": "כפתור ההדק עצמו גדל לפאנל פופאובר עם אינטרפולציית פינות.",
+  "files": [
+    {
+      "path": "components/finesse/morph-popover.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * MorphPopover - the trigger button itself grows into the popover panel\n * with a FLIP-ish morph and rounded-corner interpolation.\n */\nexport function MorphPopover({ className }: { className?: string }) {\n  const [open, setOpen] = React.useState(false);\n  return (\n    <div dir=\"rtl\" className={cn(\"relative h-44 w-56\", className)}>\n      <div\n        onClick={() => setOpen((v) => !v)}\n        className=\"absolute bottom-0 right-0 cursor-pointer border border-zinc-700 bg-zinc-900 shadow-xl transition-all\"\n        style={{\n          width: open ? 224 : 120,\n          height: open ? 150 : 44,\n          borderRadius: open ? 18 : 999,\n          transitionDuration: \".5s\",\n          transitionTimingFunction: \"cubic-bezier(.2,1.35,.3,1)\",\n        }}\n      >\n        <div className=\"grid h-11 place-items-center text-sm font-bold\"\n          style={{ color: open ? \"#2dd4bf\" : \"#e4e4e7\", opacity: open ? 0 : 1, transition: \"opacity .2s\", position: \"absolute\", insetInline: 0, bottom: open ? \"auto\" : 0, top: open ? 0 : \"auto\" }}>\n          {open ? \"\" : \"פתיחה\"}\n        </div>\n        <div className=\"p-4 text-xs\" style={{ opacity: open ? 1 : 0, transition: \"opacity .3s .18s\" }}>\n          <p className=\"mb-2 text-sm font-bold text-zinc-100\">פעולות מהירות</p>\n          {[\"שיתוף הקישור\", \"שכפול הדף\", \"העברה לארכיון\"].map((a) => (\n            <button key={a} type=\"button\" className=\"block w-full rounded-lg px-2 py-1.5 text-right text-zinc-300 hover:bg-zinc-800 hover:text-teal-300\">{a}</button>\n          ))}\n        </div>\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "crt-text",
+  "type": "registry:component",
+  "title": "CRT Text",
+  "description": "(threeui, MIT) טקסט נדלק כמו מסך CRT ישן: קו נפתח, סריקות ופליקר.",
+  "files": [
+    {
+      "path": "components/finesse/crt-text.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * CRTText (adapted from threeui's crt, MIT) - text boots up like an old\n * CRT: a bright line snaps open, scanlines and a subtle flicker follow.\n */\nexport function CRTText({ className, children = \"SYSTEM ONLINE\" }: { className?: string; children?: React.ReactNode }) {\n  const [on, setOn] = React.useState(false);\n  React.useEffect(() => {\n    const t = setTimeout(() => setOn(true), 400);\n    return () => clearTimeout(t);\n  }, []);\n  return (\n    <button type=\"button\" onClick={() => { setOn(false); setTimeout(() => setOn(true), 250); }} className={cn(\"block\", className)} aria-label=\"הפעלה מחדש של המסך\">\n      <span\n        dir=\"ltr\"\n        className=\"relative inline-block overflow-hidden rounded-lg bg-zinc-950 px-6 py-3 font-mono text-lg font-bold tracking-widest text-teal-300\"\n        style={{\n          transform: on ? \"scaleY(1)\" : \"scaleY(0.01)\",\n          filter: on ? \"brightness(1)\" : \"brightness(3)\",\n          transition: \"transform .5s cubic-bezier(.2,1.2,.3,1), filter .6s\",\n          textShadow: \"0 0 12px rgba(45,212,191,.7)\",\n        }}\n      >\n        {children}\n        <span aria-hidden className=\"pointer-events-none absolute inset-0\"\n          style={{ background: \"repeating-linear-gradient(0deg, transparent 0 2px, rgba(0,0,0,.28) 2px 3px)\", animation: \"crtFlick 4s linear infinite\" }} />\n      </span>\n      <style>{`@keyframes crtFlick{0%,94%,100%{opacity:1}95%{opacity:.86}97%{opacity:.94}}`}</style>\n    </button>\n  );\n}\n"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "springy-input",
+  "type": "registry:component",
+  "title": "Springy Input",
+  "description": "אינפוט שקופץ בפוקוס, תווית צפה, ורעידה פיזית על קלט שגוי.",
+  "files": [
+    {
+      "path": "components/finesse/springy-input.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * SpringyInput - a field that springs up on focus, floats its label,\n * and shakes with physics on invalid input.\n */\nexport function SpringyInput({ className }: { className?: string }) {\n  const [val, setVal] = React.useState(\"\");\n  const [focus, setFocus] = React.useState(false);\n  const [shake, setShake] = React.useState(0);\n  const bad = val.length > 0 && !val.includes(\"@\");\n  return (\n    <div dir=\"rtl\" className={cn(\"relative w-64\", className)}>\n      <label\n        className=\"pointer-events-none absolute right-3 transition-all\"\n        style={{\n          top: focus || val ? \"-9px\" : \"12px\",\n          fontSize: focus || val ? \"11px\" : \"14px\",\n          color: bad ? \"#fb7185\" : focus ? \"#2dd4bf\" : \"#a1a1aa\",\n          background: \"#18181b\",\n          padding: \"0 4px\",\n          transitionTimingFunction: \"cubic-bezier(.2,1.4,.3,1)\",\n          transitionDuration: \".3s\",\n        }}\n      >\n        אימייל\n      </label>\n      <input\n        dir=\"rtl\"\n        value={val}\n        onChange={(e) => setVal(e.target.value)}\n        onFocus={() => setFocus(true)}\n        onBlur={() => { setFocus(false); if (bad) setShake((s) => s + 1); }}\n        className=\"w-full rounded-xl border bg-zinc-900 px-3 py-3 text-sm text-zinc-100 outline-none\"\n        style={{\n          borderColor: bad ? \"#fb7185\" : focus ? \"#2dd4bf\" : \"#3f3f46\",\n          transform: focus ? \"scale(1.03)\" : \"scale(1)\",\n          transition: \"border-color .2s, transform .35s cubic-bezier(.2,1.5,.3,1)\",\n          animation: shake ? \"springyShake .45s\" : undefined,\n        }}\n        key={shake}\n      />\n      {bad && !focus && <p className=\"mt-1 text-xs text-rose-400\">חסר @ - נסו שוב</p>}\n      <style>{`@keyframes springyShake{0%{transform:translateX(0)}25%{transform:translateX(7px)}50%{transform:translateX(-6px)}75%{transform:translateX(4px)}100%{transform:translateX(0)}}`}</style>\n    </div>\n  );\n}\n"
+    }
+  ]
+}

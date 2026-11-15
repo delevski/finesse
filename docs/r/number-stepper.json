@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "number-stepper",
+  "type": "registry:component",
+  "title": "Number Stepper",
+  "description": "פלוס/מינוס עם ספרות שמתגלגלות כמו אודומטר וקופצות.",
+  "files": [
+    {
+      "path": "components/finesse/number-stepper.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * NumberStepper - plus/minus stepper whose digits roll vertically like\n * an odometer, bouncing on change.\n */\nexport function NumberStepper({ className, min = 0, max = 9 }: { className?: string; min?: number; max?: number }) {\n  const [n, setN] = React.useState(() => Math.max(min, Math.min(max, 3)));\n  const bump = (d: number) => setN((v) => Math.max(min, Math.min(max, v + d)));\n  return (\n    <div dir=\"ltr\" className={cn(\"flex items-center gap-3\", className)}>\n      <button type=\"button\" onClick={() => bump(-1)} aria-label=\"הורדה\"\n        className=\"grid h-9 w-9 place-items-center rounded-full border border-zinc-700 bg-zinc-900 text-lg text-zinc-200 transition-transform active:scale-90\">−</button>\n      <span className=\"relative h-10 w-8 overflow-hidden text-center\">\n        <span\n          className=\"absolute inset-x-0 top-0 transition-transform\"\n          style={{ transform: `translateY(${-(n - min) * 40}px)`, transitionDuration: \".45s\", transitionTimingFunction: \"cubic-bezier(.2,1.4,.3,1)\" }}\n        >\n          {Array.from({ length: max - min + 1 }, (_, k) => (\n            <span key={k} className=\"block h-10 text-2xl font-black leading-10 text-zinc-100\">{min + k}</span>\n          ))}\n        </span>\n      </span>\n      <button type=\"button\" onClick={() => bump(1)} aria-label=\"הוספה\"\n        className=\"grid h-9 w-9 place-items-center rounded-full bg-teal-500 text-lg font-bold text-zinc-950 transition-transform active:scale-90\">+</button>\n    </div>\n  );\n}\n"
+    }
+  ]
+}

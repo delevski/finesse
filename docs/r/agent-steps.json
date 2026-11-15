@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "agent-steps",
+  "type": "registry:component",
+  "title": "Agent Steps",
+  "description": "ציר צעדים של ריצת סוכן: ספינר שהופך ל-V מצויר, צעד אחר צעד.",
+  "files": [
+    {
+      "path": "components/finesse/agent-steps.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * AgentSteps - a vertical run of agent steps: each step spins, then\n * flips to a drawn check while the next one starts.\n */\nconst STEPS = [\"קורא את הקובץ\", \"מנתח שגיאות\", \"כותב תיקון\", \"מריץ בדיקות\"];\n\nexport function AgentSteps({ className }: { className?: string }) {\n  const [step, setStep] = React.useState(-1);\n  const [done, setDone] = React.useState(-1);\n  React.useEffect(() => {\n    if (step < 0 || step >= STEPS.length) return;\n    const t = setTimeout(() => { setDone(step); setStep(step + 1); }, 1100);\n    return () => clearTimeout(t);\n  }, [step]);\n  const run = () => { setDone(-1); setStep(0); };\n  return (\n    <div dir=\"rtl\" className={cn(\"w-60\", className)}>\n      <ol className=\"space-y-2.5\">\n        {STEPS.map((s, i) => {\n          const state = i <= done ? \"done\" : i === step ? \"run\" : \"wait\";\n          return (\n            <li key={s} className=\"flex items-center gap-3 text-sm\" style={{ color: state === \"wait\" ? \"#52525b\" : state === \"run\" ? \"#2dd4bf\" : \"#a1a1aa\" }}>\n              <span className=\"grid h-6 w-6 place-items-center rounded-full border text-[10px]\"\n                style={{ borderColor: state === \"wait\" ? \"#3f3f46\" : \"#2dd4bf\", background: state === \"done\" ? \"rgba(45,212,191,.15)\" : \"transparent\" }}>\n                {state === \"run\" ? (\n                  <svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" strokeWidth=\"3\" strokeLinecap=\"round\" style={{ animation: \"agentSpin .8s linear infinite\" }}><path d=\"M21 12a9 9 0 1 1-9-9\"/></svg>\n                ) : state === \"done\" ? (\n                  <svg width=\"11\" height=\"11\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" strokeWidth=\"3\" strokeLinecap=\"round\"><path d=\"m4 12.5 5 5L20 6.5\" strokeDasharray=\"24\" strokeDashoffset=\"0\"/></svg>\n                ) : (\n                  i + 1\n                )}\n              </span>\n              {s}\n            </li>\n          );\n        })}\n      </ol>\n      <button type=\"button\" onClick={run} className=\"mt-3 rounded-lg bg-teal-500 px-3 py-1.5 text-xs font-bold text-zinc-950\">\n        {step >= STEPS.length ? \"הריצו שוב\" : \"הרצה\"}\n      </button>\n      <style>{`@keyframes agentSpin{to{transform:rotate(1turn)}}`}</style>\n    </div>\n  );\n}\n"
+    }
+  ]
+}

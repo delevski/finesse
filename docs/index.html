@@ -589,7 +589,9 @@ header>*:not(#heroFx){position:relative;z-index:1}
 #holdBtn span{position:relative}
 /* rubber dock */
 #dockBar{display:flex;align-items:flex-end;gap:8px;padding:22px 14px 10px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid var(--border-soft);box-shadow:var(--shadow-2);touch-action:pan-y}
-.dk-icon{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:linear-gradient(180deg,var(--card-2),var(--card));font-size:20px;box-shadow:var(--shadow-1);cursor:pointer;transition:transform .16s cubic-bezier(.2,1.2,.3,1);transform-origin:bottom center}
+.dk-icon{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:linear-gradient(180deg,var(--card-2),var(--card));color:var(--muted);box-shadow:var(--shadow-1);cursor:pointer;transition:transform .16s cubic-bezier(.2,1.2,.3,1);transform-origin:bottom center}
+.dk-icon svg{width:20px;height:20px}
+.dk-icon:hover{color:var(--accent)}
 /* marker text */
 .mrk-text{max-width:420px;font-size:17px;line-height:2}
 .mrk{position:relative;display:inline-block;padding:0 3px;font-weight:600;white-space:nowrap}
@@ -738,13 +740,405 @@ body.nav-folded .nav-fold svg{transform:scaleX(-1)}
 .stat span{font-size:12.5px;color:var(--muted)}
 header h1,header .tag,header .badge{position:relative}
 
+
+/* ============ gallery 4 demos ============ */
+.g4-btn{border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:12px;padding:10px 18px;font:600 13px inherit;cursor:pointer;transition:all .25s}
+.g4-btn:hover{border-color:var(--accent-strong)}
+.g4-card{background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-1)}
+/* spring-dropdown */
+.sdd-wrap{position:relative;width:220px}
+.sdd-menu{position:absolute;inset-inline:0;top:calc(100% + 8px);z-index:5;pointer-events:none}
+.sdd-item{display:block;width:100%;text-align:right;padding:10px 14px;margin-bottom:2px;background:var(--card);border:1px solid var(--border);border-radius:10px;color:var(--text);font:500 13px inherit;cursor:pointer;opacity:0;transform:translateY(-14px) scale(.92);transition:transform .5s cubic-bezier(.2,1.5,.3,1),opacity .25s,background .15s,color .15s;box-shadow:var(--shadow-1)}
+.sdd-item:hover{background:var(--card-2);color:var(--accent)}
+.sdd-wrap.open .sdd-menu{pointer-events:auto}
+.sdd-wrap.open .sdd-item{opacity:1;transform:none}
+.sdd-chev{transition:transform .35s cubic-bezier(.2,1.4,.3,1)}
+.sdd-wrap.open .sdd-chev{transform:rotate(180deg)}
+/* command button */
+.cmd-btn{position:relative;overflow:hidden;display:flex;align-items:center;gap:9px}
+.cmd-btn::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(45,212,191,.22) 50%,transparent 60%);background-size:250% 100%;animation:cmdShim 2.8s linear infinite;pointer-events:none}
+@keyframes cmdShim{0%{background-position:130% 0}100%{background-position:-130% 0}}
+.cmd-btn kbd{border:1px solid var(--border);background:var(--card-2);border-radius:6px;padding:2px 7px;font:700 11px inherit;color:var(--text)}
+.cmd-btn.pulse{animation:cmdPulse .6s cubic-bezier(.2,1.6,.3,1)}
+@keyframes cmdPulse{30%{transform:scale(1.07)}}
+/* springy input */
+.si-wrap{position:relative;width:250px}
+.si-wrap label{position:absolute;right:12px;top:12px;font-size:13.5px;color:var(--muted);pointer-events:none;transition:all .3s cubic-bezier(.2,1.4,.3,1);background:var(--card);padding:0 5px}
+.si-wrap input{width:100%;padding:12px;background:var(--card);border:1px solid var(--border);border-radius:12px;color:var(--text);font:inherit;outline:none;transition:border-color .2s,transform .35s cubic-bezier(.2,1.5,.3,1)}
+.si-wrap input:focus{transform:scale(1.03)}
+.si-wrap.on label,.si-wrap input:focus~label{top:-9px;font-size:11px;color:var(--accent)}
+.si-wrap.bad input{border-color:#fb7185;animation:siShake .45s}
+.si-wrap.bad label{color:#fb7185}
+.si-err{margin-top:5px;font-size:11.5px;color:#fb7185;display:none}
+.si-wrap.bad .si-err{display:block}
+@keyframes siShake{0%{transform:translateX(0)}25%{transform:translateX(7px)}50%{transform:translateX(-6px)}75%{transform:translateX(4px)}100%{transform:translateX(0)}}
+/* glass lens */
+.gl-card{position:relative;width:280px;overflow:hidden;cursor:none;padding:20px}
+.gl-card p{margin:0 0 8px;font-size:12px;color:var(--muted)}
+.gl-card p:first-child{font-size:13.5px;font-weight:700;color:var(--text)}
+.gl-zoom{position:absolute;inset:0;padding:20px;background:var(--card-2);pointer-events:none;display:none}
+.gl-zoom p:first-child{color:var(--accent)}
+.gl-ring{position:absolute;width:104px;height:104px;border:2px solid rgba(45,212,191,.7);border-radius:50%;pointer-events:none;display:none;box-shadow:inset 0 0 24px rgba(45,212,191,.12),0 12px 32px rgba(0,0,0,.5)}
+/* goo morph */
+.gm2-btn{position:relative;width:150px;height:90px;background:none;border:0;cursor:pointer}
+.gm2-layer{position:absolute;inset:0;filter:url(#gooFilter)}
+.gm2-b{position:absolute;top:50%;width:46px;height:46px;margin-top:-23px;border-radius:50%;background:var(--accent);transition:all .6s cubic-bezier(.2,1.4,.3,1)}
+.gm2-btn .gm2-b.a{right:20px}.gm2-btn .gm2-b.b{right:84px}
+.gm2-btn.on .gm2-b.a{right:78px}.gm2-btn.on .gm2-b.b{right:26px}
+.gm2-ic{position:absolute;inset:0;display:grid;place-items:center;color:#04211d}
+/* roll links */
+.rl2{display:flex;gap:22px}
+.rl2 a{position:relative;overflow:hidden;height:1.45em;text-decoration:none;font:600 13.5px inherit;color:var(--muted);display:block}
+.rl2 a b{display:block;font-weight:inherit;transition:transform .3s cubic-bezier(.2,1.3,.3,1)}
+.rl2 a b i{display:block;font-style:normal}
+.rl2 a b i:last-child{color:var(--accent)}
+.rl2 a:hover b{transform:translateY(-50%)}
+/* prompt box */
+.pbx{width:280px;padding:12px;transition:border-color .3s}
+.pbx.busy{border-color:var(--accent)}
+.pbx textarea{width:100%;resize:none;background:none;border:0;outline:none;color:var(--text);font:inherit;font-size:13.5px}
+.pbx-foot{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+.pbx-count{font-size:11px;color:var(--faint)}
+.pbx-send{display:grid;place-items:center;width:32px;height:32px;border:0;cursor:pointer;color:#04211d;transition:all .35s cubic-bezier(.2,1.4,.3,1)}
+/* expand card */
+.ec-card{width:250px;overflow:hidden;max-height:78px;cursor:pointer;transition:max-height .5s cubic-bezier(.2,1.3,.3,1);padding:16px}
+.ec-card.open{max-height:270px}
+.ec-rows{margin-top:12px}
+.ec-row{display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:8px;margin-bottom:8px;font-size:12px;opacity:0;transform:translateY(8px);transition:all .4s cubic-bezier(.2,1.4,.3,1)}
+.ec-card.open .ec-row{opacity:1;transform:none}
+/* profile card */
+.pc2{width:220px;overflow:hidden;cursor:pointer}
+.pc2-head{display:flex;align-items:center;gap:12px;padding:16px}
+.pc2-av{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-strong));color:#04211d;font-size:18px;font-weight:900}
+.pc2-stats{background:rgba(24,24,27,.95);padding:14px 16px;transform:translateY(102%);transition:transform .45s cubic-bezier(.2,1.3,.3,1)}
+.pc2:hover .pc2-stats,.pc2.on .pc2-stats{transform:none}
+.pc2-bar{height:6px;border-radius:99px;background:var(--border);overflow:hidden;margin:4px 0 10px}
+.pc2-bar i{display:block;height:100%;border-radius:99px;background:var(--accent);width:0;transition:width .6s cubic-bezier(.2,1.2,.3,1)}
+/* magnetic */
+.mag-zone{display:grid;place-items:center;width:220px;height:120px}
+.mag-btn{border:0;border-radius:999px;background:var(--accent);color:#04211d;font:800 14px inherit;padding:13px 28px;cursor:pointer;box-shadow:0 10px 26px rgba(20,184,166,.3)}
+/* copy button */
+.cp2{display:flex;align-items:center;gap:8px}
+.cp2.ok{border-color:var(--accent);background:rgba(45,212,191,.12);color:var(--accent);transform:scale(1.05)}
+/* bottom bar */
+.bb-bar{position:relative;display:flex;border:1px solid var(--border);border-radius:22px;background:var(--card);padding:6px}
+.bb-ind{position:absolute;top:6px;bottom:6px;border-radius:16px;background:rgba(45,212,191,.15);transition:all .5s cubic-bezier(.2,1.5,.3,1)}
+.bb-bar button{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:3px;width:66px;padding:8px 0;background:none;border:0;color:var(--muted);font:600 10.5px inherit;cursor:pointer;transition:color .25s}
+.bb-bar button.on{color:var(--accent)}
+.bb-bar button svg{transition:transform .4s cubic-bezier(.2,1.6,.3,1)}
+.bb-bar button.on svg{transform:translateY(-2px) scale(1.12)}
+/* dynamic menu */
+.dm2{width:210px;display:flex;flex-direction:column;gap:6px}
+.dm2 button{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:12px;color:var(--text);font:500 13px inherit;cursor:pointer}
+.dm2 button:hover{border-color:var(--accent-strong)}
+.dm2 .hot{font-size:10px;font-weight:700;color:var(--accent);background:rgba(45,212,191,.12);border-radius:99px;padding:2px 8px}
+/* segmented */
+.seg{position:relative;display:flex;border:1px solid var(--border);border-radius:14px;background:var(--card);padding:4px}
+.seg-pill{position:absolute;top:4px;bottom:4px;border-radius:10px;background:var(--accent);transition:all .55s cubic-bezier(.2,1.5,.3,1)}
+.seg button{position:relative;z-index:1;width:60px;padding:8px 0;background:none;border:0;font:700 11.5px inherit;color:var(--muted);cursor:pointer;transition:color .3s}
+.seg button.on{color:#04211d}
+/* sidebar collapse */
+.sb2{display:flex;flex-direction:column;gap:4px;height:210px;overflow:hidden;padding:10px;width:170px;transition:width .5s cubic-bezier(.2,1.3,.3,1)}
+.sb2.folded{width:56px}
+.sb2 button{display:flex;align-items:center;gap:10px;padding:9px;border:0;border-radius:10px;background:none;color:var(--muted);font:600 12px inherit;cursor:pointer;white-space:nowrap}
+.sb2 button.on{background:rgba(45,212,191,.12);color:var(--accent)}
+.sb2 .sb2-lbl{transition:opacity .25s;overflow:hidden}
+.sb2.folded .sb2-lbl{opacity:0;width:0}
+.sb2-fold{display:grid;place-items:center;width:32px;height:32px;border:1px solid var(--border)!important;border-radius:8px!important;margin-bottom:6px}
+.sb2-fold svg{transition:transform .4s}
+.sb2.folded .sb2-fold svg{transform:scaleX(-1)}
+/* number stepper */
+.ns{display:flex;align-items:center;gap:14px}
+.ns button{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:18px;cursor:pointer;transition:transform .15s}
+.ns button:active{transform:scale(.88)}
+.ns .ns-win{position:relative;height:40px;width:34px;overflow:hidden}
+.ns .ns-col{position:absolute;inset-inline:0;top:0;transition:transform .45s cubic-bezier(.2,1.4,.3,1)}
+.ns .ns-col b{display:block;height:40px;line-height:40px;text-align:center;font-size:24px;font-weight:900;color:var(--text)}
+/* range slider */
+.rsl{width:250px}
+.rsl input{width:100%;appearance:none;height:8px;border-radius:99px;outline:none;cursor:pointer}
+.rsl input::-webkit-slider-thumb{appearance:none;width:18px;height:18px;border-radius:50%;background:#f4f4f5;border:3px solid var(--accent-strong);box-shadow:0 2px 8px rgba(0,0,0,.5);cursor:grab}
+.rsl-tip{position:relative;height:30px;margin-bottom:2px}
+.rsl-tip b{position:absolute;top:0;transform:translateX(-50%);background:var(--accent);color:#04211d;font-size:11px;font-weight:900;border-radius:8px;padding:4px 8px;transition:left .1s}
+.rsl-ticks{display:flex;justify-content:space-between;padding:4px 2px 0}
+.rsl-ticks i{width:2px;height:6px;border-radius:2px;background:var(--border)}
+/* checkbox list */
+.cl2{width:250px;display:flex;flex-direction:column;gap:2px}
+.cl2 button{display:flex;align-items:center;gap:11px;width:100%;padding:9px 12px;background:none;border:0;border-radius:10px;color:var(--text);font:500 13.5px inherit;cursor:pointer;text-align:right}
+.cl2 button:hover{background:var(--card)}
+.cl2 .box{display:grid;place-items:center;width:20px;height:20px;border-radius:6px;border:1.5px solid var(--faint);transition:all .25s cubic-bezier(.2,1.6,.3,1);flex:none}
+.cl2 button.done .box{border-color:var(--accent);background:var(--accent);transform:scale(1.1)}
+.cl2 .lbl{position:relative;transition:color .25s}
+.cl2 .lbl::after{content:"";position:absolute;right:0;top:50%;height:1.5px;width:0;background:var(--muted);transition:width .35s}
+.cl2 button.done{color:var(--muted)}
+.cl2 button.done .lbl::after{width:100%}
+/* siri orb */
+.orb-btn{position:relative;width:110px;height:110px;background:none;border:0;cursor:pointer;transition:transform .4s cubic-bezier(.2,1.4,.3,1)}
+.orb-btn:active{transform:scale(1.12)}
+.orb-b{position:absolute;inset:0;border-radius:50%;filter:blur(6px);mix-blend-mode:screen}
+.orb-b.a{background:radial-gradient(circle at 35% 35%,#2dd4bf,transparent 65%);animation:orbSpin 7s linear infinite;transform-origin:58% 42%}
+.orb-b.b{background:radial-gradient(circle at 60% 40%,#818cf8,transparent 65%);animation:orbSpin 5s linear infinite reverse;transform-origin:42% 58%}
+.orb-b.c{background:radial-gradient(circle at 50% 60%,#f472b6,transparent 62%);animation:orbSpin 9s linear infinite}
+.orb-ring{position:absolute;inset:0;border-radius:50%;box-shadow:0 0 22px rgba(129,140,248,.3);transition:box-shadow .3s}
+.orb-btn:active .orb-ring{box-shadow:0 0 44px rgba(45,212,191,.55)}
+@keyframes orbSpin{to{transform:rotate(1turn) scale(1.08)}}
+/* agent steps */
+.ag{width:230px}
+.ag li{display:flex;align-items:center;gap:11px;list-style:none;padding:4px 0;font-size:13.5px;color:var(--faint)}
+.ag li.run{color:var(--accent)}
+.ag li.done{color:var(--muted)}
+.ag .st{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--border);font-size:10px;font-weight:700;flex:none}
+.ag li.run .st{border-color:var(--accent)}
+.ag li.done .st{border-color:var(--accent);background:rgba(45,212,191,.12)}
+.ag .spin{animation:agSpin .8s linear infinite}
+@keyframes agSpin{to{transform:rotate(1turn)}}
+/* hold button */
+.hb{position:relative;display:grid;place-items:center;width:160px;height:60px}
+.hb svg{position:absolute;opacity:0;transition:opacity .2s}
+.hb.holding svg,.hb.ok svg{opacity:1}
+/* exposure */
+.exl{width:250px}
+.exl-scene{position:relative;height:120px;overflow:hidden;border:1px solid var(--border);border-radius:14px;transition:background .2s}
+.exl-sun{position:absolute;width:32px;height:32px;border-radius:50%;transition:all .2s}
+.exl-row{display:flex;align-items:center;gap:10px;margin-top:10px}
+.exl input{flex:1;appearance:none;height:8px;border-radius:99px;outline:none;cursor:pointer}
+.exl input::-webkit-slider-thumb{appearance:none;width:16px;height:16px;border-radius:50%;background:#f4f4f5;border:2px solid var(--accent-strong);cursor:grab}
+/* boarding pass */
+.bp{width:280px;perspective:700px}
+.bp-in{border:1px solid var(--border);border-radius:16px;background:var(--card);box-shadow:var(--shadow-2);transition:transform .5s cubic-bezier(.2,1.3,.3,1)}
+.bp-top{display:flex;align-items:center;justify-content:space-between;padding:14px}
+.bp-city small{display:block;font-size:9.5px;color:var(--faint)}
+.bp-city b{font-size:22px;font-weight:900;color:var(--text)}
+.bp-tear{position:relative;border-top:1.5px dashed var(--border)}
+.bp-tear::before,.bp-tear::after{content:"";position:absolute;top:-11px;width:22px;height:22px;border-radius:50%;background:var(--bg)}
+.bp-tear::before{right:-12px}.bp-tear::after{left:-12px}
+.bp-bot{display:flex;align-items:flex-end;justify-content:space-between;padding:14px}
+.bp-bars{display:flex;align-items:flex-end;gap:3px;height:34px}
+.bp-bars i{width:3px;border-radius:2px;background:var(--text);animation:bpBar 1.6s ease-in-out infinite alternate}
+@keyframes bpBar{from{transform:scaleY(.55)}to{transform:scaleY(1)}}
+/* slide confirm */
+.sc2{position:relative;width:280px;height:54px;overflow:hidden;border-radius:999px;border:1px solid var(--border);background:var(--card);touch-action:none;user-select:none;transition:border-color .3s,background .3s}
+.sc2.ok{border-color:var(--accent);background:rgba(45,212,191,.12)}
+.sc2-lbl{position:absolute;inset:0;display:grid;place-items:center;font-size:12.5px;font-weight:600;color:var(--muted);pointer-events:none;transition:opacity .2s}
+.sc2.ok .sc2-lbl{color:var(--accent)}
+.sc2::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 30%,rgba(45,212,191,.16) 50%,transparent 70%);background-size:200% 100%;animation:sc2Shine 2.2s linear infinite;pointer-events:none}
+.sc2.ok::after{display:none}
+@keyframes sc2Shine{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.sc2-knob{position:absolute;top:4px;right:4px;display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--accent);color:#04211d;cursor:grab;box-shadow:var(--shadow-1);touch-action:none}
+/* notification stack */
+.nst{position:relative;width:280px;height:190px}
+.nst-card{position:absolute;inset-inline:0;padding:14px;cursor:pointer;border-radius:16px;border:1px solid var(--border);background:var(--card);box-shadow:var(--shadow-2);transition:all .45s cubic-bezier(.2,1.3,.3,1)}
+.nst-card .row{display:flex;align-items:center;gap:9px}
+.nst-dot{width:10px;height:10px;border-radius:50%;flex:none}
+.nst-t{font-size:13.5px;font-weight:700;color:var(--text)}
+.nst-s{margin-inline-start:auto;font-size:10px;color:var(--faint)}
+.nst-empty{position:absolute;inset-inline:0;top:70px;text-align:center}
+/* wheel picker */
+.wp{position:relative;width:160px;height:170px;overflow:hidden;border:1px solid var(--border);border-radius:16px;background:var(--card);perspective:400px}
+.wp-hl{position:absolute;inset-inline:10px;top:50%;height:34px;transform:translateY(-50%);border-radius:10px;background:rgba(45,212,191,.1);box-shadow:0 0 0 1px rgba(45,212,191,.4);pointer-events:none;z-index:2}
+.wp-col{position:absolute;inset-inline:0;top:50%;transition:transform .4s cubic-bezier(.2,1.3,.3,1)}
+.wp-col button{display:block;width:100%;height:34px;background:none;border:0;font:700 13px inherit;color:var(--faint);cursor:pointer;transition:color .3s,opacity .3s}
+.wp-col button.on{color:var(--accent)}
+/* dynamic text */
+.dt2{font-size:20px;font-weight:900;color:var(--text)}
+.dt2 b{position:relative;display:inline-block;overflow:hidden;color:var(--accent);min-width:3.2em;vertical-align:bottom}
+.dt2 b span{display:inline-block;animation:dt2In .5s cubic-bezier(.2,1.3,.3,1) both}
+@keyframes dt2In{from{opacity:0;transform:translateY(70%);filter:blur(6px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+/* voice input */
+.vi{display:flex;align-items:center;gap:12px;width:280px;padding:12px;border:1px solid var(--border);border-radius:16px;background:var(--card);transition:border-color .3s}
+.vi.rec{border-color:#fb7185}
+.vi-mic{display:grid;place-items:center;width:42px;height:42px;border:0;border-radius:50%;background:var(--accent);color:#04211d;cursor:pointer;flex:none;transition:all .3s cubic-bezier(.2,1.5,.3,1)}
+.vi.rec .vi-mic{background:#fb7185;transform:scale(1.12)}
+.vi-bars{display:flex;align-items:center;justify-content:center;gap:4px;flex:1;height:30px}
+.vi-bars i{width:4px;border-radius:99px;background:#fb7185;animation:viBar .7s ease-in-out infinite alternate}
+@keyframes viBar{from{height:5px}to{height:24px}}
+.vi-text{flex:1;font-size:13px;color:var(--muted)}
+/* tool approval */
+.ta{width:280px;padding:16px;transition:all .35s cubic-bezier(.2,1.3,.3,1)}
+.ta.yes{border-color:var(--accent)}
+.ta.no{border-color:#fb7185}
+.ta-head{display:flex;align-items:center;gap:10px}
+.ta-ic{display:grid;place-items:center;width:32px;height:32px;border-radius:9px;background:var(--card-2);color:var(--accent)}
+.ta-btns{display:flex;gap:8px;margin-top:12px}
+.ta-btns button{flex:1;padding:8px;border-radius:9px;font:700 12px inherit;cursor:pointer;transition:transform .12s}
+.ta-btns button:active{transform:scale(.95)}
+.ta-ok{border:0;background:var(--accent);color:#04211d}
+.ta-no{border:1px solid var(--border);background:none;color:var(--text)}
+.ta-res{margin-top:12px;text-align:center;font-size:12px;font-weight:700;animation:taPop .4s cubic-bezier(.2,1.5,.3,1) both}
+@keyframes taPop{from{opacity:0;transform:translateY(8px) scale(.9)}to{opacity:1;transform:none}}
+/* toolbar */
+.tb2{display:flex;gap:4px;padding:6px;border-radius:999px;border:1px solid var(--border);background:rgba(24,24,27,.92);box-shadow:var(--shadow-2);backdrop-filter:blur(8px)}
+.tb2>span{position:relative}
+.tb2 button{display:grid;place-items:center;width:38px;height:38px;border:0;border-radius:50%;background:none;color:var(--muted);cursor:pointer;transition:all .2s;animation:tb2In .5s cubic-bezier(.2,1.5,.3,1) both}
+.tb2 button:hover{background:var(--card-2);color:var(--accent)}
+@keyframes tb2In{from{opacity:0;transform:translateY(14px) scale(.6)}to{opacity:1;transform:none}}
+.tb2 .tip{position:absolute;top:-34px;right:50%;transform:translateX(50%) translateY(6px) scale(.8);white-space:nowrap;background:var(--card-2);border-radius:8px;padding:4px 9px;font-size:10.5px;font-weight:700;color:var(--text);box-shadow:var(--shadow-1);opacity:0;transition:all .3s cubic-bezier(.2,1.5,.3,1);pointer-events:none}
+.tb2>span:hover .tip{opacity:1;transform:translateX(50%) translateY(0) scale(1)}
+
+
+/* scrubber */
+.scr{width:280px}
+.scr-track{position:relative;height:34px;cursor:pointer;touch-action:none}
+.scr-rail{position:absolute;inset-inline:0;top:50%;height:6px;transform:translateY(-50%);border-radius:99px;background:var(--border);transition:transform .3s cubic-bezier(.2,1.4,.3,1)}
+.scr-fill{position:absolute;left:0;top:50%;height:6px;transform:translateY(-50%);border-radius:99px;background:var(--accent);transition:transform .3s cubic-bezier(.2,1.4,.3,1)}
+.scr.drag .scr-rail,.scr.drag .scr-fill{transform:translateY(-50%) scaleY(1.8)}
+.scr-knob{position:absolute;top:50%;width:16px;height:16px;margin-top:-8px;border-radius:50%;background:#f4f4f5;box-shadow:var(--shadow-1);transition:transform .25s cubic-bezier(.2,1.5,.3,1)}
+.scr.drag .scr-knob{transform:scale(1.3)}
+.scr-bub{position:absolute;top:-26px;transform:translateX(-50%) translateY(6px) scale(.7);background:var(--card-2);padding:3px 8px;border-radius:8px;font:700 11px inherit;color:var(--text);box-shadow:var(--shadow-1);opacity:0;transition:all .3s cubic-bezier(.2,1.5,.3,1);pointer-events:none}
+.scr.drag .scr-bub{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}
+.scr-times{display:flex;justify-content:space-between;font-size:10px;color:var(--faint)}
+/* cart */
+.cart-wrap{display:flex;align-items:center;gap:18px}
+.cart-add{border:0;border-radius:12px;background:var(--accent);color:#04211d;font:800 13px inherit;padding:11px 18px;cursor:pointer;box-shadow:0 10px 24px rgba(20,184,166,.25);transition:transform .15s}
+.cart-add:active{transform:scale(.94)}
+.cart-ic{position:relative;display:grid;place-items:center;width:44px;height:44px;border:1px solid var(--border);border-radius:14px;background:var(--card);color:var(--text)}
+.cart-n{position:absolute;top:-7px;left:-7px;display:grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border-radius:99px;background:#fb7185;color:#fff;font-size:10px;font-weight:900;transition:transform .4s cubic-bezier(.2,1.8,.3,1)}
+.cart-n.pop{transform:scale(1.45)}
+.cart-fly{position:absolute;right:52px;top:50%;width:14px;height:14px;border-radius:4px;background:var(--accent);pointer-events:none;animation:cartFly .4s ease-in both}
+@keyframes cartFly{from{transform:translate(0,-50%) scale(1);opacity:1}to{transform:translate(42px,-50%) scale(.2);opacity:.4}}
+/* page flip */
+.pf{position:relative;width:160px;height:170px;perspective:800px;background:none;border:0;cursor:pointer}
+.pf-in{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.3,1.2,.3,1)}
+.pf.flip .pf-in{transform:rotateY(-180deg)}
+.pf-f{position:absolute;inset:0;display:grid;place-items:center;border-radius:16px;backface-visibility:hidden;padding:16px;text-align:center}
+.pf-f1{border:1px solid var(--border);background:var(--card);color:var(--text)}
+.pf-f2{border:1px solid var(--accent-strong);background:#04211d;color:#99f6e4;transform:rotateY(180deg)}
+.pf-f b{display:block;font-size:14px}
+.pf-f small{display:block;margin-top:4px;font-size:10.5px;font-weight:400;opacity:.7}
+/* signature pad */
+.sigp{width:280px}
+.sigp canvas{display:block;width:100%;height:120px;border:1px solid var(--border);border-radius:14px;background:#09090b;touch-action:none;cursor:crosshair}
+.sigp-foot{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+.sigp-foot small{color:var(--faint);font-size:11px}
+.sigp-clear{padding:6px 14px;border:1px solid var(--border);border-radius:9px;background:none;color:var(--text);font:700 11px inherit;cursor:pointer}
+.sigp-clear:hover{border-color:#fb7185;color:#fb7185}
+/* undo */
+.un-wrap{display:flex;align-items:center;gap:12px}
+.un-do{border:0;border-radius:12px;background:var(--accent);color:#04211d;font:800 13px inherit;padding:11px 18px;cursor:pointer;transition:transform .15s}
+.un-do:active{transform:scale(.94)}
+.un-btn{display:flex;align-items:center;gap:8px;padding:9px 13px;border:1px solid var(--border);border-radius:12px;background:var(--card);color:var(--text);font:700 12px inherit;cursor:pointer;animation:unIn .4s cubic-bezier(.2,1.5,.3,1) both}
+.un-note{font-size:12px;color:var(--muted);animation:unIn .3s both}
+@keyframes unIn{from{opacity:0;transform:translateX(10px) scale(.85)}to{opacity:1;transform:none}}
+/* card field */
+.cf{width:280px}
+.cf-card{height:104px;perspective:700px;margin-bottom:12px}
+.cf-in{position:relative;height:100%;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.3,1.2,.3,1)}
+.cf.cvv .cf-in{transform:rotateY(180deg)}
+.cf-f{position:absolute;inset:0;border-radius:14px;padding:14px;backface-visibility:hidden}
+.cf-front{background:linear-gradient(135deg,#0d9488,#134e4a);color:#fff}
+.cf-front small{display:block;font-size:9.5px;color:#99f6e4}
+.cf-front b{display:block;margin-top:22px;font:500 16px/1 ui-monospace,monospace;letter-spacing:2px}
+.cf-back{background:linear-gradient(135deg,#3f3f46,#18181b);transform:rotateY(180deg)}
+.cf-back .strip{height:24px;border-radius:4px;background:rgba(0,0,0,.7)}
+.cf-back b{display:block;margin-top:12px;text-align:left;font:500 13px ui-monospace,monospace;color:#fff}
+.cf-inputs{display:flex;gap:8px;direction:ltr}
+.cf-inputs input{padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--card);color:var(--text);font:400 13px ui-monospace,monospace;outline:none}
+.cf-inputs input:focus{border-color:var(--accent-strong)}
+.cf-num{flex:1}
+.cf-cvv{width:64px;text-align:center}
+/* stack panel */
+.sp2{position:relative;width:160px;height:160px;cursor:pointer}
+.sp2-c{position:absolute;inset:0;display:grid;place-items:center;border-radius:16px;border:1px solid var(--border);background:var(--card);box-shadow:var(--shadow-2);transition:all .5s cubic-bezier(.2,1.4,.3,1);font-size:13.5px;font-weight:700}
+/* typewriter */
+.tw{font-size:17px;font-weight:700;color:var(--text);min-height:26px}
+.tw .caret{display:inline-block;width:9px;height:19px;margin-inline-start:3px;background:var(--accent);vertical-align:middle;animation:twBlink 1s steps(1) infinite}
+@keyframes twBlink{50%{opacity:0}}
+/* thinking text */
+.tt{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:600}
+.tt .shine{background:linear-gradient(90deg,#71717a 30%,#f4f4f5 50%,#71717a 70%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:ttShine 1.6s linear infinite}
+@keyframes ttShine{0%{background-position:180% 0}100%{background-position:-180% 0}}
+.tt i{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:ttDot 1.2s ease-in-out infinite}
+@keyframes ttDot{0%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-5px);opacity:1}}
+/* glass player */
+.gp{display:flex;align-items:center;gap:12px;width:280px;padding:12px;border-radius:16px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);backdrop-filter:blur(14px);box-shadow:var(--shadow-2)}
+.gp-play{display:grid;place-items:center;width:42px;height:42px;border:0;border-radius:50%;background:var(--accent);color:#04211d;cursor:pointer;flex:none;transition:transform .15s}
+.gp-play:active{transform:scale(.9)}
+.gp-name{font-size:13px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gp-bars{display:flex;align-items:flex-end;gap:3px;height:20px;margin-top:6px;direction:ltr}
+.gp-bars i{width:4px;border-radius:99px;background:rgba(94,234,212,.8)}
+/* bell */
+.bel{position:relative;display:grid;place-items:center;width:48px;height:48px;border:1px solid var(--border);border-radius:14px;background:var(--card);color:var(--text);cursor:pointer}
+.bel svg{transform-origin:top center}
+.bel.ring svg{animation:belRing .8s cubic-bezier(.2,1.4,.3,1)}
+@keyframes belRing{0%{transform:rotate(0)}20%{transform:rotate(18deg)}45%{transform:rotate(-14deg)}70%{transform:rotate(8deg)}100%{transform:rotate(0)}}
+.bel-n{position:absolute;top:-6px;left:-6px;display:grid;place-items:center;min-width:19px;height:19px;padding:0 4px;border-radius:99px;background:#fb7185;color:#fff;font-size:10px;font-weight:900;animation:belPop .4s cubic-bezier(.2,1.8,.3,1) both}
+@keyframes belPop{from{transform:scale(.4)}to{transform:scale(1)}}
+/* morph popover */
+.mp{position:relative;width:230px;height:190px}
+.mp-box{position:absolute;bottom:0;right:0;overflow:hidden;border:1px solid var(--border);background:var(--card);box-shadow:var(--shadow-2);cursor:pointer;transition:all .5s cubic-bezier(.2,1.35,.3,1)}
+.mp .mp-open-lbl{position:absolute;inset:0;display:grid;place-items:center;font-size:13px;font-weight:700;color:var(--text);transition:opacity .2s}
+.mp .mp-body{padding:16px;opacity:0;transition:opacity .3s .18s}
+.mp.open .mp-body{opacity:1}
+.mp .mp-body button{display:block;width:100%;padding:7px 9px;border:0;border-radius:8px;background:none;color:var(--muted);font:500 12px inherit;text-align:right;cursor:pointer}
+.mp .mp-body button:hover{background:var(--card-2);color:var(--accent)}
+.mp .mp-body p{margin:0 0 8px;font-size:13.5px;font-weight:700;color:var(--text)}
+/* task list */
+.tl2{width:250px}
+.tl2-head{display:flex;justify-content:space-between;font-size:11.5px;color:var(--faint);margin-bottom:8px}
+.tl2-prog{height:6px;border-radius:99px;background:var(--border);overflow:hidden}
+.tl2-prog i{display:block;height:100%;border-radius:99px;background:var(--accent);transition:width .5s cubic-bezier(.2,1.3,.3,1)}
+.tl2 ul{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.tl2 li{position:relative;list-style:none}
+.tl2 button{display:flex;align-items:center;gap:10px;width:100%;padding:9px 12px;border-radius:11px;border:1px solid var(--border);background:var(--card);color:var(--text);font:500 13px inherit;cursor:pointer;transition:all .3s cubic-bezier(.2,1.6,.3,1);text-align:right}
+.tl2 button.done{border-color:rgba(45,212,191,.4);background:rgba(45,212,191,.06);color:#5eead4}
+.tl2 button.done .tt2{text-decoration:line-through;opacity:.75}
+.tl2 .conf{position:absolute;right:20px;top:50%;width:6px;height:6px;border-radius:2px;pointer-events:none;animation:tl2Conf .6s ease-out both}
+@keyframes tl2Conf{from{opacity:1;transform:translateY(0) scale(1)}to{opacity:0;transform:translateY(-26px) scale(.4)}}
+/* music toggle */
+.mt2{display:flex;align-items:center;gap:12px}
+.mt2-btn{display:grid;place-items:center;width:46px;height:46px;border:0;background:var(--border);color:var(--muted);cursor:pointer;transition:all .5s cubic-bezier(.2,1.5,.3,1)}
+.mt2.on .mt2-btn{background:var(--accent);color:#04211d;transform:rotate(0)}
+.mt2-bars{display:flex;align-items:center;gap:4px;direction:ltr;height:24px}
+.mt2-bars i{width:4px;height:5px;border-radius:99px;background:var(--border);transition:background .3s}
+.mt2.on .mt2-bars i{background:var(--accent);animation:mt2Bar .6s ease-in-out infinite alternate}
+@keyframes mt2Bar{from{height:5px}to{height:22px}}
+/* spark badge */
+.spk{position:relative;display:inline-grid;place-items:center;width:130px;height:80px}
+.spk canvas{position:absolute;inset:0}
+.spk b{position:relative;border-radius:999px;background:rgba(45,212,191,.12);color:var(--accent);padding:7px 16px;font-size:12px;font-weight:900;box-shadow:0 0 0 1px rgba(45,212,191,.5)}
+/* uplink loader */
+.upl{position:relative;display:grid;place-items:center;width:90px;height:120px}
+.upl-beam{position:absolute;top:8px;bottom:26px;width:1.5px;background:linear-gradient(to top,rgba(45,212,191,.6),transparent)}
+.upl-p{position:absolute;bottom:26px;width:6px;height:6px;border-radius:50%;background:var(--accent);animation:uplRise 1.6s cubic-bezier(.4,0,.6,1) infinite}
+@keyframes uplRise{0%{transform:translateY(0) scale(1);opacity:0}15%{opacity:1}85%{opacity:1}100%{transform:translateY(-86px) scale(.4);opacity:0}}
+.upl-hub{position:absolute;top:2px;width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px rgba(45,212,191,.9);animation:uplHub 1.6s ease-in-out infinite}
+@keyframes uplHub{0%,100%{transform:scale(1)}50%{transform:scale(1.35)}}
+.upl-lbl{position:absolute;bottom:0;font-size:10.5px;font-weight:600;color:var(--muted)}
+/* liquid metal */
+.lmb{position:relative;overflow:hidden;border:0;border-radius:999px;padding:13px 32px;font:900 14px inherit;color:#18181b;cursor:pointer;transition:transform .15s;background:linear-gradient(135deg,#e5e7eb 0%,#9ca3af 25%,#f9fafb 50%,#6b7280 75%,#e5e7eb 100%);background-size:220% 220%;animation:lmbFlow 3.2s ease-in-out infinite;box-shadow:0 10px 26px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.7)}
+.lmb:active{transform:scale(.95)}
+.lmb::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 42%,rgba(255,255,255,.85) 50%,transparent 58%);background-size:260% 100%;animation:lmbSheen 2.4s linear infinite;mix-blend-mode:screen;pointer-events:none}
+@keyframes lmbFlow{0%,100%{background-position:0% 40%}50%{background-position:100% 60%}}
+@keyframes lmbSheen{0%{background-position:160% 0}100%{background-position:-160% 0}}
+/* dot matrix */
+.dmt canvas{display:block}
+/* crt */
+.crt-btn{background:none;border:0;cursor:pointer;padding:0}
+.crt-scr{position:relative;display:inline-block;overflow:hidden;border-radius:10px;background:#09090b;padding:12px 24px;font:700 17px ui-monospace,monospace;letter-spacing:3px;color:#5eead4;text-shadow:0 0 12px rgba(45,212,191,.7);transition:transform .5s cubic-bezier(.2,1.2,.3,1),filter .6s}
+.crt-scr::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 2px,rgba(0,0,0,.28) 2px 3px);pointer-events:none}
+/* laser border */
+.lzb{position:relative;width:250px;overflow:hidden;padding:2px;border-radius:16px}
+.lzb::before{content:"";position:absolute;inset:-40%;background:conic-gradient(from 0deg,transparent 0deg,transparent 300deg,#2dd4bf 340deg,#a5f3fc 355deg,transparent 360deg);animation:lzbSpin 3s linear infinite}
+@keyframes lzbSpin{to{transform:rotate(1turn)}}
+.lzb-in{position:relative;border-radius:14px;background:#09090b;padding:16px}
+.lzb-in p{margin:0}
+
+#gallery4{display:grid;grid-template-columns:minmax(0,1fr);gap:18px}
+#gallery4>.sec-head,#gallery4>.sec-sub{grid-column:1/-1}
+#gallery4>.sec-sub{margin-bottom:12px}
+#gallery4>.demo{min-width:0}
+#gallery4 .stage-inner{display:flex;flex-direction:column;align-items:center;gap:10px}
+@media(min-width:1100px){#gallery4{grid-template-columns:repeat(2,minmax(0,1fr))}#gallery4 .stage{padding:22px;min-height:280px}#gallery4 .demo-bar{padding:12px;gap:6px}#gallery4 .demo-title{font-size:12px}#gallery4 .tsx-btn{font-size:11px}}
 </style>
 <meta property="og:title" content="finesse. - a design skill for coding agents">
 <meta property="og:description" content="Polished, animated, RTL-aware interfaces in Next.js + shadcn/ui - instead of library defaults.">
-<meta property="og:image" content="https://finesse-demo.orworkdelevski.workers.dev/og.png">
+<meta property="og:image" content="https://finesse-demo.orworkdelevski.workers.dev/social-preview.png">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://finesse-demo.orworkdelevski.workers.dev/">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="finesse. - a design skill for coding agents">
+<meta name="twitter:description" content="94 animated RTL Hebrew components for shadcn/ui - copy TSX in one click.">
+<meta name="twitter:image" content="https://finesse-demo.orworkdelevski.workers.dev/social-preview.png">
 </head>
 <body>
 <div class="bg-fx"></div>
@@ -770,8 +1164,8 @@ header h1,header .tag,header .badge{position:relative}
     </a>
   </div>
   <div class="stats">
-    <div class="stat"><b>58</b><span>live demos</span></div>
-    <div class="stat"><b>44</b><span>registry components</span></div>
+    <div class="stat"><b>108</b><span>live demos</span></div>
+    <div class="stat"><b>94</b><span>registry components</span></div>
     <div class="stat"><b>RTL</b><span>Hebrew built in</span></div>
     <div class="stat"><b>MIT</b><span>free forever</span></div>
   </div>
@@ -789,6 +1183,7 @@ header h1,header .tag,header .badge{position:relative}
   <a href="#signature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.7 4.7 1.8-4.7 1.8L12 16l-1.8-4.7-4.7-1.8L12 3z"/><path d="M18.5 14.5l.9 2.3 2.3.9-2.3.9-.9 2.3-.9-2.3-2.3-.9 2.3-.9z"/></svg><span class="nl"><span class="s">חתימה</span><span class="f">אנימציות חתימה</span></span></a>
   <a href="#gallery2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg><span class="nl"><span class="s">גלריה 2</span><span class="f">גלריה 2</span></span></a>
   <a href="#gallery3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.2 5.3 5.8.5-4.4 3.8 1.3 5.6-4.9-3-4.9 3 1.3-5.6L4 8.8l5.8-.5L12 3z"/></svg><span class="nl"><span class="s">גלריה 3</span><span class="f">גלריה 3 · 25 חדשות</span></span></a>
+  <a href="#gallery4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/></svg><span class="nl"><span class="s">גלריה 4</span><span class="f">גלריה 4 · 50 חדשות</span></span></a>
   <a href="#demos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="m10.5 9 4 2-4 2z" fill="currentColor" stroke="none"/><path d="M9 21h6"/></svg><span class="nl"><span class="s">הדמיות</span><span class="f">הדמיות נוספות</span></span></a>
   <a href="https://github.com/delevski/finesse" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.15c-3.2.69-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.05.77 2.12v3.14c0 .3.21.67.8.55A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg><span class="nl"><span class="s">GitHub</span><span class="f">GitHub</span></span></a>
 </nav>
@@ -1638,6 +2033,662 @@ header h1,header .tag,header .badge{position:relative}
       </div>
     </div></div>
   </div>
+</section>
+
+<section id="gallery4" dir="rtl" lang="he" class="heb">
+  <div class="sec-head rv"><span class="sec-num">04</span><h2>גלריה 4 - חמישים נוספים מהמקורות</h2></div>
+  <p class="sec-sub rv">50 קומפוננטות נוספות בהשראת designbookmark.com/motion ו-threeui: תפריטים קפיציים, כפתורים מגנטיים, כדור אור, אישור בהחזקה ובהחלקה, גלגלת שעות, ערימת התראות, חתימה ועוד. הכול חי, בעברית ועם קוד TSX להעתקה.</p>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">spring-dropdown.tsx</span></span>
+        <button class="tsx-btn" data-tsx="spring-dropdown" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="sdd-wrap" id="sddWrap">
+          <button class="g4-btn" id="sddBtn" type="button" style="display:flex;justify-content:space-between;width:100%"><span id="sddVal">בחרו פעולה</span><svg class="sdd-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="sdd-menu" id="sddMenu"></div>
+        </div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">command-button.tsx</span></span>
+        <button class="tsx-btn" data-tsx="command-button" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <button class="g4-btn cmd-btn" id="cmdBtn" type="button"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>חיפוש מהיר <span dir="ltr" style="display:flex;gap:4px"><kbd>⌘</kbd><kbd>K</kbd></span></button>
+        <p style="margin:12px 0 0;font-size:11.5px;color:var(--faint)">או לחצו על הקיצור האמיתי במקלדת</p>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">springy-input.tsx</span></span>
+        <button class="tsx-btn" data-tsx="springy-input" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="si-wrap" id="siWrap">
+          <input id="siInput" type="text" autocomplete="off" aria-label="אימייל">
+          <label for="siInput">אימייל</label>
+          <p class="si-err">חסר @ - נסו שוב</p>
+        </div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">glass-lens.tsx</span></span>
+        <button class="tsx-btn" data-tsx="glass-lens" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="g4-card gl-card" id="glCard">
+          <p>מבט מקרוב על הדו״ח השבועי</p><p>הכנסות: ₪48,200 (+12%)</p><p>משתמשים פעילים: 8,431</p><p>המרה: 3.8% ← 4.2%</p>
+          <div class="gl-zoom" id="glZoom"><p>מבט מקרוב על הדו״ח השבועי</p><p>הכנסות: ₪48,200 (+12%)</p><p>משתמשים פעילים: 8,431</p><p>המרה: 3.8% ← 4.2%</p></div>
+          <div class="gl-ring" id="glRing"></div>
+        </div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">goo-morph.tsx</span></span>
+        <button class="tsx-btn" data-tsx="goo-morph" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <button class="gm2-btn" id="gm2Btn" type="button" aria-pressed="false" aria-label="ניגון או השהיה">
+          <span class="gm2-layer"><span class="gm2-b a"></span><span class="gm2-b b"></span></span>
+          <span class="gm2-ic" id="gm2Ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M7 4.8v14.4c0 .8.9 1.3 1.6.9l11-7.2c.6-.4.6-1.4 0-1.8l-11-7.2c-.7-.4-1.6.1-1.6.9z"/></svg></span>
+        </button>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">roll-links.tsx</span></span>
+        <button class="tsx-btn" data-tsx="roll-links" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <nav class="rl2" aria-label="דוגמת קישורים">
+          <a href="#" onclick="return false"><b><i>ראשי</i><i>ראשי</i></b></a>
+          <a href="#" onclick="return false"><b><i>גלריות</i><i>גלריות</i></b></a>
+          <a href="#" onclick="return false"><b><i>רכיבים</i><i>רכיבים</i></b></a>
+          <a href="#" onclick="return false"><b><i>תיעוד</i><i>תיעוד</i></b></a>
+        </nav>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">prompt-box.tsx</span></span>
+        <button class="tsx-btn" data-tsx="prompt-box" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="g4-card pbx" id="pbx">
+          <textarea id="pbxTa" rows="1" placeholder="בקשו מהסוכן משהו..." aria-label="פרומפט"></textarea>
+          <div class="pbx-foot">
+            <span class="pbx-count" id="pbxCount" dir="ltr">0/200</span>
+            <button class="pbx-send" id="pbxSend" type="button" aria-label="שליחה" style="background:var(--border);border-radius:999px"></button>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">expand-card.tsx</span></span>
+        <button class="tsx-btn" data-tsx="expand-card" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="g4-card ec-card" id="ecCard" role="button" tabindex="0" aria-expanded="false">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div><p style="margin:0;font-size:13.5px;font-weight:700;color:var(--text)">כרטיס פרויקט</p><p style="margin:2px 0 0;font-size:11px;color:var(--faint)">לחצו לפרטים</p></div>
+            <svg id="ecChev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="color:var(--muted);transition:transform .4s"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+          <div class="ec-rows">
+            <div class="ec-row"><span style="color:var(--faint)">סטטוס</span><b>פעיל</b></div>
+            <div class="ec-row"><span style="color:var(--faint)">עדכון אחרון</span><b>לפני שעתיים</b></div>
+            <div class="ec-row"><span style="color:var(--faint)">בעלים</span><b>צוות המוצר</b></div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">profile-card.tsx</span></span>
+        <button class="tsx-btn" data-tsx="profile-card" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="g4-card pc2" id="pc2" role="button" tabindex="0">
+          <div class="pc2-head">
+            <span class="pc2-av">א</span>
+            <div><p style="margin:0;font-size:13.5px;font-weight:700;color:var(--text)">אבי כהן</p><p style="margin:2px 0 0;font-size:11px;color:var(--faint)">מעצב מוצר</p></div>
+          </div>
+          <div class="pc2-stats">
+            <div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted)"><span>עוקבים</span><span dir="ltr">86%</span></div><div class="pc2-bar"><i data-w="86"></i></div>
+            <div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted)"><span>פרויקטים</span><span dir="ltr">64%</span></div><div class="pc2-bar"><i data-w="64"></i></div>
+            <div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted)"><span>השפעה</span><span dir="ltr">92%</span></div><div class="pc2-bar"><i data-w="92"></i></div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">magnetic-button.tsx</span></span>
+        <button class="tsx-btn" data-tsx="magnetic-button" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="mag-zone" id="magZone"><button class="mag-btn" id="magBtn" type="button">לחצו עליי</button></div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">copy-button.tsx</span></span>
+        <button class="tsx-btn" data-tsx="copy-button" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <button class="g4-btn cp2" id="cp2Btn" type="button"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span id="cp2Lbl">העתקה</span></button>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">bottom-bar.tsx</span></span>
+        <button class="tsx-btn" data-tsx="bottom-bar" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="bb-bar" id="bbBar" role="tablist"></div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">dynamic-menu.tsx</span></span>
+        <button class="tsx-btn" data-tsx="dynamic-menu" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="dm2" id="dm2"></div>
+        <p style="margin:10px 0 0;font-size:11px;color:var(--faint)">לחיצה מקדמת פריט לראש ברגל-FLIP</p>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">segmented-control.tsx</span></span>
+        <button class="tsx-btn" data-tsx="segmented-control" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="seg" id="seg"><span class="seg-pill" id="segPill"></span></div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">sidebar-collapse.tsx</span></span>
+        <button class="tsx-btn" data-tsx="sidebar-collapse" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="g4-card sb2" id="sb2">
+          <button class="sb2-fold" id="sb2Fold" type="button" aria-label="כיווץ"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 6 6 6-6 6"/></svg></button>
+          <button type="button" class="on"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span class="sb2-lbl">לוח בקרה</span></button>
+          <button type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg><span class="sb2-lbl">לידים</span></button>
+          <button type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1"/></svg><span class="sb2-lbl">הגדרות</span></button>
+        </div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">number-stepper.tsx</span></span>
+        <button class="tsx-btn" data-tsx="number-stepper" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="ns" dir="ltr">
+          <button id="nsMinus" type="button" aria-label="הורדה">−</button>
+          <span class="ns-win"><span class="ns-col" id="nsCol"></span></span>
+          <button id="nsPlus" type="button" aria-label="הוספה" style="background:var(--accent);color:#04211d;border:0;font-weight:800">+</button>
+        </div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">range-slider.tsx</span></span>
+        <button class="tsx-btn" data-tsx="range-slider" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="rsl" dir="ltr">
+          <div class="rsl-tip"><b id="rslTip">40</b></div>
+          <input id="rslInput" type="range" min="0" max="100" value="40" aria-label="טווח">
+          <div class="rsl-ticks"><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">checkbox-list.tsx</span></span>
+        <button class="tsx-btn" data-tsx="checkbox-list" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="cl2" id="cl2"></div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">siri-orb.tsx</span></span>
+        <button class="tsx-btn" data-tsx="siri-orb" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <button class="orb-btn" id="orbBtn" type="button" aria-label="דברו אליי">
+          <span class="orb-b a"></span><span class="orb-b b"></span><span class="orb-b c"></span><span class="orb-ring"></span>
+        </button>
+        <p style="margin:8px 0 0;font-size:11px;color:var(--faint)">החזיקו את הכדור</p>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">agent-steps.tsx</span></span>
+        <button class="tsx-btn" data-tsx="agent-steps" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="ag">
+          <ul id="agList"></ul>
+          <button class="g4-btn" id="agRun" type="button" style="margin-top:10px;background:var(--accent);color:#04211d;border:0;font-weight:800">הרצה</button>
+        </div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">hold-button.tsx</span></span>
+        <button class="tsx-btn" data-tsx="hold-button" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <button class="g4-btn hb" id="hbBtn" type="button" style="width:160px;height:60px">
+          <svg width="52" height="52" viewBox="0 0 60 60"><circle cx="30" cy="30" r="26" fill="none" stroke="var(--border)" stroke-width="3" opacity=".5"/><circle id="hbRing" cx="30" cy="30" r="26" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-dasharray="163.4" stroke-dashoffset="163.4" transform="rotate(-90 30 30)"/></svg>
+          <span id="hbLbl">החזיקו לאישור</span>
+        </button>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">exposure-slider.tsx</span></span>
+        <button class="tsx-btn" data-tsx="exposure-slider" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="exl" dir="ltr">
+          <div class="exl-scene" id="exlScene"><span class="exl-sun" id="exlSun"></span></div>
+          <div class="exl-row">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#71717a" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>
+            <input id="exlInput" type="range" min="0" max="100" value="35" aria-label="חשיפה">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fde047" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">boarding-pass.tsx</span></span>
+        <button class="tsx-btn" data-tsx="boarding-pass" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="bp"><div class="bp-in" id="bpIn">
+          <div class="bp-top">
+            <div class="bp-city"><small>מוצא</small><b dir="ltr">TLV</b></div>
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="transform:rotate(90deg)"><path d="M17.8 19.2 16 11l3.5-3.5c1.5-1.5 1.5-3 .8-3.8-.8-.8-2.3-.8-3.8.8L13 8 4.8 6.2c-.5-.1-1 .1-1.2.6l-.2.5c-.2.5 0 1.1.5 1.4L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.3 5.1c.3.5.9.7 1.4.5l.5-.2c.5-.2.7-.7.6-1.2z"/></svg>
+            <div class="bp-city"><small>יעד</small><b dir="ltr">LHR</b></div>
+          </div>
+          <div class="bp-tear"></div>
+          <div class="bp-bot"><div class="bp-bars" id="bpBars" dir="ltr"></div><p style="margin:0;font-size:10px;color:var(--faint)">מושב 12A · מבטא 3</p></div>
+        </div></div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">slide-confirm.tsx</span></span>
+        <button class="tsx-btn" data-tsx="slide-confirm" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="sc2" id="sc2">
+          <span class="sc2-lbl" id="sc2Lbl">החליקו לאישור</span>
+          <span class="sc2-knob" id="sc2Knob" role="slider" aria-label="החליקו לאישור" aria-valuenow="0" tabindex="0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="m14 6-6 6 6 6"/></svg></span>
+        </div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">notification-stack.tsx</span></span>
+        <button class="tsx-btn" data-tsx="notification-stack" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="nst" id="nst"></div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">wheel-picker.tsx</span></span>
+        <button class="tsx-btn" data-tsx="wheel-picker" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="wp" dir="ltr" id="wp">
+          <div class="wp-hl"></div>
+          <div class="wp-col" id="wpCol"></div>
+        </div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">dynamic-text.tsx</span></span>
+        <button class="tsx-btn" data-tsx="dynamic-text" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <h2 class="dt2">האנימציה שלכם <b id="dt2Word"><span>מהירה</span></b></h2>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">voice-input.tsx</span></span>
+        <button class="tsx-btn" data-tsx="voice-input" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="vi" id="vi">
+          <button class="vi-mic" id="viMic" type="button" aria-pressed="false" aria-label="הקלטה"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 19v3"/></svg></button>
+          <div class="vi-bars" id="viBars" style="display:none" aria-hidden="true"></div>
+          <p class="vi-text" id="viText">החזיקו את המיקרופון ודברו</p>
+        </div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">tool-approval.tsx</span></span>
+        <button class="tsx-btn" data-tsx="tool-approval" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="g4-card ta" id="ta">
+          <div class="ta-head">
+            <span class="ta-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m4 17 6-6-6-6M12 19h8"/></svg></span>
+            <div><p style="margin:0;font-size:12px;font-weight:700;color:var(--text)" dir="ltr">run: npm test</p><p style="margin:2px 0 0;font-size:10px;color:var(--faint)">הסוכן מבקש אישור להרצה</p></div>
+          </div>
+          <div class="ta-btns" id="taBtns">
+            <button class="ta-ok" id="taYes" type="button">אישור</button>
+            <button class="ta-no" id="taNo" type="button">דחייה</button>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">toolbar.tsx</span></span>
+        <button class="tsx-btn" data-tsx="toolbar" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="tb2" id="tb2"></div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">scrubber.tsx</span></span>
+        <button class="tsx-btn" data-tsx="scrubber" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="scr" dir="ltr">
+          <div class="scr-track" id="scrTrack">
+            <span class="scr-rail"></span><span class="scr-fill" id="scrFill"></span><span class="scr-knob" id="scrKnob"></span>
+            <span class="scr-bub" id="scrBub">0:29</span>
+          </div>
+          <div class="scr-times"><span id="scrCur">0:29</span><span>1:36</span></div>
+        </div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">cart-button.tsx</span></span>
+        <button class="tsx-btn" data-tsx="cart-button" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="cart-wrap" id="cartWrap">
+          <button class="cart-add" id="cartAdd" type="button">הוספה לסל</button>
+          <span class="cart-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/><path d="M2 3h3l2.6 12.4a1 1 0 0 0 1 .6h8.9a1 1 0 0 0 1-.8L20 7H6"/></svg><span class="cart-n" id="cartN">2</span></span>
+        </div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">page-flip.tsx</span></span>
+        <button class="tsx-btn" data-tsx="page-flip" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <button class="pf" id="pf" type="button" aria-label="הפיכת עמוד">
+          <span class="pf-in">
+            <span class="pf-f pf-f1"><span><b>עמוד 1</b><small>לחצו להפיכה</small></span></span>
+            <span class="pf-f pf-f2"><span><b>עמוד 2</b><small>הצד השני!</small></span></span>
+          </span>
+        </button>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">signature-pad.tsx</span></span>
+        <button class="tsx-btn" data-tsx="signature-pad" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="sigp">
+          <canvas id="sigCanvas" width="560" height="240"></canvas>
+          <div class="sigp-foot"><small>חתמו כאן</small><button class="sigp-clear" id="sigClear" type="button">ניקוי</button></div>
+        </div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">undo-button.tsx</span></span>
+        <button class="tsx-btn" data-tsx="undo-button" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="un-wrap" id="unWrap">
+          <button class="un-do" id="unDo" type="button">מחיקת פריט</button>
+          <span id="unSlot"></span>
+        </div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">card-field.tsx</span></span>
+        <button class="tsx-btn" data-tsx="card-field" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="cf" id="cf">
+          <div class="cf-card"><div class="cf-in">
+            <div class="cf-f cf-front"><small id="cfBrand">כרטיס</small><b id="cfNum" dir="ltr">•••• •••• •••• ••••</b></div>
+            <div class="cf-f cf-back"><div class="strip"></div><b dir="ltr">CVV</b></div>
+          </div></div>
+          <div class="cf-inputs">
+            <input class="cf-num" id="cfInput" inputmode="numeric" placeholder="4580 1234 5678 9012" aria-label="מספר כרטיס">
+            <input class="cf-cvv" id="cfCvv" inputmode="numeric" placeholder="CVV" maxlength="4" aria-label="קוד אבטחה">
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">stack-panel.tsx</span></span>
+        <button class="tsx-btn" data-tsx="stack-panel" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="sp2" id="sp2"></div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">typewriter.tsx</span></span>
+        <button class="tsx-btn" data-tsx="typewriter" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <p class="tw"><span id="twText"></span><span class="caret"></span></p>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">thinking-text.tsx</span></span>
+        <button class="tsx-btn" data-tsx="thinking-text" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <span class="tt"><span class="shine">הסוכן חושב</span><i></i><i style="animation-delay:.18s"></i><i style="animation-delay:.36s"></i></span>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">glass-player.tsx</span></span>
+        <button class="tsx-btn" data-tsx="glass-player" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="gp">
+          <button class="gp-play" id="gpPlay2" type="button" aria-label="ניגון או השהיה"><svg id="gpIc" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg></button>
+          <div style="min-width:0;flex:1">
+            <p class="gp-name">צלילי לילה בגלילה</p>
+            <div class="gp-bars" id="gpBars" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">bell-button.tsx</span></span>
+        <button class="tsx-btn" data-tsx="bell-button" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <button class="bel" id="bel" type="button" aria-label="3 התראות">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9a6 6 0 1 1 12 0c0 5 2 6 2 6H4s2-1 2-6"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
+          <span class="bel-n" id="belN">3</span>
+        </button>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">morph-popover.tsx</span></span>
+        <button class="tsx-btn" data-tsx="morph-popover" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="mp"><div class="mp-box" id="mpBox" role="button" tabindex="0" aria-expanded="false">
+          <span class="mp-open-lbl" id="mpLbl">פתיחה</span>
+          <div class="mp-body"><p>פעולות מהירות</p><button type="button">שיתוף הקישור</button><button type="button">שכפול הדף</button><button type="button">העברה לארכיון</button></div>
+        </div></div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">task-list.tsx</span></span>
+        <button class="tsx-btn" data-tsx="task-list" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="tl2">
+          <div class="tl2-head"><span>משימות הספרינט</span><span id="tl2Count" dir="ltr">2/4</span></div>
+          <div class="tl2-prog"><i id="tl2Bar" style="width:50%"></i></div>
+          <ul id="tl2List"></ul>
+        </div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">music-toggle.tsx</span></span>
+        <button class="tsx-btn" data-tsx="music-toggle" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="mt2" id="mt2">
+          <button class="mt2-btn" id="mt2Btn" type="button" aria-pressed="false" aria-label="ניגון מוזיקה" style="border-radius:16px;transform:rotate(-8deg)"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" id="mt2Ic"><path d="M8 5.5v13c0 .9 1 1.5 1.8 1l10-6.5c.7-.5.7-1.5 0-2l-10-6.5c-.8-.5-1.8.1-1.8 1z"/></svg></button>
+          <div class="mt2-bars" id="mt2Bars" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">spark-badge.tsx</span></span>
+        <button class="tsx-btn" data-tsx="spark-badge" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <span class="spk"><canvas id="spkCanvas" width="260" height="160" style="width:130px;height:80px"></canvas><b>חדש</b></span>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">uplink-loader.tsx</span></span>
+        <button class="tsx-btn" data-tsx="uplink-loader" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <span class="upl"><span class="upl-beam"></span><span class="upl-p"></span><span class="upl-p" style="animation-delay:.4s"></span><span class="upl-p" style="animation-delay:.8s"></span><span class="upl-p" style="animation-delay:1.2s"></span><span class="upl-hub"></span><span class="upl-lbl">מעלה נתונים...</span></span>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">liquid-metal-button.tsx</span></span>
+        <button class="tsx-btn" data-tsx="liquid-metal-button" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <button class="lmb" type="button">שידרוג</button>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">dot-matrix-text.tsx</span></span>
+        <button class="tsx-btn" data-tsx="dot-matrix-text" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="dmt"><canvas id="dmtCanvas" width="560" height="160" style="width:280px;height:80px"></canvas></div>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">crt-text.tsx</span></span>
+        <button class="tsx-btn" data-tsx="crt-text" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <button class="crt-btn" id="crtBtn" type="button" aria-label="הפעלה מחדש"><span class="crt-scr" id="crtScr" dir="ltr">SYSTEM ONLINE</span></button>
+      </div></div>
+    </div>
+
+  <div class="demo rv">
+      <div class="demo-bar">
+        <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg><span dir="ltr">laser-border.tsx</span></span>
+        <button class="tsx-btn" data-tsx="laser-border" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>העתק TSX</button>
+      </div>
+      <div class="stage"><div class="stage-inner">
+        <div class="lzb"><div class="lzb-in"><p style="font-size:13.5px;font-weight:700;color:var(--text)">כרטיס מוגן</p><p style="margin-top:4px;font-size:11.5px;color:var(--muted)">הלייזר סורק את ההיקף ללא הפסקה.</p></div></div>
+      </div></div>
+    </div>
 </section>
 
 <section id="demos">
@@ -3467,7 +4518,7 @@ void main(){
   function tick(t){
     const p=Math.min(1,(t-startT)/DUR);
     held=p;fill.style.transform=`scaleX(${p})`;
-    if(p>=1){state="done";btn.classList.add("done");lbl.textContent="פורסם! 🎉";
+    if(p>=1){state="done";btn.classList.add("done");lbl.textContent="פורסם!";
       if(!reduced)btn.animate([{transform:"scale(1)"},{transform:"scale(1.12)"},{transform:"scale(1)"}],{duration:450,easing:"cubic-bezier(.2,1.4,.3,1)"});
       setTimeout(()=>{state="idle";held=0;fill.style.transform="scaleX(0)";btn.classList.remove("done");lbl.textContent="החזיקו לפרסום";},2600);
       return;}
@@ -3493,8 +4544,17 @@ void main(){
 /* ---- rubber dock ---- */
 (function(){
   const bar=q("#dockBar"); if(!bar) return;
-  const icons=["🏠","🔍","📊","💬","⚙️","👤"].map(ic=>{
-    const d=document.createElement("div");d.className="dk-icon";d.textContent=ic;bar.appendChild(d);return d;
+  const SVGS=[
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9 21v-6h6v6"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.2a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.2a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.2a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9v.1a1.7 1.7 0 0 0 1.5 1h.2a2 2 0 1 1 0 4h-.2a1.7 1.7 0 0 0-1.5 1z"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg>'
+  ];
+  const labels=["בית","חיפוש","סטטיסטיקות","הודעות","הגדרות","פרופיל"];
+  const icons=SVGS.map((ic,i)=>{
+    const d=document.createElement("div");d.className="dk-icon";d.setAttribute("role","button");d.setAttribute("aria-label",labels[i]);d.innerHTML=ic;bar.appendChild(d);return d;
   });
   function magnify(x){
     icons.forEach(el=>{
@@ -3601,7 +4661,7 @@ void main(){
     match=v?OPTS.find(o=>o.startsWith(v)&&o!==v):null;
     inv.textContent=v;
     rest.textContent=match?match.slice(v.length):"";
-    hint.textContent=match?"חץ שמאלה או Tab להשלמה ✨":'נסו לכתוב "תל" או "חי" - ההשלמה מתקבלת בחץ שמאלה או Tab';
+    hint.textContent=match?"חץ שמאלה או Tab להשלמה":'נסו לכתוב "תל" או "חי" - ההשלמה מתקבלת בחץ שמאלה או Tab';
   }
   inp.addEventListener("input",upd);
   inp.addEventListener("keydown",e=>{
@@ -3621,7 +4681,7 @@ void main(){
   btn.addEventListener("click",()=>{
     answered=!answered;
     if(answered){
-      stage.innerHTML='<div class="gk-answer">מצאתי 3 סניפים פתוחים עכשיו באזור שלך ✨</div>';
+      stage.innerHTML='<div class="gk-answer">מצאתי 3 סניפים פתוחים עכשיו באזור שלך</div>';
       btn.textContent="חשבו שוב";
     }else{
       stage.innerHTML='<div class="gk-dots"><i></i><i></i><i></i></div>';
@@ -3894,6 +4954,482 @@ void main(){
       label.style.color=COLORS[s]||"var(--muted)";
     }
   });
+})();
+})();
+</script>
+
+
+<script>
+/* ============ gallery 4 ============ */
+(function(){
+const q4=(s,r=document)=>r.querySelector(s),qa4=(s,r=document)=>[...r.querySelectorAll(s)];
+const RED4=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const SPR4="cubic-bezier(.2,1.5,.3,1)";
+
+/* spring dropdown */
+(function(){const w=q4("#sddWrap");if(!w)return;
+  const items=["עריכה","שכפול","העברה לארכיון","מחיקה"];
+  const menu=q4("#sddMenu");
+  items.forEach((it,i)=>{const b=document.createElement("button");b.type="button";b.className="sdd-item";b.textContent=it;
+    b.style.transitionDelay=(i*55)+"ms";
+    b.addEventListener("click",e=>{e.stopPropagation();q4("#sddVal").textContent=it;w.classList.remove("open");});
+    menu.appendChild(b);});
+  q4("#sddBtn").addEventListener("click",e=>{e.stopPropagation();w.classList.toggle("open");});
+  document.addEventListener("click",()=>w.classList.remove("open"));
+})();
+
+/* command button */
+(function(){const b=q4("#cmdBtn");if(!b)return;
+  const pulse=()=>{b.classList.remove("pulse");void b.offsetWidth;b.classList.add("pulse");};
+  b.addEventListener("click",pulse);
+  addEventListener("keydown",e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==="k"){e.preventDefault();pulse();}});
+})();
+
+/* springy input */
+(function(){const w=q4("#siWrap");if(!w)return;const inp=q4("#siInput");
+  inp.addEventListener("input",()=>w.classList.toggle("on",!!inp.value));
+  inp.addEventListener("blur",()=>{const bad=inp.value&&!inp.value.includes("@");w.classList.toggle("bad",bad);
+    if(bad){inp.style.animation="none";void inp.offsetWidth;inp.style.animation="";}});
+})();
+
+/* glass lens */
+(function(){const c=q4("#glCard");if(!c)return;const z=q4("#glZoom"),r=q4("#glRing");const Z=1.8,R=52;
+  c.addEventListener("pointermove",e=>{const b=c.getBoundingClientRect();const x=e.clientX-b.left,y=e.clientY-b.top;
+    z.style.display="block";r.style.display="block";
+    z.style.transform=`scale(${Z})`;z.style.transformOrigin=`${x}px ${y}px`;z.style.clipPath=`circle(${R}px at ${x}px ${y}px)`;
+    r.style.left=(x-R)+"px";r.style.top=(y-R)+"px";});
+  c.addEventListener("pointerleave",()=>{z.style.display="none";r.style.display="none";});
+})();
+
+/* goo morph */
+(function(){const b=q4("#gm2Btn");if(!b)return;const ic=q4("#gm2Ic");
+  const PLAY='<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M7 4.8v14.4c0 .8.9 1.3 1.6.9l11-7.2c.6-.4.6-1.4 0-1.8l-11-7.2c-.7-.4-1.6.1-1.6.9z"/></svg>';
+  const PAUSE='<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>';
+  b.addEventListener("click",()=>{const on=b.classList.toggle("on");b.setAttribute("aria-pressed",on);ic.innerHTML=on?PAUSE:PLAY;});
+})();
+
+/* prompt box */
+(function(){const box=q4("#pbx");if(!box)return;const ta=q4("#pbxTa"),send=q4("#pbxSend"),cnt=q4("#pbxCount");
+  let busy=false;
+  const UP='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 19V5m-6 6 6-6 6 6"/></svg>';
+  const STOP='<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>';
+  function paint(){send.innerHTML=busy?STOP:UP;
+    send.style.background=busy?"#fb7185":ta.value?"var(--accent)":"var(--border)";
+    send.style.borderRadius=busy?"10px":"999px";
+    send.style.transform=busy?"rotate(90deg)":"none";
+    box.classList.toggle("busy",busy);}
+  ta.addEventListener("input",()=>{cnt.textContent=ta.value.length+"/200";ta.rows=ta.value.length>40?3:1;paint();});
+  send.addEventListener("click",()=>{busy=!busy;paint();});
+  paint();
+})();
+
+/* expand card */
+(function(){const c=q4("#ecCard");if(!c)return;
+  const rows=qa4(".ec-row",c);
+  c.addEventListener("click",()=>{const on=c.classList.toggle("open");c.setAttribute("aria-expanded",on);
+    q4("#ecChev").style.transform=on?"rotate(180deg)":"none";
+    rows.forEach((r,i)=>r.style.transitionDelay=on?(i*60)+"ms":"0ms");});
+})();
+
+/* profile card */
+(function(){const c=q4("#pc2");if(!c)return;const bars=qa4(".pc2-bar i",c);
+  const on=v=>bars.forEach((b,i)=>{b.style.transitionDelay=v?(i*90)+"ms":"0ms";b.style.width=v?b.dataset.w+"%":"0%";});
+  c.addEventListener("pointerenter",()=>on(true));
+  c.addEventListener("pointerleave",()=>on(false));
+  c.addEventListener("click",()=>{const v=c.classList.toggle("on");on(v);});
+})();
+
+/* magnetic button */
+(function(){const z=q4("#magZone");if(!z)return;const b=q4("#magBtn");
+  z.addEventListener("pointermove",e=>{const r=b.getBoundingClientRect();
+    const dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2);
+    if(Math.hypot(dx,dy)<110){b.style.transition="transform .08s linear";b.style.transform=`translate(${dx*.35}px,${dy*.35}px)`;}
+    else{b.style.transition=`transform .55s ${SPR4}`;b.style.transform="none";}});
+  z.addEventListener("pointerleave",()=>{b.style.transition=`transform .55s ${SPR4}`;b.style.transform="none";});
+})();
+
+/* copy button */
+(function(){const b=q4("#cp2Btn");if(!b)return;const lbl=q4("#cp2Lbl");
+  b.addEventListener("click",()=>{navigator.clipboard?.writeText("npm i finesse").catch(()=>{});
+    b.classList.add("ok");lbl.textContent="הועתק!";
+    setTimeout(()=>{b.classList.remove("ok");lbl.textContent="העתקה";},1600);});
+})();
+
+/* bottom bar */
+(function(){const bar=q4("#bbBar");if(!bar)return;
+  const T=[["בית",'<path d="M3 10.5 12 3l9 7.5M5 9.5V21h14V9.5"/>'],["חיפוש",'<circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>'],["התראות",'<path d="M6 9a6 6 0 1 1 12 0c0 5 2 6 2 6H4s2-1 2-6M10 20a2 2 0 0 0 4 0"/>'],["פרופיל",'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/>']];
+  const ind=document.createElement("span");ind.className="bb-ind";bar.appendChild(ind);
+  T.forEach(([lb,ic],i)=>{const b=document.createElement("button");b.type="button";b.setAttribute("role","tab");
+    b.innerHTML=`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ic}</svg>${lb}`;
+    b.addEventListener("click",()=>go(i));bar.appendChild(b);});
+  function go(i){qa4("button",bar).forEach((b,k)=>b.classList.toggle("on",k===i));
+    const btn=qa4("button",bar)[i];const br=bar.getBoundingClientRect(),r=btn.getBoundingClientRect();
+    ind.style.right=(br.right-r.right)+"px";ind.style.width=r.width+"px";}
+  requestAnimationFrame(()=>go(0));
+})();
+
+/* dynamic menu */
+(function(){const host=q4("#dm2");if(!host)return;let items=["העתקה","הדבקה","שיתוף","שמירה","מחיקה"];
+  function render(){host.innerHTML="";
+    items.forEach((it,i)=>{const b=document.createElement("button");b.type="button";b.dataset.k=it;
+      b.innerHTML=it+(i===0?'<span class="hot">שכיח</span>':"");
+      b.addEventListener("click",()=>promote(it));host.appendChild(b);});}
+  function promote(it){const prev={};qa4("button",host).forEach(b=>prev[b.dataset.k]=b.getBoundingClientRect().top);
+    items=[it,...items.filter(x=>x!==it)];render();
+    qa4("button",host).forEach(b=>{const dy=prev[b.dataset.k]-b.getBoundingClientRect().top;
+      if(dy&&!RED4)b.animate([{transform:`translateY(${dy}px)`},{transform:"translateY(0)"}],{duration:450,easing:SPR4});});}
+  render();
+})();
+
+/* segmented */
+(function(){const seg=q4("#seg");if(!seg)return;const pill=q4("#segPill");
+  ["יומי","שבועי","חודשי","שנתי"].forEach((t,i)=>{const b=document.createElement("button");b.type="button";b.textContent=t;
+    b.addEventListener("click",()=>go(i));seg.appendChild(b);});
+  function go(i){qa4("button",seg).forEach((b,k)=>b.classList.toggle("on",k===i));
+    pill.style.right=`calc(${i} * 25% + 4px)`;pill.style.width="calc(25% - 8px)";}
+  go(0);
+})();
+
+/* sidebar collapse */
+(function(){const sb=q4("#sb2");if(!sb)return;
+  q4("#sb2Fold").addEventListener("click",e=>{e.stopPropagation();sb.classList.toggle("folded");});
+  qa4("button:not(.sb2-fold)",sb).forEach(b=>b.addEventListener("click",()=>{
+    qa4("button:not(.sb2-fold)",sb).forEach(x=>x.classList.remove("on"));b.classList.add("on");}));
+})();
+
+/* number stepper */
+(function(){const col=q4("#nsCol");if(!col)return;let n=3;
+  for(let i=0;i<=9;i++){const b=document.createElement("b");b.textContent=i;col.appendChild(b);}
+  const paint=()=>col.style.transform=`translateY(${-n*40}px)`;
+  q4("#nsMinus").addEventListener("click",()=>{n=Math.max(0,n-1);paint();});
+  q4("#nsPlus").addEventListener("click",()=>{n=Math.min(9,n+1);paint();});
+  paint();
+})();
+
+/* range slider */
+(function(){const inp=q4("#rslInput");if(!inp)return;const tip=q4("#rslTip");
+  function paint(){const v=+inp.value;
+    inp.style.background=`linear-gradient(90deg,#2dd4bf ${v}%,#3f3f46 ${v}%)`;
+    tip.textContent=v;tip.style.left=`calc(${v}% )`;}
+  inp.addEventListener("input",paint);
+  const snap=()=>{inp.value=Math.round(inp.value/25)*25;paint();};
+  inp.addEventListener("pointerup",snap);
+  paint();
+})();
+
+/* checkbox list */
+(function(){const host=q4("#cl2");if(!host)return;
+  const TASKS=["לסיים את הדף","לתקן באג RTL","לעדכן README","לפרסם גרסה"];
+  TASKS.forEach(t=>{const b=document.createElement("button");b.type="button";
+    b.innerHTML=`<span class="box"></span><span class="lbl">${t}</span>`;
+    b.addEventListener("click",()=>{const d=b.classList.toggle("done");
+      b.querySelector(".box").innerHTML=d?'<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#04211d" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12.5 5 5L20 6.5" stroke-dasharray="24" stroke-dashoffset="24"><animate attributeName="stroke-dashoffset" from="24" to="0" dur="0.3s" fill="freeze"/></path></svg>':"";});
+    host.appendChild(b);});
+})();
+
+/* agent steps */
+(function(){const list=q4("#agList");if(!list)return;
+  const STEPS=["קורא את הקובץ","מנתח שגיאות","כותב תיקון","מריץ בדיקות"];
+  let step=-1,done=-1,timer=null;
+  const CHK='<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="m4 12.5 5 5L20 6.5"/></svg>';
+  const SPN='<svg class="spin" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-9-9"/></svg>';
+  function paint(){list.innerHTML=STEPS.map((s,i)=>{
+    const st=i<=done?"done":i===step?"run":"wait";
+    return `<li class="${st}"><span class="st">${st==="run"?SPN:st==="done"?CHK:i+1}</span>${s}</li>`;}).join("");
+    q4("#agRun").textContent=step>=STEPS.length?"הריצו שוב":"הרצה";}
+  function next(){if(step<0||step>=STEPS.length)return;
+    timer=setTimeout(()=>{done=step;step++;paint();next();},1100);}
+  q4("#agRun").addEventListener("click",()=>{clearTimeout(timer);done=-1;step=0;paint();next();});
+  paint();
+})();
+
+/* hold button */
+(function(){const b=q4("#hbBtn");if(!b)return;const ring=q4("#hbRing"),lbl=q4("#hbLbl");
+  const C=163.4;let raf=null,t0=0,ok=false;
+  function tick(t){const v=Math.min(1,(t-t0)/1400);ring.style.strokeDashoffset=C*(1-v);
+    if(v<1)raf=requestAnimationFrame(tick);else{ok=true;b.classList.add("ok");lbl.textContent="אושר!";b.style.borderColor="var(--accent)";b.style.color="var(--accent)";b.style.background="rgba(45,212,191,.12)";}}
+  b.addEventListener("pointerdown",()=>{if(ok){ok=false;b.classList.remove("ok");lbl.textContent="החזיקו לאישור";ring.style.strokeDashoffset=C;b.style.borderColor="";b.style.color="";b.style.background="";return;}
+    b.classList.add("holding");t0=performance.now();raf=requestAnimationFrame(tick);});
+  const cancel=()=>{if(!ok){cancelAnimationFrame(raf);ring.style.strokeDashoffset=C;b.classList.remove("holding");}};
+  b.addEventListener("pointerup",cancel);b.addEventListener("pointerleave",cancel);
+})();
+
+/* exposure slider */
+(function(){const inp=q4("#exlInput");if(!inp)return;const sc=q4("#exlScene"),sun=q4("#exlSun");
+  function paint(){const v=+inp.value;
+    sc.style.background=`linear-gradient(180deg,hsl(${220-v*1.4} ${30+v*.5}% ${12+v*.55}%) 0%,hsl(${200-v*1.1} ${45+v*.4}% ${20+v*.6}%) 100%)`;
+    sun.style.left=(12+v*.62)+"%";sun.style.top=(52-v*.32)+"%";
+    sun.style.background=v>50?"#fde047":"#e2e8f0";
+    sun.style.boxShadow=v>50?"0 0 30px rgba(253,224,71,.8)":"0 0 18px rgba(226,232,240,.5)";
+    inp.style.background=`linear-gradient(90deg,#fde047 ${v}%,#3f3f46 ${v}%)`;}
+  inp.addEventListener("input",paint);paint();
+})();
+
+/* boarding pass */
+(function(){const card=q4("#bpIn");if(!card)return;
+  const bars=q4("#bpBars");[5,9,3,7,4,8,2,6,9,3,5,7,4,6,8].forEach((h,i)=>{
+    const b=document.createElement("i");b.style.height=h*3.4+"px";b.style.animationDelay=i*.12+"s";bars.appendChild(b);});
+  const host=card.parentElement;
+  host.addEventListener("pointermove",e=>{const r=host.getBoundingClientRect();
+    card.style.transitionDuration=".1s";
+    card.style.transform=`rotateX(${((e.clientY-r.top)/r.height-.5)*-10}deg) rotateY(${((e.clientX-r.left)/r.width-.5)*10}deg)`;});
+  host.addEventListener("pointerleave",()=>{card.style.transitionDuration=".5s";card.style.transform="none";});
+})();
+
+/* slide confirm */
+(function(){const box=q4("#sc2");if(!box)return;const knob=q4("#sc2Knob"),lbl=q4("#sc2Lbl");
+  let x=0,drag=false,ok=false;
+  const max=()=>box.clientWidth-54;
+  knob.addEventListener("pointerdown",e=>{if(ok)return;knob.setPointerCapture(e.pointerId);drag=true;});
+  knob.addEventListener("pointermove",e=>{if(!drag)return;const r=box.getBoundingClientRect();
+    x=Math.max(0,Math.min(max(),r.right-e.clientX-27));
+    knob.style.transition="none";knob.style.transform=`translateX(${-x}px)`;});
+  const end=()=>{if(!drag)return;drag=false;
+    if(x>max()*.85){ok=true;x=max();box.classList.add("ok");lbl.textContent="אושר!";
+      knob.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="m4 12.5 5 5L20 6.5"/></svg>';}
+    else x=0;
+    knob.style.transition=`transform .5s ${SPR4}`;knob.style.transform=`translateX(${-x}px)`;};
+  knob.addEventListener("pointerup",end);knob.addEventListener("pointercancel",end);
+})();
+
+/* notification stack */
+(function(){const host=q4("#nst");if(!host)return;
+  const BASE=[{t:"ליד חדש נכנס",s:"לפני 2 דקות",c:"#2dd4bf"},{t:"התשלום התקבל",s:"לפני שעה",c:"#a78bfa"},{t:"משימה הושלמה",s:"אתמול",c:"#fbbf24"}];
+  let items=[...BASE],open=false;
+  function render(){host.innerHTML="";
+    if(!items.length){const d=document.createElement("div");d.className="nst-empty";
+      d.innerHTML='<button class="g4-btn" type="button">הכול טופל. להחזיר?</button>';
+      d.querySelector("button").addEventListener("click",()=>{items=[...BASE];render();});host.appendChild(d);return;}
+    items.forEach((n,i)=>{const c=document.createElement("div");c.className="nst-card";
+      c.style.top=(open?i*62:i*14)+"px";c.style.scale=open?"1":String(1-i*.04);c.style.zIndex=items.length-i;
+      c.innerHTML=`<div class="row"><span class="nst-dot" style="background:${n.c}"></span><span class="nst-t">${n.t}</span><span class="nst-s">${n.s}</span></div>`;
+      c.addEventListener("click",()=>{c.animate([{transform:"translateX(0) rotate(0)"},{transform:"translateX(-140%) rotate(-8deg)"}],{duration:350,easing:"ease-in",fill:"forwards"}).onfinish=()=>{items=items.filter(x=>x.t!==n.t);render();};});
+      host.appendChild(c);});}
+  host.addEventListener("pointerenter",()=>{open=true;render();});
+  host.addEventListener("pointerleave",()=>{open=false;render();});
+  render();
+})();
+
+/* wheel picker */
+(function(){const wp=q4("#wp");if(!wp)return;const col=q4("#wpCol");
+  const H=["08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00"];let i=2,lock=false;
+  H.forEach((h,k)=>{const b=document.createElement("button");b.type="button";b.textContent=h;
+    b.addEventListener("click",()=>go(k-i));col.appendChild(b);});
+  function go(d){if(lock)return;lock=true;i=Math.max(0,Math.min(H.length-1,i+d));
+    col.style.transform=`translateY(${-i*34-17}px)`;
+    qa4("button",col).forEach((b,k)=>{const dd=k-i;
+      b.classList.toggle("on",dd===0);
+      b.style.transform=`rotateX(${-dd*24}deg) translateZ(34px)`;
+      b.style.opacity=Math.max(.15,1-Math.abs(dd)*.34);});
+    setTimeout(()=>lock=false,180);}
+  wp.addEventListener("wheel",e=>{e.preventDefault();go(e.deltaY>0?1:-1);},{passive:false});
+  let dragY=null;wp.style.touchAction="none";
+  wp.addEventListener("pointerdown",e=>{dragY=e.clientY;wp.setPointerCapture(e.pointerId);});
+  wp.addEventListener("pointermove",e=>{if(dragY===null)return;const d=dragY-e.clientY;if(Math.abs(d)>24){go(d>0?1:-1);dragY=e.clientY;}});
+  wp.addEventListener("pointerup",()=>dragY=null);wp.addEventListener("pointercancel",()=>dragY=null);
+  go(0);
+})();
+
+/* dynamic text */
+(function(){const w=q4("#dt2Word");if(!w)return;
+  const W=["מהירה","זורמת","חיה","מרשימה"];let i=0;
+  setInterval(()=>{i=(i+1)%W.length;w.innerHTML=`<span>${W[i]}</span>`;},2200);
+})();
+
+/* voice input */
+(function(){const box=q4("#vi");if(!box)return;const mic=q4("#viMic"),bars=q4("#viBars"),txt=q4("#viText");
+  for(let i=0;i<16;i++){const b=document.createElement("i");b.style.animationDuration=(0.5+(i%5)*0.09)+"s";b.style.animationDelay=(i*0.05)+"s";bars.appendChild(b);}
+  let typing=null;
+  mic.addEventListener("pointerdown",e=>{mic.setPointerCapture(e.pointerId);box.classList.add("rec");bars.style.display="flex";txt.style.display="none";clearInterval(typing);});
+  const stop=()=>{if(!box.classList.contains("rec"))return;box.classList.remove("rec");bars.style.display="none";txt.style.display="";
+    const full="הזכר לי לשלוח את ההצעה מחר בבוקר";let i=0;txt.textContent="";txt.style.color="var(--text)";
+    typing=setInterval(()=>{i+=2;txt.textContent=full.slice(0,i);if(i>=full.length)clearInterval(typing);},40);};
+  mic.addEventListener("pointerup",stop);mic.addEventListener("pointercancel",stop);
+})();
+
+/* tool approval */
+(function(){const card=q4("#ta");if(!card)return;const btns=q4("#taBtns");
+  function done(ok){card.classList.add(ok?"yes":"no");
+    btns.innerHTML=`<p class="ta-res" style="color:${ok?"var(--accent)":"#fb7185"};margin:0;flex:1">${ok?"הורץ בהצלחה":"נדחה - הסוכן ינסה דרך אחרת"}</p>`;}
+  q4("#taYes").addEventListener("click",()=>done(true));
+  q4("#taNo").addEventListener("click",()=>done(false));
+})();
+
+/* toolbar */
+(function(){const tb=q4("#tb2");if(!tb)return;
+  const T=[["מרקר",'<path d="m9 11-6 6v3h9l3-3"/><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4z"/>'],["טקסט",'<path d="M4 7V4h16v3M9 20h6M12 4v16"/>'],["צורות",'<circle cx="8" cy="8" r="5"/><rect x="12" y="12" width="9" height="9" rx="1.5"/>'],["ביטול",'<path d="M3 7v6h6M21 17a9 9 0 0 0-15-6.7L3 13"/>']];
+  T.forEach(([lb,ic],i)=>{const sp=document.createElement("span");
+    sp.innerHTML=`<button type="button" aria-label="${lb}" style="animation-delay:${i*70}ms"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ic}</svg></button><span class="tip">${lb}</span>`;
+    tb.appendChild(sp);});
+})();
+
+/* scrubber */
+(function(){const root=q4(".scr");if(!root)return;const track=q4("#scrTrack"),fill=q4("#scrFill"),knob=q4("#scrKnob"),bub=q4("#scrBub"),cur=q4("#scrCur");
+  const DUR=96;let v=.3,drag=false;
+  const fmt=s=>`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,"0")}`;
+  function paint(){fill.style.width=v*100+"%";knob.style.left=`calc(${v*100}% - 8px)`;bub.style.left=v*100+"%";
+    bub.textContent=fmt(v*DUR);cur.textContent=fmt(v*DUR);}
+  function set(e){const r=track.getBoundingClientRect();v=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width));paint();}
+  track.addEventListener("pointerdown",e=>{track.setPointerCapture(e.pointerId);drag=true;root.classList.add("drag");set(e);});
+  track.addEventListener("pointermove",e=>drag&&set(e));
+  track.addEventListener("pointerup",()=>{drag=false;root.classList.remove("drag");});
+  paint();
+})();
+
+/* cart */
+(function(){const add=q4("#cartAdd");if(!add)return;const n=q4("#cartN"),wrap=q4("#cartWrap");let c=2;
+  add.addEventListener("click",()=>{const f=document.createElement("span");f.className="cart-fly";wrap.appendChild(f);
+    setTimeout(()=>{f.remove();c++;n.textContent=c;n.classList.remove("pop");void n.offsetWidth;n.classList.add("pop");},380);});
+})();
+
+/* page flip */
+(function(){const b=q4("#pf");if(!b)return;b.addEventListener("click",()=>b.classList.toggle("flip"));})();
+
+/* signature pad */
+(function(){const c=q4("#sigCanvas");if(!c)return;const ctx=c.getContext("2d");let drawing=false;
+  const pos=e=>{const r=c.getBoundingClientRect();return{x:(e.clientX-r.left)*(c.width/r.width),y:(e.clientY-r.top)*(c.height/r.height)};};
+  c.addEventListener("pointerdown",e=>{c.setPointerCapture(e.pointerId);drawing=true;const p=pos(e);
+    ctx.strokeStyle="#2dd4bf";ctx.lineCap="round";ctx.lineJoin="round";ctx.beginPath();ctx.moveTo(p.x,p.y);});
+  c.addEventListener("pointermove",e=>{if(!drawing)return;const p=pos(e);
+    ctx.lineWidth=3+(e.pressure||.4)*5;ctx.lineTo(p.x,p.y);ctx.stroke();});
+  c.addEventListener("pointerup",()=>drawing=false);
+  q4("#sigClear").addEventListener("click",()=>{ctx.clearRect(0,0,c.width,c.height);
+    c.animate([{opacity:1},{opacity:.4},{opacity:1}],{duration:300});});
+})();
+
+/* undo */
+(function(){const btn=q4("#unDo");if(!btn)return;const slot=q4("#unSlot");let timer=null;
+  const C=2*Math.PI*9;
+  btn.addEventListener("click",()=>{clearTimeout(timer);
+    slot.innerHTML=`<button class="un-btn" type="button"><svg width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="var(--border)" stroke-width="2.5"/><circle cx="12" cy="12" r="9" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="${C}" transform="rotate(-90 12 12)"><animate attributeName="stroke-dashoffset" from="0" to="${C}" dur="4s" fill="freeze"/></circle><path d="M9 10V7l-3 3 3 3v-3h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>ביטול</button>`;
+    slot.querySelector("button").addEventListener("click",()=>{clearTimeout(timer);slot.innerHTML="";});
+    timer=setTimeout(()=>{slot.innerHTML='<span class="un-note">הפריט נמחק לצמיתות</span>';},4000);});
+})();
+
+/* card field */
+(function(){const box=q4("#cf");if(!box)return;const inp=q4("#cfInput"),cvv=q4("#cfCvv"),num=q4("#cfNum"),brand=q4("#cfBrand");
+  inp.addEventListener("input",()=>{const d=inp.value.replace(/\D/g,"").slice(0,16);
+    inp.value=d.replace(/(.{4})/g,"$1 ").trim();
+    num.textContent=inp.value||"•••• •••• •••• ••••";
+    brand.textContent=d.startsWith("4")?"Visa":d.startsWith("5")?"Mastercard":"כרטיס";});
+  inp.addEventListener("focus",()=>box.classList.remove("cvv"));
+  cvv.addEventListener("focus",()=>box.classList.add("cvv"));
+})();
+
+/* stack panel */
+(function(){const host=q4("#sp2");if(!host)return;
+  const P=[["עיצוב","#2dd4bf"],["פיתוח","#a78bfa"],["שיווק","#fbbf24"]];let open=false;
+  P.forEach(([t,c],i)=>{const d=document.createElement("div");d.className="sp2-c";d.textContent=t;d.style.color=c;d.style.zIndex=P.length-i;
+    host.appendChild(d);});
+  function paint(){qa4(".sp2-c",host).forEach((d,i)=>{
+    d.style.transitionDelay=(i*40)+"ms";
+    d.style.transform=open?`rotate(${(i-1)*14}deg) translate(${(i-1)*-52}px,${Math.abs(i-1)*8}px)`:`rotate(${(i-1)*3}deg)`;});}
+  host.addEventListener("pointerenter",()=>{open=true;paint();});
+  host.addEventListener("pointerleave",()=>{open=false;paint();});
+  host.addEventListener("click",()=>{open=!open;paint();});
+  paint();
+})();
+
+/* typewriter */
+(function(){const el=q4("#twText");if(!el)return;
+  const L=["בונים ממשקים שמרגישים חיים.","אנימציה היא לא קישוט - היא שפה.","RTL מהקו הראשון."];
+  let i=0,len=0;
+  function tick(){const full=L[i];
+    if(len<full.length){el.textContent=full.slice(0,++len);setTimeout(tick,55);}
+    else setTimeout(()=>{len=0;i=(i+1)%L.length;tick();},1800);}
+  tick();
+})();
+
+/* glass player */
+(function(){const btn=q4("#gpPlay2");if(!btn)return;const bars=q4("#gpBars");let play=true;
+  for(let i=0;i<22;i++){const b=document.createElement("i");b.style.height=4+((i*37)%14)+"px";
+    b.style.animation=`gpBar ${0.6+(i%4)*0.13}s ${i*0.05}s ease-in-out infinite alternate`;bars.appendChild(b);}
+  const st=document.createElement("style");st.textContent="@keyframes gpBar{from{transform:scaleY(.3)}to{transform:scaleY(1)}}";document.head.appendChild(st);
+  const PAUSE='<rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/>';
+  const PLAY='<path d="M7 4.8v14.4c0 .8.9 1.3 1.6.9l11-7.2c.6-.4.6-1.4 0-1.8l-11-7.2c-.7-.4-1.6.1-1.6.9z"/>';
+  btn.addEventListener("click",()=>{play=!play;q4("#gpIc").innerHTML=play?PAUSE:PLAY;
+    qa4("i",bars).forEach(b=>b.style.animationPlayState=play?"running":"paused");});
+})();
+
+/* bell */
+(function(){const b=q4("#bel");if(!b)return;const n=q4("#belN");
+  b.addEventListener("click",()=>{b.classList.remove("ring");void b.offsetWidth;b.classList.add("ring");
+    if(n)n.remove();b.setAttribute("aria-label","אין התראות");});
+})();
+
+/* morph popover */
+(function(){const box=q4("#mpBox");if(!box)return;const lbl=q4("#mpLbl");
+  box.style.width="120px";box.style.height="44px";box.style.borderRadius="999px";
+  box.addEventListener("click",()=>{const on=box.parentElement.classList.toggle("open");
+    box.setAttribute("aria-expanded",on);
+    box.style.width=on?"224px":"120px";box.style.height=on?"150px":"44px";box.style.borderRadius=on?"18px":"999px";
+    lbl.style.opacity=on?0:1;lbl.textContent=on?"":"פתיחה";box.style.cursor=on?"default":"pointer";});
+})();
+
+/* task list */
+(function(){const list=q4("#tl2List");if(!list)return;
+  let items=[{t:"סקיצה ראשונה",d:true},{t:"בניית פרוטוטייפ",d:true},{t:"בדיקות משתמשים",d:false},{t:"השקה",d:false}];
+  function render(burst){list.innerHTML="";
+    const done=items.filter(x=>x.d).length;
+    q4("#tl2Count").textContent=`${done}/${items.length}`;
+    q4("#tl2Bar").style.width=(done/items.length*100)+"%";
+    items.forEach(x=>{const li=document.createElement("li");
+      const b=document.createElement("button");b.type="button";b.className=x.d?"done":"";
+      if(burst===x.t)b.style.transform="scale(1.04)";
+      b.innerHTML=`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">${x.d?'<path d="m4 12.5 5 5L20 6.5"/>':'<circle cx="12" cy="12" r="8" opacity=".4"/>'}</svg><span class="tt2">${x.t}</span>`;
+      b.addEventListener("click",()=>{x.d=!x.d;render(x.d?x.t:null);
+        if(x.d)for(let i=0;i<8;i++){const c=document.createElement("span");c.className="conf";
+          c.style.background=i%2?"#2dd4bf":"#fbbf24";c.style.transform=`rotate(${i*45}deg)`;c.style.animationDelay=(i*.02)+"s";
+          li.appendChild(c);setTimeout(()=>c.remove(),800);}});
+      li.appendChild(b);list.appendChild(li);});}
+  render();
+})();
+
+/* music toggle */
+(function(){const box=q4("#mt2");if(!box)return;const btn=q4("#mt2Btn"),ic=q4("#mt2Ic"),bars=q4("#mt2Bars");
+  qa4("i",bars).forEach((b,i)=>b.style.animationDelay=(i*.07)+"s");
+  btn.addEventListener("click",()=>{const on=box.classList.toggle("on");
+    btn.setAttribute("aria-pressed",on);
+    btn.style.borderRadius=on?"999px":"16px";btn.style.transform=on?"rotate(0)":"rotate(-8deg)";
+    ic.innerHTML=on?'<rect x="6" y="5" width="4.5" height="14" rx="1.4"/><rect x="13.5" y="5" width="4.5" height="14" rx="1.4"/>':'<path d="M8 5.5v13c0 .9 1 1.5 1.8 1l10-6.5c.7-.5.7-1.5 0-2l-10-6.5c-.8-.5-1.8.1-1.8 1z"/>';
+    qa4("i",bars).forEach((b,i)=>{b.style.animationDuration=(0.55+i*.11)+"s";});
+  });
+})();
+
+/* spark badge */
+(function(){const c=q4("#spkCanvas");if(!c||RED4)return;const ctx=c.getContext("2d");let t=0;
+  const sparks=Array.from({length:14},(_,i)=>({a:i/14*Math.PI*2,r:60+(i%4)*13,s:.6+(i%3)*.35,o:.4+(i%5)*.12}));
+  (function draw(){t+=.016;ctx.clearRect(0,0,c.width,c.height);
+    sparks.forEach(p=>{const ang=p.a+t*p.s;
+      const x=c.width/2+Math.cos(ang)*p.r,y=c.height/2+Math.sin(ang)*p.r*.55;
+      const tw=.5+.5*Math.sin(t*3+p.a*7);
+      ctx.globalAlpha=p.o*tw;ctx.fillStyle="#5eead4";
+      ctx.beginPath();ctx.arc(x,y,1.4+tw*2,0,7);ctx.fill();});
+    ctx.globalAlpha=1;requestAnimationFrame(draw);})();
+})();
+
+/* dot matrix */
+(function(){const c=q4("#dmtCanvas");if(!c)return;const ctx=c.getContext("2d");
+  const off=document.createElement("canvas");off.width=c.width;off.height=c.height;
+  const o=off.getContext("2d");o.fillStyle="#fff";o.font="900 88px Inter,sans-serif";
+  o.textAlign="center";o.textBaseline="middle";o.fillText("finesse",c.width/2,c.height/2);
+  const img=o.getImageData(0,0,c.width,c.height).data,G=14,cells=[];
+  for(let y=0;y<c.height;y+=G)for(let x=0;x<c.width;x+=G)
+    if(img[(y*c.width+x)*4+3]>128)cells.push({x,y,d:Math.random()*1.2});
+  const t0=performance.now();
+  (function draw(t){const el=(t-t0)/1000;ctx.clearRect(0,0,c.width,c.height);
+    cells.forEach(p=>{const a=Math.max(0,Math.min(1,(el-p.d)*2.4));
+      const pulse=.85+.15*Math.sin(el*2+p.x*.05);
+      ctx.globalAlpha=a;ctx.fillStyle="#5eead4";
+      ctx.beginPath();ctx.arc(p.x,p.y,4.2*pulse*(.3+.7*a),0,7);ctx.fill();});
+    ctx.globalAlpha=1;requestAnimationFrame(draw);})(t0);
+})();
+
+/* crt */
+(function(){const scr=q4("#crtScr");if(!scr)return;
+  function boot(){scr.style.transform="scaleY(0.01)";scr.style.filter="brightness(3)";
+    setTimeout(()=>{scr.style.transform="scaleY(1)";scr.style.filter="brightness(1)";},250);}
+  q4("#crtBtn").addEventListener("click",boot);boot();
 })();
 })();
 </script>

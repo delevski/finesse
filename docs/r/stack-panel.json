@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "stack-panel",
+  "type": "registry:component",
+  "title": "Stack Panel",
+  "description": "פאנלים מוערמים נפרשים כמו חבילת קלפים בריחוף.",
+  "files": [
+    {
+      "path": "components/finesse/stack-panel.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * StackPanel - stacked panels that fan open like a deck on hover, each\n * card rotating out with a spring.\n */\nconst PANELS = [\n  { t: \"עיצוב\", c: \"#2dd4bf\" },\n  { t: \"פיתוח\", c: \"#a78bfa\" },\n  { t: \"שיווק\", c: \"#fbbf24\" },\n];\n\nexport function StackPanel({ className }: { className?: string }) {\n  const [open, setOpen] = React.useState(false);\n  return (\n    <div\n      dir=\"rtl\"\n      onPointerEnter={() => setOpen(true)}\n      onPointerLeave={() => setOpen(false)}\n      onClick={() => setOpen((v) => !v)}\n      className={cn(\"relative h-44 w-44 cursor-pointer\", className)}\n    >\n      {PANELS.map((p, i) => (\n        <div\n          key={p.t}\n          className=\"absolute inset-0 grid place-items-center rounded-2xl border border-zinc-700 bg-zinc-900 shadow-xl transition-all\"\n          style={{\n            transform: open\n              ? `rotate(${(i - 1) * 14}deg) translate(${(i - 1) * -52}px, ${Math.abs(i - 1) * 8}px)`\n              : `rotate(${(i - 1) * 3}deg)`,\n            transitionDuration: \".5s\",\n            transitionDelay: `${i * 40}ms`,\n            transitionTimingFunction: \"cubic-bezier(.2,1.4,.3,1)\",\n            zIndex: PANELS.length - i,\n          }}\n        >\n          <span className=\"text-sm font-bold\" style={{ color: p.c }}>{p.t}</span>\n        </div>\n      ))}\n    </div>\n  );\n}\n"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html><html dir="rtl" lang="he"><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;800;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;box-sizing:border-box}
+body{width:1200px;height:630px;overflow:hidden;font-family:Heebo,Inter,sans-serif;background:#0a0f14;color:#eef4f8;position:relative}
+.glow1{position:absolute;top:0;right:0;width:560px;height:560px;transform:translate(0,-32%);border-radius:50%;background:radial-gradient(circle,rgba(45,212,191,.28),transparent 65%)}
+.glow2{position:absolute;bottom:0;left:0;width:640px;height:640px;transform:translate(0,36%);border-radius:50%;background:radial-gradient(circle,rgba(129,140,248,.22),transparent 65%)}
+.grid{position:absolute;inset:0;background-image:linear-gradient(rgba(148,163,184,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(148,163,184,.06) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(ellipse at 50% 40%,black 30%,transparent 75%)}
+.inner{position:relative;height:100%;padding:64px 72px;display:flex;flex-direction:column;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:14px}
+.logo{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#2dd4bf,#0d9488);display:grid;place-items:center;box-shadow:0 8px 30px rgba(45,212,191,.4)}
+.logo svg{width:30px;height:30px}
+.brand b{font-size:26px;font-weight:800;letter-spacing:-.02em}
+.brand span{font-size:15px;color:#8fa3b8}
+h1{font-size:92px;font-weight:900;line-height:1.05;letter-spacing:-.03em;margin-top:6px;background:linear-gradient(180deg,#fff 40%,#9fd8d0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{font-size:30px;color:#a9bccf;margin-top:14px;font-weight:400}
+.sub b{color:#2dd4bf;font-weight:700}
+.pills{display:flex;gap:12px;margin-top:26px}
+.pill{font-size:17px;font-weight:600;padding:9px 18px;border-radius:999px;border:1px solid rgba(45,212,191,.35);background:rgba(45,212,191,.08);color:#5eead4}
+.pill.b{border-color:rgba(167,139,250,.35);background:rgba(167,139,250,.08);color:#c4b5fd}
+.pill.c{border-color:rgba(251,191,36,.3);background:rgba(251,191,36,.07);color:#fcd34d}
+.stats{display:flex;gap:44px;align-items:flex-end}
+.stat b{display:block;font-size:52px;font-weight:900;color:#fff;line-height:1}
+.stat span{font-size:16px;color:#8fa3b8}
+.cards{position:absolute;left:70px;bottom:180px;display:flex;gap:0}
+.card{width:110px;height:155px;border-radius:18px;background:linear-gradient(180deg,#161e28,#10161f);border:1px solid #263242;box-shadow:0 24px 50px rgba(0,0,0,.55);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;margin-left:-26px}
+.card:first-child{margin-left:0}
+.card:nth-child(1){transform:rotate(-9deg) translateY(14px)}
+.card:nth-child(2){transform:rotate(-3deg) translateY(-4px)}
+.card:nth-child(3){transform:rotate(3deg) translateY(2px)}
+.card:nth-child(4){transform:rotate(9deg) translateY(16px)}
+.card svg{width:44px;height:44px}
+.card i{font-style:normal;font-size:12px;color:#a9bccf;font-weight:600}
+.star{position:absolute;top:56px;left:72px;display:flex;align-items:center;gap:10px;background:#161e28;border:1px solid #2b3a4d;border-radius:999px;padding:10px 20px;font-size:18px;font-weight:700;color:#fde047;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+</style></head><body>
+<div class="grid"></div><div class="glow1"></div><div class="glow2"></div>
+<div class="star"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 2.9 6.6 7.1.7-5.4 4.7 1.6 7-6.2-3.8L5.8 21l1.6-7L2 9.3l7.1-.7L12 2z"/></svg>תנו לנו כוכב ב-GitHub!</div>
+<div class="inner">
+  <div class="brand">
+    <div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="#04211d" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
+    <div><b>finesse</b><br><span>delevski/finesse</span></div>
+  </div>
+  <div>
+    <h1>אנימציות ממשק<br>שמרגישות חיות</h1>
+    <p class="sub"><b>94 קומפוננטות</b> ל-shadcn/ui · עברית · RTL מלא</p>
+    <div class="pills"><span class="pill">React + Tailwind</span><span class="pill b">העתק TSX בלחיצה</span><span class="pill c">MIT · חינם לנצח</span></div>
+  </div>
+  <div class="stats">
+    <div class="stat"><b>94</b><span>קומפוננטות ברג׳יסטרי</span></div>
+    <div class="stat"><b>108</b><span>הדמיות חיות באתר</span></div>
+    <div class="stat"><b>4</b><span>גלריות מושן</span></div>
+  </div>
+</div>
+<div class="cards">
+  <div class="card"><svg viewBox="0 0 24 24" fill="none" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="m9 12.5 2 2 4-4.5"/></svg><i>כפתורי החזקה</i></div>
+  <div class="card"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0-4 10.5V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-3.5A6 6 0 0 0 12 3z"/></svg><i>מושן וגליטש</i></div>
+  <div class="card"><svg viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/></svg><i>פיקרים וגלגלות</i></div>
+  <div class="card"><svg viewBox="0 0 24 24" fill="none" stroke="#fb7185" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg><i>קנבס וגלים</i></div>
+</div>
+</body></html>

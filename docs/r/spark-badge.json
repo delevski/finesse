@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "spark-badge",
+  "type": "registry:component",
+  "title": "Spark Badge",
+  "description": "(threeui, MIT) באדג' עם ניצוצות שחגים סביבו על קנבס זעיר.",
+  "files": [
+    {
+      "path": "components/finesse/spark-badge.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * SparkBadge (adapted from threeui's spark-badge, MIT) - a badge with\n * sparks orbiting it on a tiny canvas.\n */\nexport function SparkBadge({ className, children = \"חדש\" }: { className?: string; children?: React.ReactNode }) {\n  const ref = React.useRef<HTMLCanvasElement>(null);\n  React.useEffect(() => {\n    const c = ref.current!;\n    const ctx = c.getContext(\"2d\")!;\n    let raf = 0, t = 0;\n    const sparks = Array.from({ length: 14 }, (_, i) => ({\n      a: (i / 14) * Math.PI * 2, r: 34 + (i % 4) * 7, s: 0.6 + (i % 3) * 0.35, o: 0.4 + (i % 5) * 0.12,\n    }));\n    const draw = () => {\n      t += 0.016;\n      ctx.clearRect(0, 0, c.width, c.height);\n      sparks.forEach((p) => {\n        const ang = p.a + t * p.s;\n        const x = c.width / 2 + Math.cos(ang) * p.r;\n        const y = c.height / 2 + Math.sin(ang) * p.r * 0.55;\n        const tw = 0.5 + 0.5 * Math.sin(t * 3 + p.a * 7);\n        ctx.globalAlpha = p.o * tw;\n        ctx.fillStyle = \"#5eead4\";\n        ctx.beginPath(); ctx.arc(x, y, 1.4 + tw, 0, 7); ctx.fill();\n      });\n      ctx.globalAlpha = 1;\n      raf = requestAnimationFrame(draw);\n    };\n    draw();\n    return () => cancelAnimationFrame(raf);\n  }, []);\n  return (\n    <span className={cn(\"relative inline-grid h-20 w-32 place-items-center\", className)}>\n      <canvas ref={ref} width={128} height={80} className=\"absolute inset-0\" aria-hidden />\n      <span className=\"relative rounded-full bg-teal-500/15 px-4 py-1.5 text-xs font-black text-teal-300 ring-1 ring-teal-500/50\">\n        {children}\n      </span>\n    </span>\n  );\n}\n"
+    }
+  ]
+}

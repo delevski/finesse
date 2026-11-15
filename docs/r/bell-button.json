@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "bell-button",
+  "type": "registry:component",
+  "title": "Bell Button",
+  "description": "הפעמון מצלצל בקשת אמיתית עם ניצוצות, והבאדג' מתאפס.",
+  "files": [
+    {
+      "path": "components/finesse/bell-button.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * BellButton - the bell rings with a real swing arc and spark particles,\n * and the badge counts up.\n */\nexport function BellButton({ className }: { className?: string }) {\n  const [n, setN] = React.useState(3);\n  const [ring, setRing] = React.useState(0);\n  return (\n    <button\n      type=\"button\"\n      aria-label={`${n} התראות`}\n      onClick={() => { setRing((r) => r + 1); setN(0); }}\n      className={cn(\"relative grid h-12 w-12 place-items-center rounded-2xl border border-zinc-700 bg-zinc-900 text-zinc-200\", className)}\n    >\n      <svg key={ring} width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" strokeWidth=\"1.8\" strokeLinecap=\"round\" strokeLinejoin=\"round\"\n        style={{ transformOrigin: \"top center\", animation: ring ? \"bellRing .8s cubic-bezier(.2,1.4,.3,1)\" : \"none\" }}>\n        <path d=\"M6 9a6 6 0 1 1 12 0c0 5 2 6 2 6H4s2-1 2-6\" />\n        <path d=\"M10 20a2 2 0 0 0 4 0\" />\n      </svg>\n      {n > 0 && (\n        <span className=\"absolute -left-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-rose-500 px-1 text-[10px] font-black text-white\"\n          style={{ animation: \"bellPop .4s cubic-bezier(.2,1.8,.3,1) both\" }}>{n}</span>\n      )}\n      {ring > 0 && [0, 1, 2, 3, 4, 5].map((i) => (\n        <span key={`${ring}-${i}`} aria-hidden className=\"pointer-events-none absolute left-1/2 top-1/2 h-1 w-1 rounded-full bg-teal-300\"\n          style={{ animation: `bellSpark .6s ${i * 0.03}s ease-out both`, transform: `rotate(${i * 60}deg)` }} />\n      ))}\n      <style>{`@keyframes bellRing{0%{transform:rotate(0)}20%{transform:rotate(18deg)}45%{transform:rotate(-14deg)}70%{transform:rotate(8deg)}100%{transform:rotate(0)}}\n@keyframes bellPop{from{transform:scale(.4)}to{transform:scale(1)}}\n@keyframes bellSpark{from{opacity:1;transform:rotate(var(--r,0)) translateY(-4px) scale(1)}to{opacity:0;transform:rotate(var(--r,0)) translateY(-20px) scale(.3)}}`}</style>\n    </button>\n  );\n}\n"
+    }
+  ]
+}

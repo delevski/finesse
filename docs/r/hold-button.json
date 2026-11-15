@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hold-button",
+  "type": "registry:component",
+  "title": "Hold Button",
+  "description": "החזקה ממלאה טבעת מסביב לכפתור; רק החזקה מלאה מאשרת.",
+  "files": [
+    {
+      "path": "components/finesse/hold-button.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * HoldButton - press and hold: a ring fills around the label, the button\n * tightens, and only a full hold commits the action.\n */\nexport function HoldButton({ className, label = \"החזיקו לאישור\", done = \"אושר!\" }: { className?: string; label?: string; done?: string }) {\n  const [p, setP] = React.useState(0);\n  const [ok, setOk] = React.useState(false);\n  const raf = React.useRef<number>(0);\n  const start = () => {\n    if (ok) { setOk(false); setP(0); return; }\n    const t0 = performance.now();\n    const tick = (t: number) => {\n      const v = Math.min(1, (t - t0) / 1400);\n      setP(v);\n      if (v < 1) raf.current = requestAnimationFrame(tick);\n      else setOk(true);\n    };\n    raf.current = requestAnimationFrame(tick);\n  };\n  const stop = () => { if (!ok && raf.current) { cancelAnimationFrame(raf.current); setP(0); } };\n  const C = 2 * Math.PI * 26;\n  return (\n    <button\n      type=\"button\"\n      onPointerDown={start}\n      onPointerUp={stop}\n      onPointerLeave={stop}\n      className={cn(\"relative grid h-16 w-40 select-none place-items-center rounded-2xl border text-sm font-bold transition-all\", className)}\n      style={{\n        borderColor: ok ? \"#2dd4bf\" : \"#3f3f46\",\n        background: ok ? \"rgba(45,212,191,.15)\" : \"#18181b\",\n        color: ok ? \"#2dd4bf\" : \"#e4e4e7\",\n        transform: p > 0 && !ok ? `scale(${1 - p * 0.05})` : \"scale(1)\",\n      }}\n    >\n      <svg className=\"absolute inset-0 m-auto\" width=\"52\" height=\"52\" viewBox=\"0 0 60 60\" style={{ opacity: p > 0 || ok ? 1 : 0, transition: \"opacity .2s\" }}>\n        <circle cx=\"30\" cy=\"30\" r=\"26\" fill=\"none\" stroke=\"#3f3f46\" strokeWidth=\"3\" opacity=\".35\" />\n        <circle cx=\"30\" cy=\"30\" r=\"26\" fill=\"none\" stroke=\"#2dd4bf\" strokeWidth=\"3\" strokeLinecap=\"round\"\n          strokeDasharray={C} strokeDashoffset={C * (1 - (ok ? 1 : p))} transform=\"rotate(-90 30 30)\" />\n      </svg>\n      {ok ? done : label}\n    </button>\n  );\n}\n"
+    }
+  ]
+}
