@@ -2151,7 +2151,7 @@ document.addEventListener("click",async e=>{
   b.disabled=true;
   const orig=b.innerHTML;
   try{
-    const r=await fetch("/r/"+b.dataset.tsx+".json");
+    const r=await fetch("r/"+b.dataset.tsx+".json");
     if(!r.ok)throw 0;
     const item=await r.json();
     await navigator.clipboard.writeText(item.files[0].content);
