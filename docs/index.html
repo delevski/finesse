@@ -56,6 +56,99 @@ section{padding:56px 0 8px}
 h2{font-size:clamp(24px,3.4vw,34px);font-weight:700;letter-spacing:-.02em}
 .sec-sub{color:var(--muted);font-size:15px;line-height:1.65;max-width:660px;margin-bottom:26px}
 .demo{border:1px solid var(--border-soft);border-radius:var(--radius);background:var(--bg-soft);overflow:hidden;box-shadow:var(--shadow-2)}
+/* R7 gallery 2 */
+.pg-stage{display:grid;place-items:center;min-height:130px;width:100%}
+.pg-ball{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-strong));box-shadow:0 12px 26px rgba(0,0,0,.45)}
+.pg-controls{display:grid;gap:13px;width:100%;max-width:340px}
+.pg-row{display:grid;gap:5px}
+.pg-row label{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted)}
+.pg-row input[type=range]{width:100%;accent-color:var(--accent)}
+.pg-actions{display:flex;gap:10px;align-items:center}
+.ptr-stage{position:relative;width:100%;max-width:340px;height:250px;overflow:hidden;border-radius:14px;border:1px solid var(--border-soft);background:var(--card);touch-action:pan-y}
+.ptr-list{display:grid;gap:10px;padding:16px}
+.ptr-item{background:var(--card-2);border:1px solid var(--border-soft);border-radius:11px;padding:13px 15px;font-size:13.5px}
+.ptr-climber{position:absolute;top:0;left:50%;transform:translate(-50%,-80px);display:grid;justify-items:center;z-index:2}
+.ptr-climber .c-head{width:16px;height:16px;border-radius:50%;background:#f5c89a}
+.ptr-climber .c-body{width:12px;height:20px;border-radius:6px;background:var(--accent);margin-top:2px}
+.ptr-climber .c-rope{width:2.5px;height:60px;background:var(--border);border-radius:2px}
+.sf-wrap{display:grid;justify-items:center;gap:18px}
+.sf-row{display:flex;gap:7px;direction:ltr}
+.sf-d{position:relative;width:46px;height:62px;font-family:"JetBrains Mono",monospace;font-size:34px;font-weight:700;color:var(--accent)}
+.sf-d>div{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(180deg,var(--card-2),var(--card));border:1px solid var(--border-soft);border-radius:9px;backface-visibility:hidden}
+.sf-upper{clip-path:inset(0 0 50% 0)}
+.sf-lower{clip-path:inset(50% 0 0 0)}
+.sf-flap{clip-path:inset(0 0 50% 0);transform-origin:50% 100%;z-index:2}
+.sf-d::after{content:"";position:absolute;top:50%;left:0;right:0;height:1.5px;background:rgba(0,0,0,.55);z-index:3}
+.sf-actions{display:flex;gap:12px}
+.sf-btn{width:46px;height:46px;border-radius:13px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:22px;font-weight:700;cursor:pointer;transition:transform .12s,border-color .2s;font-family:inherit}
+.sf-btn:active{transform:scale(.88)}
+.er-wrap{display:grid;justify-items:center;gap:16px;width:100%}
+.er-box{position:relative;width:100%;max-width:300px;min-height:170px;border:1.5px dashed var(--border);border-radius:16px;display:grid;place-items:center;padding:22px;overflow:hidden}
+.er-robot{position:relative;width:70px;height:86px;transition:transform .4s cubic-bezier(.2,1.4,.3,1)}
+.er-head{position:absolute;top:18px;left:50%;transform:translateX(-50%);width:56px;height:42px;background:var(--card-2);border:2px solid var(--border-soft);border-radius:14px;display:flex;justify-content:center;gap:10px;padding-top:13px;z-index:1}
+.er-head i{width:9px;height:4px;background:var(--faint);border-radius:4px;transition:all .35s}
+.er-ant{position:absolute;top:0;left:50%;transform:translateX(-50%);width:3px;height:18px;background:var(--border);border-radius:2px;transition:transform .4s cubic-bezier(.2,1.5,.3,1)}
+.er-ant::after{content:"";position:absolute;top:-7px;left:50%;transform:translateX(-50%);width:9px;height:9px;border-radius:50%;background:var(--faint);transition:all .3s}
+.er-body{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:42px;height:22px;background:var(--card-2);border:2px solid var(--border-soft);border-radius:9px 9px 13px 13px}
+.er-robot.happy{transform:translateY(-8px)}
+.er-robot.happy .er-head i{height:11px;background:var(--accent);border-radius:50%}
+.er-robot.happy .er-ant{transform:translateX(-50%) rotate(-10deg)}
+.er-robot.happy .er-ant::after{background:var(--accent)}
+.er-txt{font-size:13px;color:var(--muted);text-align:center}
+.er-item{position:absolute;bottom:14px;inset-inline:24px;background:linear-gradient(135deg,var(--accent),var(--accent-strong));color:#04211d;font-weight:600;font-size:13.5px;border-radius:11px;padding:11px 14px;text-align:center;transform:translateY(70px) scale(.6);opacity:0;transition:all .5s cubic-bezier(.2,1.4,.3,1)}
+.er-item.in{transform:none;opacity:1}
+.cmd-open{display:inline-flex;align-items:center;gap:10px;padding:12px 20px;border-radius:12px;border:1px solid var(--border);background:var(--card);color:var(--muted);font:500 14px inherit;cursor:pointer}
+.cmd-open kbd{font-family:"JetBrains Mono",monospace;font-size:11.5px;background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:6px;padding:3px 7px}
+.cmd-back{position:fixed;inset:0;background:rgba(4,6,10,.62);backdrop-filter:blur(4px);z-index:60;display:grid;justify-items:center;align-items:start;padding-top:14vh;opacity:0;pointer-events:none;transition:opacity .25s}
+.cmd-back.open{opacity:1;pointer-events:auto}
+.cmd-panel{width:min(400px,88vw);background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:0 30px 70px rgba(0,0,0,.55);overflow:hidden;transform:translateY(-14px) scale(.96);transition:transform .3s cubic-bezier(.2,1.3,.3,1)}
+.cmd-back.open .cmd-panel{transform:none}
+.cmd-input{width:100%;padding:15px 18px;background:transparent;border:0;border-bottom:1px solid var(--border-soft);color:var(--text);font:500 15px inherit;outline:none}
+.cmd-list{max-height:280px;overflow-y:auto;padding:8px}
+.cmd-item{display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:11px;font-size:14px;color:var(--text);cursor:pointer}
+.cmd-item svg{width:15px;height:15px;color:var(--muted);flex-shrink:0}
+.cmd-item.on{background:var(--accent-soft)}
+.cmd-item.on svg{color:var(--accent)}
+.swa-wrap{display:grid;gap:10px;width:100%;max-width:340px}
+.swa-row{position:relative;overflow:hidden;border-radius:14px}
+.swa-actions{position:absolute;inset-block:0;left:0;display:flex}
+.swa-actions button{width:64px;border:0;display:grid;place-items:center;color:#fff;cursor:pointer;font-size:19px}
+.swa-actions .arc{background:#3b82f6}
+.swa-actions .del{background:#ef4444}
+.swa-card{position:relative;z-index:1;display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--border-soft);border-radius:14px;padding:15px 16px;font-size:14px;touch-action:pan-y;transition:transform .35s cubic-bezier(.2,1.3,.3,1)}
+.swa-card .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.stw-wrap{display:grid;justify-items:center;gap:24px;width:100%}
+.stw-track{position:relative;width:min(300px,80%);height:4px;background:var(--border-soft);border-radius:3px}
+.stw-fill{position:absolute;top:0;inset-inline-start:0;height:100%;width:0;background:var(--accent);border-radius:3px;transition:width .5s cubic-bezier(.2,1,.3,1)}
+.stw-steps{position:absolute;top:50%;inset-inline:0;display:flex;justify-content:space-between;transform:translateY(-50%)}
+.stw-step{width:14px;height:14px;border-radius:50%;background:var(--card);border:2.5px solid var(--border);transition:border-color .3s,background .3s}
+.stw-step.hit{background:var(--accent);border-color:var(--accent)}
+.stw-walker{position:absolute;top:-11px;inset-inline-start:0;width:26px;height:26px;margin-inline-start:-13px;display:grid;place-items:center;z-index:2}
+.stw-walker span{width:16px;height:16px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 5px var(--accent-soft)}
+.stw-btns{display:flex;gap:10px}
+.peel-card{position:relative;width:100%;max-width:320px;border-radius:16px;overflow:hidden;border:1px solid var(--border-soft)}
+.peel-real{padding:20px;display:grid;gap:8px;background:var(--card)}
+.peel-real b{font-size:15px}
+.peel-real p{font-size:13px;color:var(--muted);line-height:1.6}
+.peel-real .pill{display:inline-block;background:var(--accent-soft);color:var(--accent);font-size:11.5px;font-weight:600;border-radius:99px;padding:4px 11px;width:max-content}
+.peel-skel{position:absolute;inset:0;background:var(--card-2);padding:20px;display:grid;gap:10px;align-content:start;transform-origin:100% 0;z-index:2}
+.peel-skel .shimmer{border-radius:8px}
+.vn-wrap{display:grid;justify-items:center;gap:14px;width:100%}
+.vn-bubble{display:flex;align-items:center;gap:13px;background:linear-gradient(135deg,var(--accent),var(--accent-strong));border-radius:18px;border-top-right-radius:5px;padding:13px 18px;width:min(300px,86%)}
+.vn-play{width:38px;height:38px;border-radius:50%;border:0;background:rgba(4,33,29,.85);color:#a7f3d0;display:grid;place-items:center;cursor:pointer;flex-shrink:0}
+.vn-bars{display:flex;align-items:center;gap:2.5px;height:30px;flex:1;direction:ltr}
+.vn-bars i{flex:1;background:rgba(4,33,29,.4);border-radius:2px;height:30%}
+.vn-bars i.played{background:rgba(4,33,29,.9)}
+.vn-time{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:rgba(4,33,29,.8);direction:ltr}
+.sun-stage{position:relative;width:100%;max-width:340px;height:220px;border-radius:16px;overflow:hidden;border:1px solid var(--border-soft)}
+.sun-sky{position:absolute;inset:0;background:linear-gradient(180deg,#7dd3fc 0%,#fde68a 70%,#fcd34d 100%);transition:filter 1.2s}
+.sun-stage.dusk .sun-sky{filter:hue-rotate(180deg) brightness(.32) saturate(1.4)}
+.sun-orb{position:absolute;top:18%;left:50%;width:52px;height:52px;margin-left:-26px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff7d6,#fbbf24 70%);box-shadow:0 0 34px 10px rgba(251,191,36,.55);transition:transform 1.2s cubic-bezier(.4,0,.6,1),background 1.2s}
+.sun-stage.dusk .sun-orb{transform:translateY(150px);background:radial-gradient(circle at 35% 35%,#e2e8f0,#94a3b8 70%);box-shadow:0 0 22px 6px rgba(148,163,184,.35)}
+.sun-hills{position:absolute;bottom:-4px;left:-6%;right:-6%;height:44%;background:radial-gradient(120% 130% at 50% 130%,#14532d 60%,transparent 61%),radial-gradient(140% 150% at 18% 135%,#166534 58%,transparent 59%);transition:filter 1.2s}
+.sun-stage.dusk .sun-hills{filter:brightness(.35)}
+.sun-star{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;opacity:0;transition:opacity .8s}
+.sun-stage.dusk .sun-star{opacity:.9}
 .demo-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;border-bottom:1px solid var(--border-soft);flex-wrap:wrap}
 .tsx-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:9px;border:1px solid var(--border);background:var(--bg-soft);color:var(--muted);font:600 12.5px inherit;cursor:pointer;transition:all .2s;flex-shrink:0}
 .tsx-btn:hover{border-color:var(--primary);color:var(--primary)}
@@ -774,6 +867,151 @@ footer a:hover{color:var(--accent)}
       <div class="es-state" style="text-align:center;margin-top:14px">מונה אודומטר: כל ספרה היא גלגלת שמתגלגלת לערך בסטאגר - כמו מונית מרחק אמיתית</div>
     </div></div>
   </div>
+</section>
+
+<section id="gallery2" dir="rtl" lang="he" class="heb">
+  <div class="sec-head rv"><span class="sec-num">07</span><h2>גלריה 2 - עוד עשרה קמעות</h2></div>
+  <p class="sec-sub rv">Ten more signature characters: a live-tunable playground, a climbing pull-to-refresh, a split-flap counter, an empty-state robot, a command palette, swipe actions, a walking stepper, a peeling skeleton, a voice note and a sunset theme wipe.</p>
+
+  <div class="demo rv">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3"/><path d="M2 14h4M10 8h4M18 16h4"/></svg><span dir="ltr">playground.tsx</span></span>
+    </div>
+    <div class="stage"><div class="stage-inner" style="display:grid;place-items:center;gap:22px">
+      <div class="pg-stage"><div class="pg-ball" id="pgBall"></div></div>
+      <div class="pg-controls">
+        <div class="pg-row"><label><span>קשיחות הקפיץ</span><output id="pgStiffV" dir="ltr">1.4</output></label><input type="range" id="pgStiff" min="0.4" max="2.6" step="0.1" value="1.4"></div>
+        <div class="pg-row"><label><span>משך (ms)</span><output id="pgDurV" dir="ltr">600</output></label><input type="range" id="pgDur" min="200" max="1400" step="50" value="600"></div>
+        <div class="pg-actions"><button class="btn primary ripple-host" id="pgPlay">נגנו</button><button class="btn-ghost" id="pgCopy">העתק ערכים מכוונים</button></div>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="demo rv">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg><span dir="ltr">pull-refresh.tsx</span></span>
+    </div>
+    <div class="stage"><div class="stage-inner" style="display:grid;place-items:center">
+      <div class="ptr-stage" id="ptrStage">
+        <div class="ptr-climber" id="ptrClimber"><span class="c-rope"></span><span class="c-head"></span><span class="c-body"></span></div>
+        <div class="ptr-list" id="ptrList"></div>
+      </div>
+      <div class="es-state" style="margin-top:16px">מושכים את הרשימה למטה - המטפס יורד עם החבל; משחררים מעבר לסף והוא נקלע למעלה ומרענן</div>
+    </div></div>
+  </div>
+
+  <div class="demo rv">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 12h18"/></svg><span dir="ltr">split-flap.tsx</span></span>
+    </div>
+    <div class="stage"><div class="stage-inner" style="display:grid;place-items:center">
+      <div class="sf-wrap">
+        <div class="sf-row" id="sfRow"></div>
+        <div class="sf-actions"><button class="sf-btn" id="sfMinus" aria-label="פחות">−</button><button class="sf-btn" id="sfPlus" aria-label="עוד">+</button></div>
+        <div class="es-state">הזמנות שהתקבלו היום - ספרות מתהפכות כמו שלט שדה תעופה</div>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="demo rv">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 8V4M9 13h.01M15 13h.01"/></svg><span dir="ltr">empty-robot.tsx</span></span>
+    </div>
+    <div class="stage"><div class="stage-inner" style="display:grid;place-items:center">
+      <div class="er-wrap">
+        <div class="er-box">
+          <div style="display:grid;gap:12px;justify-items:center">
+            <div class="er-robot" id="erRobot"><span class="er-ant"></span><span class="er-head"><i></i><i></i></span><span class="er-body"></span></div>
+            <div class="er-txt" id="erTxt">עוד אין פריטים - הרובוט קצת עצוב</div>
+          </div>
+          <div class="er-item" id="erItem">הפריט הראשון נוסף!</div>
+        </div>
+        <button class="btn primary ripple-host" id="erAdd">הוסיפו פריט</button>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="demo rv">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="m9 10 2 2-2 2M13 14h3"/></svg><span dir="ltr">cmd-palette.tsx</span></span>
+    </div>
+    <div class="stage"><div class="stage-inner" style="display:grid;place-items:center;gap:16px">
+      <button class="cmd-open" id="cmdOpen"><kbd>Cmd</kbd>+<kbd>K</kbd> פתחו פלטת פקודות</button>
+      <div class="es-state">חיפוש חי, סטאגר בפתיחה, וההדגשה קופצת עם החיצים</div>
+      <div class="es-state" id="cmdLast" style="min-height:20px"></div>
+    </div></div>
+  </div>
+
+  <div class="demo rv">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="6" width="18" height="12" rx="3"/><path d="M8 12h8"/></svg><span dir="ltr">swipe-actions.tsx</span></span>
+    </div>
+    <div class="stage"><div class="stage-inner" style="display:grid;place-items:center">
+      <div class="swa-wrap" id="swaWrap"></div>
+      <div class="es-state" style="margin-top:16px">גוררים שורה שמאלה (במובייל: החלקה) - הארכיון מתנדנד כשמוכן; שחרור פותח את הפעולות</div>
+    </div></div>
+  </div>
+
+  <div class="demo rv">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 15h4l2-7 4 12 2-7h4"/></svg><span dir="ltr">step-walker.tsx</span></span>
+    </div>
+    <div class="stage"><div class="stage-inner" style="display:grid;place-items:center">
+      <div class="stw-wrap">
+        <div class="stw-track">
+          <div class="stw-fill" id="stwFill"></div>
+          <div class="stw-steps" id="stwSteps"><span class="stw-step"></span><span class="stw-step"></span><span class="stw-step"></span><span class="stw-step"></span></div>
+          <div class="stw-walker" id="stwWalker"><span></span></div>
+        </div>
+        <div class="stw-btns"><button class="btn primary ripple-host" id="stwNext">השלב הבא</button><button class="btn-ghost" id="stwBack">חזרה</button></div>
+        <div class="es-state">הנקודה קופצת בין שלבים בסקווש, והקו נצבע אחריה</div>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="demo rv">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M4 14c4 1 8-1 10-4 1.5-2 4-3 6-2"/></svg><span dir="ltr">peel-skeleton.tsx</span></span>
+    </div>
+    <div class="stage"><div class="stage-inner" style="display:grid;place-items:center;gap:16px">
+      <div class="peel-card">
+        <div class="peel-real"><span class="pill">חדש</span><b>ברוכים הבאים לדשבורד</b><p>הנתונים נטענו במלואם. הסקלטון קולף את עצמו כמו מדבקה במקום פייד משעמם.</p></div>
+        <div class="peel-skel" id="peelSkel"><div class="shimmer" style="height:16px;width:34%"></div><div class="shimmer" style="height:22px;width:64%"></div><div class="shimmer" style="height:12px;width:88%"></div><div class="shimmer" style="height:12px;width:74%"></div></div>
+      </div>
+      <button class="btn-ghost" id="peelReplay">נגנו שוב</button>
+    </div></div>
+  </div>
+
+  <div class="demo rv">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span dir="ltr">voice-note.tsx</span></span>
+    </div>
+    <div class="stage"><div class="stage-inner" style="display:grid;place-items:center">
+      <div class="vn-wrap">
+        <div class="vn-bubble">
+          <button class="vn-play" id="vnPlay" aria-label="נגינה"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+          <div class="vn-bars" id="vnBars"></div>
+          <span class="vn-time" id="vnTime">0:12</span>
+        </div>
+        <div class="es-state">הודעה קולית מהלקוח - הווייבפורם חי בזמן נגינה</div>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="demo rv">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/></svg><span dir="ltr">sunset-toggle.tsx</span></span>
+    </div>
+    <div class="stage"><div class="stage-inner" style="display:grid;place-items:center;gap:16px">
+      <div class="sun-stage" id="sunStage">
+        <div class="sun-sky"></div>
+        <div class="sun-orb"></div>
+        <div class="sun-hills"></div>
+      </div>
+      <button class="btn primary ripple-host" id="sunBtn">החשכה</button>
+    </div></div>
+  </div>
+
 </section>
 
 <section id="demos">
@@ -1913,6 +2151,287 @@ document.addEventListener("click",async e=>{
   }
   setTimeout(()=>{b.classList.remove("ok","err");b.innerHTML=orig;b.disabled=false;},1700);
 });
+</script>
+<script>
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+/* ==== R7: playground ==== */
+const pgBall=$("#pgBall");
+if(pgBall){
+  const stiff=$("#pgStiff"),dur=$("#pgDur"),sv=$("#pgStiffV"),dv=$("#pgDurV");
+  let side=1;
+  const upd=()=>{sv.textContent=parseFloat(stiff.value).toFixed(1);dv.textContent=dur.value;};
+  stiff.addEventListener("input",upd);dur.addEventListener("input",upd);upd();
+  $("#pgPlay").addEventListener("click",()=>{
+    const s=parseFloat(stiff.value),d=parseInt(dur.value);
+    side*=-1;
+    if(reduce){pgBall.style.transform=`translateX(${side*105}px)`;return;}
+    const stretch=1+.16*(s-1);
+    pgBall.animate([
+      {transform:`translateX(${-side*105}px) scale(1)`},
+      {transform:`translateX(${side*105}px) scale(${stretch.toFixed(2)},${(2-stretch).toFixed(2)})`,offset:.55},
+      {transform:`translateX(${side*105-side*9*(s-1)}px) scale(${(.9+.08*s).toFixed(2)},${(1.1-.08*s).toFixed(2)})`,offset:.8},
+      {transform:`translateX(${side*105}px) scale(1)`}
+    ],{duration:d,easing:`cubic-bezier(.2,${s},.3,1)`,fill:"forwards"});
+  });
+  $("#pgCopy").addEventListener("click",async e=>{
+    const b=e.currentTarget,s=parseFloat(stiff.value).toFixed(1),d=dur.value;
+    const css=`transition-timing-function: cubic-bezier(0.2, ${s}, 0.3, 1);\ntransition-duration: ${d}ms;`;
+    try{await navigator.clipboard.writeText(css);b.textContent="הועתק!";}
+    catch(_){b.textContent="נכשל - נסו שוב";}
+    setTimeout(()=>b.textContent="העתק ערכים מכוונים",1600);
+  });
+}
+
+/* ==== R7: pull to refresh ==== */
+const ptrStage=$("#ptrStage");
+if(ptrStage){
+  const list=$("#ptrList"),climber=$("#ptrClimber");
+  let ptrN=1042,drag=false,sy=0,dy=0,busy=false;
+  const item=t=>{const d=document.createElement("div");d.className="ptr-item";d.textContent=t;return d;};
+  const seed=()=>{list.innerHTML="";[["משלוח 1042 - בדרך אליך"],["משלוח 1041 - נמסר אתמול"],["משלוח 1040 - נמסר ביום שני"]].forEach(x=>list.appendChild(item(x[0])));};
+  seed();
+  const render=()=>{list.style.transform=`translateY(${dy}px)`;climber.style.transform=`translate(-50%,${Math.min(dy*.85,120)-80}px)`;};
+  ptrStage.addEventListener("pointerdown",e=>{if(busy)return;drag=true;sy=e.clientY;dy=0;list.style.transition="none";climber.style.transition="none";ptrStage.setPointerCapture(e.pointerId);});
+  ptrStage.addEventListener("pointermove",e=>{if(!drag)return;dy=Math.max(0,Math.min(e.clientY-sy,150));render();});
+  const end=()=>{
+    if(!drag)return;drag=false;
+    list.style.transition="transform .4s cubic-bezier(.2,1.4,.3,1)";
+    climber.style.transition="transform .45s cubic-bezier(.3,.8,.4,1)";
+    if(dy>90&&!reduce){
+      busy=true;
+      dy=110;render();
+      climber.style.transition="transform .38s cubic-bezier(.5,-.3,.6,.4)";
+      climber.style.transform="translate(-50%,-170px) rotate(-18deg)";
+      setTimeout(()=>{
+        ptrN++;const ni=item(`משלוח ${ptrN} - התקבלה הזמנה חדשה`);
+        list.prepend(ni);
+        ni.animate([{transform:"translateY(-26px) scale(.85)",opacity:0},{transform:"none",opacity:1}],{duration:450,easing:"cubic-bezier(.2,1.4,.3,1)"});
+        dy=0;render();
+        setTimeout(()=>{climber.style.transition="none";climber.style.transform="translate(-50%,-80px)";busy=false;},300);
+      },420);
+    }else{dy=0;render();}
+  };
+  ptrStage.addEventListener("pointerup",end);
+  ptrStage.addEventListener("pointercancel",end);
+}
+
+/* ==== R7: split-flap ==== */
+const sfRow=$("#sfRow");
+if(sfRow){
+  let sfVal=128;
+  const digits=[];
+  for(let i=0;i<3;i++){
+    const d=document.createElement("div");d.className="sf-d";
+    d.innerHTML='<div class="sf-lower"><span>0</span></div><div class="sf-upper"><span>0</span></div><div class="sf-flap"><span>0</span></div>';
+    sfRow.appendChild(d);digits.push(d);
+  }
+  const sfRender=(v)=>{const s=String(v).padStart(3,"0");digits.forEach((d,i)=>{d.querySelector(".sf-upper span").textContent=s[i];d.querySelector(".sf-lower span").textContent=s[i];d.querySelector(".sf-flap span").textContent=s[i];});};
+  sfRender(sfVal);
+  const sfSet=(v)=>{
+    v=Math.max(0,Math.min(999,v));
+    const from=String(sfVal).padStart(3,"0"),to=String(v).padStart(3,"0");sfVal=v;
+    digits.forEach((d,i)=>{
+      if(from[i]===to[i])return;
+      const up=d.querySelector(".sf-upper span"),lo=d.querySelector(".sf-lower span"),fl=d.querySelector(".sf-flap"),fls=fl.querySelector("span");
+      if(reduce){up.textContent=to[i];lo.textContent=to[i];fls.textContent=to[i];return;}
+      fls.textContent=from[i];
+      fl.animate([{transform:"rotateX(0deg)"},{transform:"rotateX(-90deg)"}],{duration:150,easing:"ease-in",fill:"forwards"}).onfinish=()=>{
+        up.textContent=to[i];
+        fls.textContent=to[i];
+        lo.textContent=to[i];
+        fl.animate([{transform:"rotateX(88deg)"},{transform:"rotateX(0deg)"}],{duration:170,easing:"ease-out",fill:"forwards"});
+      };
+    });
+  };
+  $("#sfPlus").addEventListener("click",()=>sfSet(sfVal+7));
+  $("#sfMinus").addEventListener("click",()=>sfSet(sfVal-7));
+}
+
+/* ==== R7: empty robot ==== */
+const erRobot=$("#erRobot");
+if(erRobot){
+  const txt=$("#erTxt"),it=$("#erItem"),btn=$("#erAdd");
+  let n=0;
+  btn.addEventListener("click",()=>{
+    n++;
+    erRobot.classList.add("happy");
+    it.textContent=n===1?"הפריט הראשון נוסף!":`פריט מספר ${n} נוסף!`;
+    it.classList.remove("in");void it.offsetWidth;it.classList.add("in");
+    txt.textContent=n===1?"יש פריט אחד - הרובוט מאושר":`${n} פריטים - הרובוט מאושר`;
+    erRobot.animate([{transform:"translateY(0)"},{transform:"translateY(-16px)",offset:.4},{transform:"translateY(-8px)"}],{duration:500,easing:"cubic-bezier(.2,1.4,.3,1)"});
+  });
+}
+
+/* ==== R7: command palette ==== */
+const cmdOpen=$("#cmdOpen");
+if(cmdOpen){
+  const back=document.createElement("div");back.className="cmd-back";
+  back.innerHTML=`<div class="cmd-panel"><input class="cmd-input" placeholder="מה עושים היום?" aria-label="חיפוש פעולה"><div class="cmd-list"></div></div>`;
+  document.body.appendChild(back);
+  const inp=back.querySelector(".cmd-input"),list=back.querySelector(".cmd-list");
+  const CMDS=[["פתיחת הזמנה חדשה","M12 5v14M5 12h14"],["חיפוש לקוח","M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3"],["יצוא דוח שבועי","M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"],["הגדרות צוות","M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM19 12a7 7 0 0 0-.1-1.2l2-1.6-2-3.4-2.4 1a7 7 0 0 0-2-1.2L14 3h-4l-.5 2.6a7 7 0 0 0-2 1.2l-2.4-1-2 3.4 2 1.6A7 7 0 0 0 5 12"],["מעבר למצב לילה","M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"]];
+  let idx=0,open=false;
+  const render=q=>{
+    const items=CMDS.filter(c=>!q||c[0].includes(q));
+    list.innerHTML=items.map((c,i)=>`<div class="cmd-item${i===idx?" on":""}" style="animation:swapIn .3s cubic-bezier(.2,1.3,.3,1) ${i*45}ms backwards"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="${c[1]}"/></svg>${c[0]}</div>`).join("")||'<div style="padding:16px;color:var(--muted);font-size:13.5px">לא נמצאה פעולה</div>';
+    list.querySelectorAll(".cmd-item").forEach((el,i)=>el.addEventListener("click",()=>pick(items[i])));
+  };
+  const show=()=>{open=true;idx=0;back.classList.add("open");inp.value="";render("");setTimeout(()=>inp.focus(),80);};
+  const hide=()=>{open=false;back.classList.remove("open");};
+  const pick=c=>{if(!c)return;hide();const l=$("#cmdLast");l.textContent=`בוצע: ${c[0]}`;l.animate([{opacity:0,transform:"translateY(6px)"},{opacity:1,transform:"none"}],{duration:300});};
+  cmdOpen.addEventListener("click",show);
+  back.addEventListener("click",e=>{if(e.target===back)hide();});
+  inp.addEventListener("input",()=>{idx=0;render(inp.value.trim());});
+  document.addEventListener("keydown",e=>{
+    if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==="k"){e.preventDefault();open?hide():show();return;}
+    if(!open)return;
+    const items=[...list.querySelectorAll(".cmd-item")];
+    if(e.key==="Escape")hide();
+    if(e.key==="ArrowDown"||e.key==="ArrowUp"){e.preventDefault();idx=(idx+(e.key==="ArrowDown"?1:-1)+items.length)%Math.max(1,items.length);items.forEach((el,i)=>el.classList.toggle("on",i===idx));}
+    if(e.key==="Enter"&&items[idx]){const f=CMDS.filter(c=>!inp.value.trim()||c[0].includes(inp.value.trim()));pick(f[idx]);}
+  });
+  render("");
+}
+
+/* ==== R7: swipe row actions ==== */
+const swaWrap=$("#swaWrap");
+if(swaWrap){
+  const ROWS=[["חשבונית 1042 - נשלחה לתשלום"],["הזמנת משרד חדשה - ממתינה לאישור"],["תזכורת צוות - סקירה ביום חמישי"]];
+  ROWS.forEach(r=>{
+    const row=document.createElement("div");row.className="swa-row";
+    row.innerHTML=`<div class="swa-actions"><button class="arc" aria-label="ארכיון"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="5" rx="1"/><path d="M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9M10 13h4"/></svg></button><button class="del" aria-label="מחיקה"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg></button></div><div class="swa-card"><span class="dot"></span>${r[0]}</div>`;
+    swaWrap.appendChild(row);
+    const card=row.querySelector(".swa-card"),arc=row.querySelector(".arc");
+    let drag=false,sx=0,dx=0,openS=false;
+    card.addEventListener("pointerdown",e=>{drag=true;sx=e.clientX;dx=0;card.style.transition="none";card.setPointerCapture(e.pointerId);});
+    card.addEventListener("pointermove",e=>{
+      if(!drag)return;
+      dx=Math.max(0,Math.min(e.clientX-sx,140));
+      card.style.transform=`translateX(${dx}px)`;
+      arc.style.transform=dx>70?"rotate(-8deg) scale(1.15)":"";
+      if(dx>70)arc.animate([{transform:"rotate(0deg)"},{transform:"rotate(-10deg)"},{transform:"rotate(6deg)"},{transform:"rotate(0deg)"}],{duration:300,iterations:1});
+    });
+    const end=()=>{
+      if(!drag)return;drag=false;
+      card.style.transition="transform .35s cubic-bezier(.2,1.3,.3,1)";
+      if(dx>70){openS=true;card.style.transform="translateX(128px)";}
+      else{openS=false;card.style.transform="translateX(0)";}
+    };
+    card.addEventListener("pointerup",end);
+    card.addEventListener("pointercancel",end);
+    row.querySelector(".del").addEventListener("click",()=>{
+      card.style.transition="transform .3s ease-in,opacity .3s";
+      card.style.transform="translateX(120%)";card.style.opacity="0";
+      setTimeout(()=>{row.style.height=row.offsetHeight+"px";row.style.transition="height .3s";row.style.height="0";row.style.marginBottom="-10px";},280);
+    });
+    arc.addEventListener("click",()=>{card.style.transform="translateX(0)";openS=false;});
+  });
+}
+
+/* ==== R7: step walker ==== */
+const stwWalker=$("#stwWalker");
+if(stwWalker){
+  const fill=$("#stwFill"),steps=[...document.querySelectorAll("#stwSteps .stw-step")];
+  let cur=0,animating=false;
+  const pos=i=>`${(i/(steps.length-1))*100}%`;
+  const go=to=>{
+    if(animating||to===cur||to<0||to>=steps.length)return;
+    animating=true;
+    const from=cur;cur=to;
+    if(reduce){
+      stwWalker.style.insetInlineStart=pos(to);fill.style.width=pos(to);
+      steps.forEach((s,i)=>s.classList.toggle("hit",i<=to));animating=false;return;
+    }
+    const fromX=parseFloat(stwWalker.style.insetInlineStart||"0")/100*stwWalker.parentElement.offsetWidth;
+    const toX=to/(steps.length-1)*stwWalker.parentElement.offsetWidth;
+    const ball=stwWalker.querySelector("span");
+    stwWalker.animate([
+      {transform:`translateX(${fromX}px)`},
+      {transform:`translateX(${(fromX+toX)/2}px) translateY(-22px)`,offset:.5},
+      {transform:`translateX(${toX}px)`}
+    ],{duration:520,easing:"cubic-bezier(.3,.9,.4,1)",fill:"forwards"});
+    ball.animate([
+      {transform:"scale(1)"},
+      {transform:"scale(.85,1.2)",offset:.35},
+      {transform:"scale(1.25,.75)",offset:.75},
+      {transform:"scale(1)"}
+    ],{duration:520,easing:"ease-out"});
+    setTimeout(()=>{
+      stwWalker.style.insetInlineStart=pos(to);
+      fill.style.width=pos(to);
+      steps.forEach((s,i)=>s.classList.toggle("hit",i<=to));
+      animating=false;
+    },500);
+  };
+  steps[0].classList.add("hit");
+  $("#stwNext").addEventListener("click",()=>go(Math.min(cur+1,3)));
+  $("#stwBack").addEventListener("click",()=>go(Math.max(cur-1,0)));
+}
+
+/* ==== R7: peel skeleton ==== */
+const peelSkel=$("#peelSkel");
+if(peelSkel){
+  const run=()=>{
+    peelSkel.style.display="grid";
+    peelSkel.style.transform="none";peelSkel.style.opacity="1";
+    setTimeout(()=>{
+      if(reduce){peelSkel.style.opacity="0";return;}
+      peelSkel.animate([
+        {transform:"rotate(0deg) translate(0,0)",opacity:1},
+        {transform:"rotate(24deg) translate(46%,-14%) skewX(8deg)",opacity:.9,offset:.55},
+        {transform:"rotate(38deg) translate(120%,-30%) skewX(10deg)",opacity:0}
+      ],{duration:750,easing:"cubic-bezier(.4,0,.6,1)",fill:"forwards"});
+    },900);
+  };
+  run();
+  $("#peelReplay").addEventListener("click",run);
+}
+
+/* ==== R7: voice note ==== */
+const vnBars=$("#vnBars");
+if(vnBars){
+  const N=26,bars=[];
+  const H=[35,55,80,60,90,45,70,95,50,65,85,40,75,95,55,70,45,88,60,78,42,68,92,58,72,38];
+  for(let i=0;i<N;i++){const b=document.createElement("i");b.style.height=H[i]+"%";vnBars.appendChild(b);bars.push(b);}
+  const playBtn=$("#vnPlay"),timeEl=$("#vnTime");
+  let playing=false,tick=null,t=0;
+  playBtn.addEventListener("click",()=>{
+    playing=!playing;
+    playBtn.innerHTML=playing?'<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>':'<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+    if(playing){
+      const perBar=12000/N;
+      tick=setInterval(()=>{
+        t+=120;
+        const upto=Math.floor(t/perBar);
+        bars.forEach((b,i)=>{
+          b.classList.toggle("played",i<upto);
+          if(i<upto+3&&i>=upto&&!reduce)b.animate([{height:H[i]+"%"},{height:Math.min(100,H[i]*1.5)+"%"},{height:H[i]+"%"}],{duration:300});
+        });
+        const left=Math.max(0,12-Math.floor(t/1000));
+        timeEl.textContent="0:"+String(left).padStart(2,"0");
+        if(t>=12000){clearInterval(tick);playing=false;t=0;timeEl.textContent="0:12";bars.forEach(b=>b.classList.remove("played"));playBtn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';}
+      },120);
+    }else{clearInterval(tick);}
+  });
+}
+
+/* ==== R7: sunset toggle ==== */
+const sunStage=$("#sunStage");
+if(sunStage){
+  for(let i=0;i<14;i++){
+    const s=document.createElement("span");s.className="sun-star";
+    s.style.top=(6+Math.random()*44)+"%";s.style.left=(4+Math.random()*92)+"%";
+    s.style.transitionDelay=(Math.random()*.7)+"s";
+    sunStage.appendChild(s);
+  }
+  $("#sunBtn").addEventListener("click",()=>{
+    sunStage.classList.toggle("dusk");
+    $("#sunBtn").textContent=sunStage.classList.contains("dusk")?"האירו":"החשכה";
+  });
+}
+/*R7JS*/
 </script>
 </body>
 </html>
