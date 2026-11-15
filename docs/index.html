@@ -132,6 +132,18 @@ h2{font-size:clamp(24px,3.4vw,34px);font-weight:700;letter-spacing:-.02em}
 .send-btn{width:42px;height:42px;border-radius:10px;border:0;background:var(--accent-soft);color:var(--accent);cursor:pointer;display:grid;place-items:center;transition:transform .12s;flex-shrink:0}
 .send-btn:active{transform:scale(.92)}
 .send-btn svg{width:17px;height:17px}
+.chat-body{max-height:290px;overflow-y:auto}
+.msg-wrap{position:relative;align-self:flex-start;margin-left:auto;max-width:78%}
+.msg-wrap.them{margin-left:0;margin-right:auto}
+.msg-wrap .msg{max-width:100%;animation:none;margin:0}
+.msg-eyes{position:absolute;top:-11px;inset-inline-start:12px;display:flex;gap:5px;z-index:2;transition:opacity .28s,transform .28s}
+.msg-eyes i{width:13px;height:15px;background:#fff;border-radius:50% 50% 46% 46%;position:relative;box-shadow:0 1px 3px rgba(0,0,0,.35)}
+.msg-eyes i::after{content:"";position:absolute;top:2.5px;left:50%;transform:translateX(-50%);width:5px;height:5px;border-radius:50%;background:#1a2432;transition:transform .13s}
+.msg-eyes.blink i::after{transform:translateX(-50%) scaleY(.12)}
+.msg-hand{position:absolute;top:46%;width:15px;height:15px;border-radius:50% 50% 45% 45%;background:#f5c89a;box-shadow:0 0 0 4.5px var(--accent);z-index:1;transition:opacity .3s,transform .32s}
+.msg-hand.l{inset-inline-start:-17px;transform:rotate(-14deg)}
+.msg-hand.r{inset-inline-end:-17px;transform:rotate(14deg)}
+.msg-wrap.done .msg-eyes,.msg-wrap.done .msg-hand{opacity:0;transform:scale(.3)}
 [dir="rtl"] .mirror{transform:scaleX(-1)}
 .dir-seg{display:inline-flex;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:3px}
 .dir-seg button{border:0;background:transparent;color:var(--muted);font-family:inherit;font-size:12.5px;font-weight:600;padding:6px 14px;border-radius:8px;cursor:pointer;transition:all .2s}
@@ -970,6 +982,52 @@ function renderChat(){
         <button class="send-btn" aria-label="${c.send}"><svg class="mirror" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
       </div>
     </div></div>`;
+  const body=$(".chat-body",$("#stage-chat")),inp=$(".chat-foot .f-input",$("#stage-chat")),btn=$(".send-btn",$("#stage-chat"));
+  function pushMsg(txt,who){
+    const wrap=document.createElement("div");
+    wrap.className="msg-wrap"+(who==="them"?" them":"");
+    const safe=txt.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+    wrap.innerHTML=`<div class="msg ${who}">${safe}</div><span class="msg-eyes"><i></i><i></i></span><span class="msg-hand l"></span><span class="msg-hand r"></span>`;
+    body.appendChild(wrap);
+    const msg=wrap.firstElementChild;
+    const others=[...body.querySelectorAll(":scope > .msg, :scope > .msg-wrap")].slice(0,-1);
+    body.scrollTop=body.scrollHeight;
+    if(reduce){wrap.classList.add("done");return;}
+    wrap.animate([
+      {transform:"translateY(64px) scale(.55,1.35)",opacity:0},
+      {transform:"translateY(-7px) scale(1.07,.93)",opacity:1,offset:.55},
+      {transform:"translateY(2px) scale(.98,1.03)",offset:.78},
+      {transform:"translateY(0) scale(1)",opacity:1}
+    ],{duration:560,easing:"cubic-bezier(.25,1.4,.35,1)"});
+    others.reverse().forEach((m,i)=>{
+      const f=Math.max(.35,1-i*.22);
+      m.animate([
+        {transform:"translateY(0)"},
+        {transform:`translateY(${(-16*f).toFixed(1)}px) rotate(${((i%2?1:-1)*1.2*f).toFixed(1)}deg)`,offset:.32},
+        {transform:`translateY(${(5*f).toFixed(1)}px)`,offset:.68},
+        {transform:"translateY(0)"}
+      ],{duration:520,easing:"cubic-bezier(.2,1.5,.3,1)",delay:i*40});
+    });
+    wrap.querySelectorAll(".msg-hand").forEach((h,i)=>{
+      h.animate([
+        {transform:`translateY(7px) rotate(${i?14:-14}deg) scale(.6)`},
+        {transform:`translateY(-8px) rotate(${i?10:-10}deg) scale(1.08)`,offset:.5},
+        {transform:`translateY(0) rotate(${i?14:-14}deg) scale(1)`}
+      ],{duration:520,easing:"cubic-bezier(.25,1.4,.35,1)"});
+    });
+    setTimeout(()=>wrap.querySelector(".msg-eyes").classList.add("blink"),430);
+    setTimeout(()=>{wrap.classList.add("done");
+      setTimeout(()=>{const plain=document.createElement("div");plain.className="msg "+who;plain.innerHTML=msg.innerHTML;wrap.replaceWith(plain);},320);
+    },780);
+  }
+  function send(){
+    const txt=inp.value.trim()||(chatDir==="rtl"?"ועוד הודעה לבדיקה":"One more test message");
+    inp.value="";
+    pushMsg(txt,"me");
+    setTimeout(()=>pushMsg(chatDir==="rtl"?"קיבלתי! מטפלת בזה עכשיו":"Got it! On it right now","them"),reduce?250:1350);
+  }
+  btn.addEventListener("click",send);
+  inp.addEventListener("keydown",e=>{if(e.key==="Enter")send();});
 }
 renderChat();
 $$("#dirSeg button").forEach(b=>b.addEventListener("click",()=>{
