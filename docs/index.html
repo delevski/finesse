@@ -525,8 +525,10 @@ header>*:not(#heroFx){position:relative;z-index:1}
 /* pull cord */
 .cord-stage{position:relative;display:grid;place-items:center;width:220px;padding:26px 0 8px;border-radius:18px;transition:background .6s}
 .cord-stage.lit{background:radial-gradient(180px 130px at 50% 12%,rgba(245,180,83,.22),transparent 72%)}
-#cordLamp{font-size:44px;transition:all .5s;filter:grayscale(1) opacity(.4)}
-.cord-stage.lit #cordLamp{filter:none;transform:scale(1.12)}
+#cordLamp{color:var(--faint);transition:all .5s;line-height:0}
+#cordLamp .bulb-glass{fill:transparent;transition:fill .5s}
+.cord-stage.lit #cordLamp{color:#fbbf24;transform:scale(1.12);filter:drop-shadow(0 0 16px rgba(251,191,36,.75))}
+.cord-stage.lit #cordLamp .bulb-glass{fill:rgba(251,191,36,.35)}
 #cordLine{width:2px;background:var(--faint);height:90px}
 #cordKnob{width:26px;height:26px;border-radius:50%;background:linear-gradient(180deg,#f8cd7e,#d99a35);box-shadow:0 3px 8px rgba(0,0,0,.4);cursor:grab;touch-action:none}
 #cordKnob:active{cursor:grabbing}
@@ -538,10 +540,10 @@ header>*:not(#heroFx){position:relative;z-index:1}
 #tipCard button{display:block;margin-top:8px;border:0;background:none;color:var(--accent);font:600 12px inherit;cursor:pointer}
 /* file drop */
 .drop-wrap{display:grid;justify-items:center;gap:18px;width:100%;max-width:340px}
-#dropFolder{position:relative;display:grid;place-items:center;width:170px;height:130px;border:2px dashed var(--border);border-radius:18px;font-size:48px;transition:all .3s}
-#dropFolder.hot{border-color:var(--accent);background:var(--accent-soft)}
+#dropFolder{position:relative;display:grid;place-items:center;width:170px;height:130px;border:2px dashed var(--border);border-radius:18px;color:var(--muted);transition:all .3s}
+#dropFolder.hot{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
 #dropFolder .cap{position:absolute;bottom:10px;font-size:11px;color:var(--muted)}
-#dropChip{padding:9px 16px;background:var(--card-2);border:1px solid var(--border);border-radius:10px;font:600 13px inherit;cursor:grab;user-select:none;touch-action:none;box-shadow:var(--shadow-1)}
+#dropChip{display:flex;align-items:center;gap:7px;padding:9px 16px;background:var(--card-2);border:1px solid var(--border);border-radius:10px;font:600 13px inherit;cursor:grab;user-select:none;touch-action:none;box-shadow:var(--shadow-1)}
 #dropChip:active{cursor:grabbing}
 #dropList{width:100%;display:grid;gap:6px;font-size:13px}
 #dropList li{list-style:none;background:var(--accent-soft);color:var(--accent);border-radius:8px;padding:7px 12px}
@@ -570,9 +572,9 @@ header>*:not(#heroFx){position:relative;z-index:1}
 .goo-ball{position:absolute;bottom:14px;right:14px;display:grid;place-items:center;border:0;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-strong));color:#04211d;box-shadow:0 6px 16px rgba(20,184,166,.35);cursor:pointer;transition:transform .42s cubic-bezier(.2,1.5,.3,1)}
 #gooFab{width:56px;height:56px;font-size:26px;font-weight:700;z-index:2}
 .goo-item{width:46px;height:46px;font-size:17px;transform:translateY(0) scale(.35)}
-.goo-labels{position:absolute;bottom:22px;right:74px;display:flex;flex-direction:column;align-items:flex-end;gap:27px;font:600 12px inherit;color:var(--muted)}
-.goo-labels span{animation:gooLbl .3s both}
-@keyframes gooLbl{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:none}}
+.goo-labels{position:absolute;inset:0;pointer-events:none}
+.goo-labels span{position:absolute;right:74px;transform:translateY(50%);font:600 12px inherit;color:var(--muted);white-space:nowrap;animation:gooLbl .3s both}
+@keyframes gooLbl{from{opacity:0;transform:translateY(50%) translateX(10px)}to{opacity:1;transform:translateY(50%) translateX(0)}}
 /* jelly slider */
 .jl-wrap{width:100%;max-width:340px;padding-top:34px}
 #jlTrack{position:relative;height:8px;border-radius:99px;background:var(--border);touch-action:none;cursor:pointer}
@@ -628,8 +630,8 @@ header>*:not(#heroFx){position:relative;z-index:1}
 #stBubble .cur{display:inline-block;width:8px;height:15px;margin:0 2px;border-radius:2px;background:var(--accent);vertical-align:middle;animation:pulse 1s infinite}
 /* like burst */
 .lk-wrap{display:flex;align-items:center;gap:14px}
-#lkBtn{position:relative;display:grid;place-items:center;width:50px;height:50px;border-radius:50%;border:1px solid var(--border);background:var(--card);font-size:22px;cursor:pointer;box-shadow:var(--shadow-1)}
-#lkBtn.off{filter:grayscale(1) opacity(.55)}
+#lkBtn{position:relative;display:grid;place-items:center;width:50px;height:50px;border-radius:50%;border:1px solid var(--border);background:var(--card);color:#fb7185;cursor:pointer;box-shadow:var(--shadow-1);transition:color .3s}
+#lkBtn.off{color:var(--faint)}
 #lkCount{font:800 20px inherit;min-width:44px;text-align:start;display:inline-block;overflow:hidden;height:26px}
 /* loading success */
 #lsBtn{position:relative;display:grid;place-items:center;height:48px;width:172px;border:0;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-strong));color:#04211d;font:700 14px inherit;cursor:pointer;box-shadow:var(--shadow-2);transition:width .45s cubic-bezier(.2,1.2,.3,1),border-radius .45s,background .3s;overflow:hidden}
@@ -672,7 +674,8 @@ header>*:not(#heroFx){position:relative;z-index:1}
 #fidScan{position:absolute;left:16px;right:16px;height:2px;border-radius:2px;background:var(--accent);box-shadow:0 0 12px var(--accent);display:none}
 #fidBtn.scanning #fidScan{display:block;animation:fidScan 1.5s ease-in-out}
 @keyframes fidScan{0%{top:20%}50%{top:80%}100%{top:20%}}
-#fidOk{position:absolute;inset:0;display:none;place-items:center;border-radius:26px;background:rgba(52,211,153,.15);font-size:38px;animation:gooLbl .4s both}
+#fidOk{position:absolute;inset:0;display:none;place-items:center;border-radius:26px;background:rgba(52,211,153,.15);animation:fidOkIn .4s both}
+@keyframes fidOkIn{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
 #fidBtn.ok #fidOk{display:grid}
 /* pagination dots */
 .dots-wrap{display:flex;align-items:center;gap:16px}
@@ -692,17 +695,42 @@ header>*:not(#heroFx){position:relative;z-index:1}
 /* password strength */
 .pw-wrap{width:100%;max-width:320px}
 .pw-head{display:flex;align-items:center;justify-content:space-between;font:600 13px inherit;margin-bottom:6px}
-#pwFace{font-size:20px;display:inline-block}
+#pwFace{display:inline-flex;line-height:0;color:var(--muted)}
+#pwFace .f{display:none}
+#pwFace[data-s="0"] .f0{display:block}
+#pwFace[data-s="1"] .f1{display:block}
+#pwFace[data-s="2"] .f2{display:block}
+#pwFace[data-s="3"] .f3{display:block}
+#pwFace[data-s="4"] .f4{display:block}
 #pwFace.pop{animation:rtPop .4s cubic-bezier(.2,1.5,.3,1) both}
 .pw-segs{display:flex;gap:6px;margin-top:9px}
 .pw-segs i{flex:1;height:6px;border-radius:99px;background:var(--border);transition:all .35s cubic-bezier(.2,1.4,.3,1)}
 #pwLabel{margin-top:6px;font:600 12px inherit;min-height:16px}
 /* R8 site redesign chrome */
-.site-nav{position:sticky;top:10px;z-index:60;display:flex;gap:4px;justify-content:flex-start;overflow-x:auto;padding:7px 8px;margin:0 auto 6px;width:max-content;max-width:100%;border-radius:999px;background:rgba(13,17,23,.72);border:1px solid var(--border-soft);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);scrollbar-width:none}
-.site-nav::-webkit-scrollbar{display:none}
-.site-nav a{color:var(--muted);text-decoration:none;font:600 13px inherit;padding:7px 15px;border-radius:999px;transition:all .25s;white-space:nowrap}
+/* nav: bottom bar on phones, floating collapsible sidebar on desktop */
+.site-nav{position:fixed;bottom:0;right:0;left:0;z-index:60;display:flex;background:rgba(13,17,23,.93);border-top:1px solid var(--border-soft);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:5px 4px calc(5px + env(safe-area-inset-bottom));margin:0}
+.site-nav a{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--muted);text-decoration:none;font:600 10.5px inherit;padding:6px 2px;border-radius:12px;transition:color .25s,background .25s;white-space:nowrap;min-width:0}
+.site-nav a svg{width:19px;height:19px;flex:none}
 .site-nav a:hover{color:var(--text)}
-.site-nav a.on{background:var(--accent-soft);color:var(--accent)}
+.site-nav a.on{color:var(--accent);background:var(--accent-soft)}
+.site-nav .f{display:none}
+.nav-fold{display:none}
+@media(max-width:959px){body{padding-bottom:74px}}
+@media(min-width:960px){
+body{padding-right:280px;transition:padding-right .3s var(--ease)}
+body.nav-folded{padding-right:96px}
+.site-nav{top:18px;bottom:18px;left:auto;right:18px;width:230px;flex-direction:column;gap:4px;padding:12px;border:1px solid var(--border-soft);border-radius:22px;background:rgba(13,17,23,.82);box-shadow:0 18px 50px rgba(0,0,0,.5);transition:width .3s var(--ease)}
+body.nav-folded .site-nav{width:62px}
+.site-nav a{flex:none;flex-direction:row;justify-content:flex-start;gap:11px;font-size:13.5px;padding:10px 12px;width:100%}
+.site-nav .f{display:inline}
+.site-nav .s{display:none}
+body.nav-folded .site-nav .nl{display:none}
+body.nav-folded .site-nav a{justify-content:center;padding:10px 0}
+.nav-fold{display:grid;place-items:center;width:100%;padding:8px 0;margin-bottom:6px;background:none;border:1px solid var(--border-soft);border-radius:12px;color:var(--muted);cursor:pointer;transition:all .25s;font-family:inherit}
+.nav-fold:hover{color:var(--text);border-color:var(--border)}
+.nav-fold svg{width:16px;height:16px;transition:transform .3s var(--ease)}
+body.nav-folded .nav-fold svg{transform:scaleX(-1)}
+}
 #orbFx{display:block;width:140px;height:140px;margin:0 auto 6px;filter:drop-shadow(0 0 34px rgba(20,184,166,.3))}
 .stats{display:flex;gap:30px;justify-content:center;flex-wrap:wrap;margin-top:36px}
 .stat{text-align:center}
@@ -742,8 +770,8 @@ header h1,header .tag,header .badge{position:relative}
     </a>
   </div>
   <div class="stats">
-    <div class="stat"><b>44</b><span>animated components</span></div>
-    <div class="stat"><b>3</b><span>live galleries</span></div>
+    <div class="stat"><b>58</b><span>live demos</span></div>
+    <div class="stat"><b>44</b><span>registry components</span></div>
     <div class="stat"><b>RTL</b><span>Hebrew built in</span></div>
     <div class="stat"><b>MIT</b><span>free forever</span></div>
   </div>
@@ -757,11 +785,12 @@ header h1,header .tag,header .badge{position:relative}
   </div>
 </header>
 <nav class="site-nav" dir="rtl" lang="he" aria-label="ניווט בגלריות">
-  <a href="#signature">אנימציות חתימה</a>
-  <a href="#gallery2">גלריה 2</a>
-  <a href="#gallery3">גלריה 3 · חדש</a>
-  <a href="#demos">הדמיות נוספות</a>
-  <a href="https://github.com/delevski/finesse" target="_blank" rel="noopener" dir="ltr">GitHub ↗</a>
+  <button class="nav-fold" id="navFold" type="button" aria-label="כווץ או הרחב תפריט"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></button>
+  <a href="#signature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.7 4.7 1.8-4.7 1.8L12 16l-1.8-4.7-4.7-1.8L12 3z"/><path d="M18.5 14.5l.9 2.3 2.3.9-2.3.9-.9 2.3-.9-2.3-2.3-.9 2.3-.9z"/></svg><span class="nl"><span class="s">חתימה</span><span class="f">אנימציות חתימה</span></span></a>
+  <a href="#gallery2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg><span class="nl"><span class="s">גלריה 2</span><span class="f">גלריה 2</span></span></a>
+  <a href="#gallery3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.2 5.3 5.8.5-4.4 3.8 1.3 5.6-4.9-3-4.9 3 1.3-5.6L4 8.8l5.8-.5L12 3z"/></svg><span class="nl"><span class="s">גלריה 3</span><span class="f">גלריה 3 · 25 חדשות</span></span></a>
+  <a href="#demos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="m10.5 9 4 2-4 2z" fill="currentColor" stroke="none"/><path d="M9 21h6"/></svg><span class="nl"><span class="s">הדמיות</span><span class="f">הדמיות נוספות</span></span></a>
+  <a href="https://github.com/delevski/finesse" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.15c-3.2.69-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.05.77 2.12v3.14c0 .3.21.67.8.55A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg><span class="nl"><span class="s">GitHub</span><span class="f">GitHub</span></span></a>
 </nav>
 
 <section id="signature" dir="rtl" lang="he" class="heb">
@@ -1291,7 +1320,7 @@ header h1,header .tag,header .badge{position:relative}
     </div>
     <div class="stage"><div class="stage-inner" style="display:grid;place-items:center;gap:14px">
       <div class="cord-stage" id="cordStage">
-        <div id="cordLamp">💡</div>
+        <div id="cordLamp"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="bulb-glass" d="M12 3a6 6 0 0 0-4 10.5c.8.7 1 1.4 1 2.5h6c0-1.1.2-1.8 1-2.5A6 6 0 0 0 12 3z"/><path d="M9.5 19h5M10.5 21.5h3"/></svg></div>
         <div id="cordLine"></div>
         <div id="cordKnob" role="switch" aria-checked="false" tabindex="0" aria-label="חבל הדלקה"></div>
       </div>
@@ -1323,8 +1352,8 @@ header h1,header .tag,header .badge{position:relative}
     </div>
     <div class="stage"><div class="stage-inner" style="display:grid;place-items:center">
       <div class="drop-wrap">
-        <div id="dropFolder">📂<span class="cap">גררו את הקובץ לכאן</span></div>
-        <div id="dropChip">📄 מסמך-לדוגמה.pdf</div>
+        <div id="dropFolder"><svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg><span class="cap">גררו את הקובץ לכאן</span></div>
+        <div id="dropChip"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2h8l4 4v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><path d="M14 2v5h5"/></svg>מסמך-לדוגמה.pdf</div>
         <ul id="dropList"></ul>
       </div>
     </div></div>
@@ -1493,7 +1522,7 @@ header h1,header .tag,header .badge{position:relative}
     </div>
     <div class="stage"><div class="stage-inner" style="display:grid;place-items:center">
       <div class="lk-wrap">
-        <button id="lkBtn" class="off" type="button" aria-pressed="false" aria-label="לייק">❤️</button>
+        <button id="lkBtn" class="off" type="button" aria-pressed="false" aria-label="לייק"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
         <span id="lkCount">128</span>
       </div>
     </div></div>
@@ -1551,7 +1580,7 @@ header h1,header .tag,header .badge{position:relative}
             <path d="M14 20v3M34 20v3"/><path d="M20 32c2.2 2 5.8 2 8 0"/><path d="M24 20v8h-3"/>
           </svg>
           <span id="fidScan"></span>
-          <span id="fidOk">✅</span>
+          <span id="fidOk"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="rgba(52,211,153,.25)"/><path d="m7.5 12.5 3 3 6-7" stroke="#34d399" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         </button>
         <div class="es-state" id="fidState">לחצו לסריקה</div>
       </div>
@@ -1595,7 +1624,14 @@ header h1,header .tag,header .badge{position:relative}
     </div>
     <div class="stage"><div class="stage-inner" style="display:grid;place-items:center">
       <div class="pw-wrap">
-        <div class="pw-head"><span>סיסמה</span><span id="pwFace">🫣</span></div>
+        <div class="pw-head"><span>סיסמה</span><span id="pwFace" data-s="0"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<circle cx="12" cy="12" r="9.5"/>
+<g class="f f0"><path d="M6.5 10q2 2.2 4 0"/><path d="M13.5 10q2 2.2 4 0"/><path d="M9.5 15.5h5"/></g>
+<g class="f f1"><circle cx="8.5" cy="9.8" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="9.8" r="1.2" fill="currentColor" stroke="none"/><rect x="7" y="14.2" width="10" height="3.6" rx="1.3"/><path d="M9.3 14.2v3.6M12 14.2v3.6M14.7 14.2v3.6" stroke-width="1"/></g>
+<g class="f f2"><circle cx="8.5" cy="10" r="1.3" fill="currentColor" stroke="none"/><circle cx="15.5" cy="10" r="1.3" fill="currentColor" stroke="none"/><path d="M8 15.5h8"/></g>
+<g class="f f3"><circle cx="8.5" cy="10" r="1.3" fill="currentColor" stroke="none"/><circle cx="15.5" cy="10" r="1.3" fill="currentColor" stroke="none"/><path d="M8 14.5q4 4 8 0"/></g>
+<g class="f f4"><path d="M8.5 7.6l.8 1.6 1.6.8-1.6.8-.8 1.6-.8-1.6-1.6-.8 1.6-.8z" fill="currentColor" stroke="none"/><path d="M15.5 7.6l.8 1.6 1.6.8-1.6.8-.8 1.6-.8-1.6-1.6-.8 1.6-.8z" fill="currentColor" stroke="none"/><path d="M7.5 14q4.5 5.5 9 0z" fill="currentColor" stroke="none"/></g>
+</svg></span></div>
         <input class="f-input" id="pwInput" type="password" placeholder="נסו: Sun4Flower!" aria-label="סיסמה" dir="rtl">
         <div class="pw-segs" id="pwSegs"><i></i><i></i><i></i><i></i></div>
         <div id="pwLabel">&nbsp;</div>
@@ -3370,7 +3406,7 @@ void main(){
     });
     if(open){
       labels.hidden=false;
-      labels.innerHTML=items.slice().reverse().map(([,lb],i)=>`<span style="animation-delay:${i*60+120}ms">${lb}</span>`).join("");
+      labels.innerHTML=items.map(([,lb],i)=>`<span style="bottom:${37+64*(i+1)}px;animation-delay:${i*60+120}ms">${lb}</span>`).join("");
     }else labels.hidden=true;
   });
 })();
@@ -3816,11 +3852,20 @@ void main(){
   });
 })();
 
+/* ---- nav fold (desktop sidebar) ---- */
+(function(){
+  const f=q("#navFold"); if(!f) return;
+  try{ if(localStorage.getItem("fn-nav-fold")==="1") document.body.classList.add("nav-folded"); }catch(e){}
+  f.addEventListener("click",()=>{
+    const c=document.body.classList.toggle("nav-folded");
+    try{ localStorage.setItem("fn-nav-fold",c?"1":"0"); }catch(e){}
+  });
+})();
+
 /* ---- password strength ---- */
 (function(){
   const inp=q("#pwInput"); if(!inp) return;
   const segs=qa("i",q("#pwSegs")),face=q("#pwFace"),label=q("#pwLabel");
-  const FACES=["🫣","😬","😐","🙂","💪"];
   const LABELS=["","חלשה מאוד","חלשה","סבירה","חזקה"];
   const COLORS=["","#fb7185","#fb923c","#f5b453","#34d399"];
   function score(p){
@@ -3842,7 +3887,8 @@ void main(){
     });
     if(s!==prev){
       prev=s;
-      face.textContent=FACES[s];
+      face.dataset.s=s;
+      face.style.color=COLORS[s]||"var(--muted)";
       face.classList.remove("pop");void face.offsetWidth;face.classList.add("pop");
       label.textContent=LABELS[s]||" ";
       label.style.color=COLORS[s]||"var(--muted)";

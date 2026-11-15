@@ -49,7 +49,7 @@ Or just say *"make this look designed"* in a project where the skill is installe
 
 ## Signature components - drop-in via shadcn registry
 
-44 animated components from the three live galleries, installable straight into any shadcn/ui project:
+44 animated components in the registry (58 live demos across the three galleries), installable straight into any shadcn/ui project:
 
 | fan-drawer | swipe-stack | liquid-tabs |
 | --- | --- | --- |
