@@ -314,22 +314,35 @@ No `startViewTransition` (older Safari) or reduced motion -> instant swap. The o
 
 ---
 
-## 3. Ripple (pointer-true, RTL-safe)
+## 3. Bubble ripple (pointer-true, RTL-safe)
 
-Material-style ink from the exact press point. Physical event coordinates are already correct in both writing directions - do not route them through logical properties.
+Not the flat Material ink dot: a cluster of bubbles grows from the exact press point and sweeps along the whole button toward the far end, staggered like foam. Physical event coordinates are already correct in both writing directions - do not route them through logical properties.
 
 ```tsx
-function useRipple() {
+function useBubbleRipple() {
   return (e: React.PointerEvent<HTMLElement>) => {
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const el = e.currentTarget;
     const r = el.getBoundingClientRect();
-    const d = Math.max(r.width, r.height) * 2.1;
-    const ink = document.createElement("span");
-    ink.className = "ripple-ink";
-    ink.style.cssText = `width:${d}px;height:${d}px;left:${e.clientX - r.left - d / 2}px;top:${e.clientY - r.top - d / 2}px`;
-    el.appendChild(ink);
-    ink.addEventListener("animationend", () => ink.remove());
+    const px = e.clientX - r.left, py = e.clientY - r.top;
+    const goLeft = px > r.width / 2; // sweep toward the far end
+    for (let i = 0; i < 6; i++) {
+      const bub = document.createElement("span");
+      bub.className = "ripple-bubble";
+      const sz = 14 + Math.random() * 26;
+      bub.style.cssText = `width:${sz}px;height:${sz}px;left:${px - sz / 2}px;top:${py - sz / 2}px`;
+      el.appendChild(bub);
+      const travel = (goLeft ? -1 : 1) * (r.width * (0.55 + Math.random() * 0.5));
+      const dy = (Math.random() - 0.5) * r.height * 0.6;
+      bub.animate(
+        [
+          { transform: "translate(0,0) scale(.25)", opacity: 0.4 },
+          { transform: `translate(${travel * 0.6}px,${dy * 0.6}px) scale(1)`, opacity: 0.25, offset: 0.6 },
+          { transform: `translate(${travel}px,${dy}px) scale(1.7)`, opacity: 0 },
+        ],
+        { duration: 650 + Math.random() * 300, delay: i * 55, easing: "cubic-bezier(.22,1,.36,1)", fill: "backwards" }
+      ).onfinish = () => bub.remove();
+    }
   };
 }
 // <button onPointerDown={ripple} className="ripple-host ...">
@@ -337,48 +350,33 @@ function useRipple() {
 
 ```css
 .ripple-host { position: relative; overflow: hidden; isolation: isolate; }
-.ripple-ink {
-  position: absolute; border-radius: 999px; pointer-events: none;
-  background: currentColor; opacity: .22; transform: scale(0);
-  animation: ripple .55s cubic-bezier(.22,1,.36,1) forwards;
-}
-@keyframes ripple { to { transform: scale(1); opacity: 0; } }
+.ripple-bubble { position: absolute; border-radius: 50%; pointer-events: none; background: currentColor; opacity: 0; }
 ```
 
-Rules: host gets `overflow: hidden` and `isolation: isolate` (keeps ink under rounded corners and above the background). `currentColor` inherits the label color - a dark button inks light, a light button inks dark, no per-variant tokens. Clean up on `animationend`, not with a timeout.
+Rules: host gets `overflow: hidden` and `isolation: isolate` (keeps bubbles under rounded corners and above the background). `currentColor` inherits the label color - a dark button bubbles light, a light button bubbles dark, no per-variant tokens. Clean up on WAAPI `onfinish`, not with a timeout.
 
 ---
 
-## 4. Magnetic hover
+## 4. Lift button (press to lift, release to drop)
 
-The button leans toward the cursor within a short radius and springs back on leave. Desktop only - touch has no hover, so gate it:
+A press-and-hold interaction that works on touch and mouse alike: while pressed, the button lifts off the surface with a growing shadow; on release it drops back with a small bounce. No hover dependency.
 
-```tsx
-function Magnetic({ children, strength = 0.35 }: { children: React.ReactNode; strength?: number }) {
-  const reduce = useReducedMotion();
-  const noHover = typeof matchMedia !== "undefined" && matchMedia("(hover: none)").matches;
-  const x = useMotionValue(0), y = useMotionValue(0);
-  const sx = useSpring(x, { stiffness: 180, damping: 14, mass: 0.4 });
-  const sy = useSpring(y, { stiffness: 180, damping: 14, mass: 0.4 });
-  if (reduce || noHover) return <>{children}</>;
-
-  return (
-    <motion.div
-      style={{ x: sx, y: sy, display: "inline-block" }}
-      onPointerMove={(e) => {
-        const r = e.currentTarget.getBoundingClientRect();
-        x.set((e.clientX - r.left - r.width / 2) * strength);
-        y.set((e.clientY - r.top - r.height / 2) * strength);
-      }}
-      onPointerLeave={() => { x.set(0); y.set(0); }}
-    >
-      {children}
-    </motion.div>
-  );
+```css
+.lift-btn { transition: transform .18s var(--ease), box-shadow .18s var(--ease); box-shadow: 0 6px 18px rgba(0,0,0,.35); }
+.lift-btn.lifted { transform: translateY(-16px) scale(1.045); box-shadow: 0 26px 44px rgba(0,0,0,.5), 0 0 0 1px var(--accent-strong); }
+.lift-btn.dropping { animation: dropBounce .55s cubic-bezier(.22,1,.36,1); }
+@keyframes dropBounce {
+  0% { transform: translateY(-16px) scale(1.045); }
+  45% { transform: translateY(5px) scale(.98); }
+  70% { transform: translateY(-3px) scale(1.01); }
+  100% { transform: translateY(0) scale(1); }
 }
 ```
 
-Cap the pull at ~40% of the distance (`strength 0.35`) and the travel under ~18px - more than that and the button dodges the click, which is the opposite of delightful.
+```tsx
+// pointerdown -> add .lifted; pointerup/cancel/leave -> remove .lifted, replay .dropping;
+// clean up .dropping on animationend. Respect prefers-reduced-motion (skip the bounce).
+```
 
 ---
 
@@ -412,17 +410,19 @@ Call it when the submit promise resolves, on the button that was clicked. The bu
 
 The everyday components are where "basic" is most visible. These recipes are inspired by the high-star animation libraries - React Bits (davidhdev/react-bits), Magic UI (magicuidesign/magicui), Codrops demos - and rebuilt for Next.js + shadcn with the states layer intact (focus ring, aria, keyboard). Every selection deserves a story: open with character, confirm with motion, land the choice where the user can see it.
 
-**Checkbox (burst)** - the check draws itself (SVG `stroke-dasharray` 22 -> 0), and on check the box plays a jelly squash-and-stretch (`scale(1.3,.7) -> (.82,1.18) -> (1.12,.9) -> 1`, ~550ms) while 8-12 small particles burst outward from the box center with random angle/distance/rotation and fade. Particles are spawned spans, removed on `animationend`; skip them under `prefers-reduced-motion`.
+**Checkbox (confetti row)** - the check draws itself (SVG `stroke-dasharray` 22 -> 0), the box plays a jelly squash-and-stretch (`scale(1.3,.7) -> (.82,1.18) -> (1.12,.9) -> 1`, ~550ms), and the whole row celebrates: ~18 confetti bits in the palette spawn at random points across the row and fly up/out with rotation (WAAPI, removed on `onfinish`), plus a one-shot background flash to the accent wash. Skip the particles under `prefers-reduced-motion`.
 
-**Dropdown (3D unfold)** - the wrapper gets `perspective: ~900px`; items enter with `rotateX(-75deg) translateY(-8px)` -> none, `transform-origin: top`, staggered ~55ms with an overshoot bezier (`cubic-bezier(.2,1.35,.3,1)`), so the panel reads as unfolding, not fading. On select, the chosen row flashes the accent wash once, the button label swaps through a blur (blur(5px)/fade out, swap text, blur back in), and the check springs in with rotation. Close on outside click and Escape; `aria-expanded`, `role="listbox"`/`option`, `aria-selected`.
+**Dropdown (trapdoor swing)** - the wrapper gets `perspective: ~900px`; the panel itself swings down like a trapdoor (`rotateX(-82deg)` -> none, `transform-origin: top`, ~550ms with an overshoot bezier), then items pop in staggered (~60ms apart, starting ~150ms in) with `scale(.55) rotate(-3deg)` -> none and a spring bezier. On select, the chosen row flashes the accent wash once, the check draws itself (`stroke-dashoffset` 24 -> 0), the button label swaps through a blur (blur(5px)/fade out, swap text, blur back in), and the panel closes. Close on outside click and Escape; `aria-expanded`, `role="listbox"`/`option`, `aria-selected`.
 
 **Combobox (cascade + fly-to-chip)** - typing shows the mini spinner (visible async state); results cascade in with `blur(6px) translateY(10px)` -> sharp, staggered ~50ms, re-running on every keystroke's render. Zero results get a designed empty state plus a short horizontal shake on the input. On select, the option row flies (shared `flyArc`) into the chip area and lands as a removable chip that springs in (`scale(.3) rotate(-8deg)` -> none); removing the chip shrinks/rotates it out.
 
-**Fan drawer (the selection fan)** - instead of a plain bottom sheet: options are cards stacked on a shared pivot below the stage (`transform-origin: 50% 160%`). Opening rotates each card to its fan angle (`--a: -22deg..22deg`) with a staggered overshoot (`cubic-bezier(.2,1.45,.32,1)`, ~55ms apart) over a dimming backdrop - the fan unfolds like a hand of cards. Center card carries the top z-index. On select, a clone of the card flies a quadratic-bezier arc (perpendicular control point ~0.3x the chord) up to the trigger at the head, rotating with the path tangent and shrinking to ~30%; on landing the trigger pops (`scale .82 -> 1.07 -> 1` + expanding glow ring) and shows the selection; the fan collapses with reverse stagger. Escape/backdrop close. RTL-safe: rotation is symmetric, no logical-property offsets in the fan geometry.
+**Fan drawer (the selection fan)** - instead of a plain bottom sheet: options are cards fanned around a shared pivot below the stage (`transform-origin: 50% 175%`, angles ~-26deg..26deg, staggered overshoot `cubic-bezier(.2,1.45,.32,1)` ~55ms apart) over a dimming backdrop. Readability on a 390px phone is the constraint: cards stay slim (~88px) with avatar + name at the TOP so the visible top strip of every card identifies it, the outer cards' rotated bounding boxes must stay inside the stage (verify by measurement, not by eye), and hover/touch lifts a card (`translateY(-16px) scale(1.09)`, z-index to front) for a full read. Center card carries the top resting z-index. On select, a clone of the card flies a quadratic-bezier arc (perpendicular control point ~0.3x the chord) up to the trigger at the head, rotating with the path tangent and shrinking to ~30%; on landing the trigger pops (`scale .82 -> 1.07 -> 1` + expanding glow ring) and shows the selection; the fan collapses with reverse stagger. Escape/backdrop close. RTL-safe: rotation is symmetric, use physical `margin-left` for centering, not logical properties.
 
 **Loaders with character** - replace the gray spinner: three orbiting dots, an equalizer of bars, five particles that converge to the center, merge, and pass through to the opposite side (`rotate(var(--ang)) translateX(...)` keyframes), a morphing blob (animated `border-radius` + rotation), or a progress ring that fills with a live percentage and ends in a drawn check. A determinate action (upload, import) always gets the ring over an indeterminate spinner.
 
 **Shared: `flyArc(from, to, html)`** - the selection-flight primitive used by the combobox and fan drawer: fixed-position clone, rAF loop over a quadratic bezier (endpoints = element centers, control point = chord midpoint + perpendicular offset), rotation follows the path tangent, scale eases toward the target, element removed on finish. Resolves immediately under reduced motion. One layout read per endpoint per flight - never per frame.
+
+**Aquarium form** - a form card with a living background: a 2D canvas behind the content draws small fish (ellipse body + wiggling triangle tail + eye) swimming across with sine bobbing and edge wrap, in palette colors at ~85% opacity. Inputs and the submit keep SOLID backgrounds so fish visibly disappear behind them as they pass. The frame is a rotating gold border: a `conic-gradient(from var(--ga), ...)` segment spun with an `@property`-registered angle (`@keyframes { to { --ga: 360deg } }`), masked to a 2px ring (`mask-composite: exclude` over `content-box`); without `@property` support it degrades to a static gradient ring. Canvas rAF pauses on `visibilitychange` and `IntersectionObserver`; reduced motion renders one static frame. The submit keeps the full states layer (spinner within a frame, double-click guard, error + retry, success burst). RTL-safe: fish directions are symmetric.
 
 All of these are demoed live in the gallery (`docs/index.html`, the signature-motion section) - copy the behavior from there.
 

@@ -167,8 +167,7 @@ footer a:hover{color:var(--accent)}
 .es-state{font-size:14px;color:var(--muted);line-height:1.7}
 .es-state b{color:var(--text)}
 .ripple-host{position:relative;overflow:hidden;isolation:isolate}
-.ripple-ink{position:absolute;border-radius:999px;pointer-events:none;background:currentColor;opacity:.22;transform:scale(0);animation:rip .55s var(--ease) forwards}
-@keyframes rip{to{transform:scale(1);opacity:0}}
+.ripple-bubble{position:absolute;border-radius:50%;pointer-events:none;background:currentColor;opacity:0}
 .btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text);border-radius:12px;padding:12px 22px;font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;transition:border-color .2s}
 .btn-ghost:hover{border-color:var(--accent-strong)}
 .ok-mini{display:flex;align-items:center;gap:8px;color:var(--green);font-size:13.5px;font-weight:600}
@@ -196,7 +195,7 @@ footer a:hover{color:var(--accent)}
 /* --- animated standard controls (signature level, round 3) --- */
 /* burst checkbox */
 .xc-list{display:flex;flex-direction:column;gap:12px;width:100%;max-width:400px}
-.xcheck{display:flex;align-items:center;gap:12px;cursor:pointer;padding:13px 15px;border:1px solid var(--border-soft);border-radius:13px;background:var(--card);transition:border-color .2s,transform .12s var(--ease);user-select:none;font-size:14.5px}
+.xcheck{position:relative;display:flex;align-items:center;gap:12px;cursor:pointer;padding:13px 15px;border:1px solid var(--border-soft);border-radius:13px;background:var(--card);transition:border-color .2s,transform .12s var(--ease);user-select:none;font-size:14.5px}
 .xcheck:hover{border-color:var(--border)}
 .xcheck:active{transform:scale(.98)}
 .xcheck input{position:absolute;opacity:0;pointer-events:none}
@@ -206,8 +205,9 @@ footer a:hover{color:var(--accent)}
 .xcheck input:checked+.xc-box{background:linear-gradient(135deg,var(--accent),var(--accent-strong));border-color:transparent;animation:ckJelly .55s var(--ease)}
 .xcheck input:checked+.xc-box .xc-tick{stroke-dashoffset:0}
 @keyframes ckJelly{0%{transform:scale(1)}30%{transform:scale(1.3,.7)}52%{transform:scale(.82,1.18)}72%{transform:scale(1.12,.9)}100%{transform:scale(1)}}
-.ck-bit{position:absolute;left:50%;top:50%;width:5px;height:5px;border-radius:2px;pointer-events:none;background:var(--bc,var(--accent));animation:ckBurst .6s var(--ease) forwards}
-@keyframes ckBurst{0%{transform:translate(-50%,-50%) scale(1);opacity:1}100%{transform:translate(calc(-50% + var(--tx)),calc(-50% + var(--ty))) rotate(var(--rr)) scale(.2);opacity:0}}
+.ck-conf{position:absolute;width:6px;height:6px;border-radius:2px;pointer-events:none;background:var(--bc,var(--accent));opacity:0}
+.xcheck.celebrate{animation:rowFlash .6s var(--ease)}
+@keyframes rowFlash{0%{background:var(--card)}35%{background:var(--accent-soft)}100%{background:var(--card)}}
 .xcheck input:focus-visible+.xc-box{outline:2px solid var(--accent);outline-offset:3px}
 .xc-count{margin-top:18px;font-size:14px;color:var(--muted)}
 .xc-count b{color:var(--accent);display:inline-block}
@@ -225,8 +225,12 @@ footer a:hover{color:var(--accent)}
 .dd-panel,.cb-panel{position:absolute;top:calc(100% + 8px);inset-inline:0;background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-2);padding:6px;z-index:6;opacity:0;transform:scale(.96) translateY(-6px);transform-origin:top center;pointer-events:none;transition:opacity .18s var(--ease),transform .22s var(--ease);max-height:240px;overflow-y:auto}
 .dd.open .dd-panel,.cb.open .cb-panel{opacity:1;transform:none;pointer-events:auto}
 .dd-item{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;padding:11px 12px;border:0;background:transparent;color:var(--text);font-family:inherit;font-size:14px;border-radius:9px;cursor:pointer;text-align:start;transform-origin:50% 0}
-.dd.open .dd-item{animation:unfoldIn .5s cubic-bezier(.2,1.35,.3,1) calc(var(--i)*55ms) backwards}
-@keyframes unfoldIn{from{opacity:0;transform:rotateX(-75deg) translateY(-8px)}to{opacity:1;transform:none}}
+.dd.open .dd-panel{animation:panelSwing .55s cubic-bezier(.2,1.25,.3,1)}
+@keyframes panelSwing{from{transform:rotateX(-82deg)}to{transform:none}}
+.dd.open .dd-item{animation:ddPop .45s cubic-bezier(.34,1.7,.64,1) calc(150ms + var(--i)*60ms) backwards}
+@keyframes ddPop{from{opacity:0;transform:translateY(-10px) scale(.55) rotate(-3deg)}to{opacity:1;transform:none}}
+.dd-check path{stroke-dasharray:24;stroke-dashoffset:24;transition:stroke-dashoffset .35s ease .06s}
+.dd-item[aria-selected="true"] .dd-check path{stroke-dashoffset:0}
 .cb.open .dd-item{animation:cascIn .4s var(--ease) calc(var(--i)*50ms) backwards}
 @keyframes cascIn{from{opacity:0;filter:blur(6px);transform:translateY(10px) scale(.98)}to{opacity:1;filter:blur(0);transform:none}}
 .dd-item:hover{background:var(--card-2)}
@@ -248,9 +252,9 @@ footer a:hover{color:var(--accent)}
 /* shared fly-arc element (selection lands at the component head) */
 .fly-arc{position:fixed;z-index:70;pointer-events:none;display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--accent-strong);border-radius:12px;padding:9px 14px;box-shadow:var(--shadow-2);font-size:13.5px;font-weight:600;color:var(--text);white-space:nowrap;will-change:transform}
 .fly-arc .avatar{width:26px;height:26px;font-size:10px}
-/* fan drawer: options unfold like cards, selection arcs to the head */
-.fan-stage{position:relative;width:100%;min-height:470px;border-radius:12px;overflow:hidden;background:radial-gradient(90% 70% at 50% 100%,#101722,var(--bg))}
-.fan-trigger{position:absolute;top:26px;left:50%;translate:-50% 0;display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:999px;padding:11px 20px;color:var(--text);font-family:inherit;font-size:14.5px;font-weight:600;cursor:pointer;transition:border-color .2s;z-index:5;white-space:nowrap}
+/* fan drawer: readable card fan, selection arcs to the head */
+.fan-stage{position:relative;width:100%;min-height:400px;border-radius:12px;overflow:hidden;background:radial-gradient(90% 70% at 50% 100%,#101722,var(--bg))}
+.fan-trigger{position:absolute;top:22px;left:50%;translate:-50% 0;display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:999px;padding:11px 20px;color:var(--text);font-family:inherit;font-size:14.5px;font-weight:600;cursor:pointer;transition:border-color .2s;z-index:5;white-space:nowrap}
 .fan-trigger:hover{border-color:var(--accent-strong)}
 .fan-trigger:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .fan-trigger .chev{transition:transform .35s cubic-bezier(.34,1.56,.64,1);color:var(--muted)}
@@ -260,16 +264,30 @@ footer a:hover{color:var(--accent)}
 .fan-trigger .avatar{width:26px;height:26px;font-size:10px}
 .fan-backdrop{position:absolute;inset:0;background:rgba(4,8,12,.55);opacity:0;pointer-events:none;transition:opacity .35s}
 .fan-stage.open .fan-backdrop{opacity:1;pointer-events:auto}
-.fan{position:absolute;left:50%;bottom:70px;z-index:4}
-.fan-card{position:absolute;left:0;bottom:0;width:118px;height:150px;margin-left:-59px;transform-origin:50% 160%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;background:linear-gradient(180deg,var(--card),var(--card-2));border:1px solid var(--border);border-radius:16px;box-shadow:0 14px 34px rgba(0,0,0,.45);color:var(--text);font-family:inherit;cursor:pointer;padding:12px 8px;opacity:0;pointer-events:none;transform:rotate(0deg) translateY(60px) scale(.4);transition:transform .5s cubic-bezier(.2,1.45,.32,1) calc(var(--i)*55ms),opacity .3s var(--ease) calc(var(--i)*55ms),border-color .2s;will-change:transform}
+.fan{position:absolute;left:50%;bottom:60px;z-index:4}
+.fan-card{position:absolute;left:0;bottom:0;width:88px;height:122px;margin-left:-44px;transform-origin:50% 175%;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:5px;padding:12px 4px 8px;background:linear-gradient(180deg,var(--card),var(--card-2));border:1px solid var(--border);border-radius:14px;box-shadow:0 14px 30px rgba(0,0,0,.45);color:var(--text);font-family:inherit;cursor:pointer;opacity:0;pointer-events:none;transform:rotate(0deg) translateY(60px) scale(.4);transition:transform .55s cubic-bezier(.2,1.45,.32,1) calc(var(--i)*55ms),opacity .3s var(--ease) calc(var(--i)*55ms),border-color .2s;will-change:transform}
 .fan-stage.open .fan-card{opacity:1;pointer-events:auto;transform:rotate(var(--a)) translateY(0) scale(1)}
-.fan-card:hover{border-color:var(--accent-strong)}
+.fan-stage.open .fan-card:hover,.fan-stage.open .fan-card:active{transform:rotate(var(--a)) translateY(-16px) scale(1.09);z-index:9;transition-delay:0s;border-color:var(--accent-strong)}
 .fan-card:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-.fan-card .avatar{width:42px;height:42px;font-size:14px}
-.fan-card b{font-size:13px}
-.fan-card small{font-size:10.5px;color:var(--muted);text-align:center}
+.fan-card .avatar{width:34px;height:34px;font-size:12px}
+.fan-card b{font-size:10px;line-height:1.25;text-align:center}
+.fan-card small{font-size:9px;color:var(--muted);text-align:center;line-height:1.3}
 .fan-hint{position:absolute;bottom:12px;left:50%;translate:-50% 0;font-size:12px;color:var(--faint);z-index:3;transition:opacity .3s;white-space:nowrap}
 .fan-stage.open .fan-hint{opacity:0}
+/* lift button (press to lift, release to drop) */
+.lift-btn{transition:transform .18s var(--ease),box-shadow .18s var(--ease);box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.lift-btn.lifted{transform:translateY(-16px) scale(1.045);box-shadow:0 26px 44px rgba(0,0,0,.5),0 0 0 1px var(--accent-strong)}
+.lift-btn.dropping{animation:dropBounce .55s cubic-bezier(.22,1,.36,1)}
+@keyframes dropBounce{0%{transform:translateY(-16px) scale(1.045)}45%{transform:translateY(5px) scale(.98)}70%{transform:translateY(-3px) scale(1.01)}100%{transform:translateY(0) scale(1)}}
+/* aquarium form: fish behind the inputs, rotating gold border */
+@property --ga{syntax:"<angle>";initial-value:0deg;inherits:false}
+.aqua-form{position:relative;max-width:340px;margin:0 auto;border-radius:18px;overflow:hidden;background:linear-gradient(180deg,#0b1d26,#081420);border:1px solid rgba(245,180,83,.25);box-shadow:var(--shadow-1)}
+.aqua-form::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:2px;background:conic-gradient(from var(--ga),transparent 0deg,rgba(245,180,83,.06) 40deg,#f5b453 90deg,#ffe9b0 120deg,#f5b453 150deg,rgba(245,180,83,.06) 200deg,transparent 260deg);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;animation:goldspin 4.5s linear infinite;pointer-events:none;z-index:2}
+@keyframes goldspin{to{--ga:360deg}}
+.aqua-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.aqua-content{position:relative;z-index:1;display:flex;flex-direction:column;gap:12px;padding:22px 20px}
+.aqua-title{font-size:15.5px;font-weight:700;color:var(--text);text-align:center}
+.aqua-form .f-input{background:var(--card);border-color:var(--border-soft)}
 /* loaders with character */
 .loaders{display:flex;gap:30px;justify-content:center;align-items:center;flex-wrap:wrap;padding:6px 0 26px}
 .orbit{position:relative;width:46px;height:46px;animation:spin 1.6s linear infinite}
@@ -394,11 +412,26 @@ footer a:hover{color:var(--accent)}
         <button class="btn primary ripple-host">גל מנקודת הלחיצה</button>
         <button class="btn-ghost ripple-host">גם בכפתור שקוף</button>
       </div>
-      <div id="saveWrap" style="position:relative;max-width:340px;margin:28px auto 0">
-        <button class="submit ripple-host" id="saveDemo">שמירת ההגדרות</button>
-        <div id="saveNote" style="margin-top:12px;min-height:22px"></div>
-      </div>
-      <div class="es-state" style="margin-top:14px">כפתור השמירה מראה טוען תוך פריים, חוסם לחיצה כפולה, נכשל בפעם הראשונה עם ניסיון חוזר - ומצליח בשנייה עם פיצוץ חלקיקים</div>
+      <div class="es-state" style="margin-top:14px">בועות שצומחות מנקודת הלחיצה ונסחפות לאורך כל הכפתור - גם בכפתור שקוף</div>
+    </div></div>
+  </div>
+
+  <div class="demo rv" style="margin-bottom:18px">
+    <div class="demo-bar">
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 3h12l4 6-10 12L2 9l4-6z"/></svg><span dir="ltr">aquarium-form.tsx</span></span>
+    </div>
+    <div class="stage"><div class="stage-inner">
+      <form class="aqua-form" id="saveWrap" novalidate>
+        <canvas class="aqua-canvas" id="aquaCanvas"></canvas>
+        <div class="aqua-content">
+          <div class="aqua-title">הגדרות התראות</div>
+          <input class="f-input" id="aq-name" placeholder="השם שלך" autocomplete="off" aria-label="השם שלך">
+          <input class="f-input" id="aq-mail" dir="ltr" placeholder="you@example.com" autocomplete="off" aria-label="מייל">
+          <button class="submit ripple-host" id="saveDemo" type="button">שמירת ההגדרות</button>
+          <div id="saveNote" style="min-height:22px"></div>
+        </div>
+      </form>
+      <div class="es-state" style="text-align:center;margin-top:14px">טופס אקווריום: דגים קטנים שוחים ברקע ונעלמים מאחורי האינפוטים, מסגרת זהב זוהרת מסתובבת - והשמירה עדיין עם טוען, שגיאה וניסיון חוזר</div>
     </div></div>
   </div>
 
@@ -470,15 +503,15 @@ footer a:hover{color:var(--accent)}
         <button class="fan-trigger" id="fanTrigger" aria-expanded="false"><span id="fanLabel">בחירת נציג</span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg></button>
         <div class="fan-backdrop" id="fanBackdrop"></div>
         <div class="fan" id="fan">
-          <button class="fan-card" style="--a:-22deg;--i:0;z-index:2" data-name="שירה כהן" data-init="ש"><span class="avatar">ש</span><b>שירה כהן</b><small>זמינה עכשיו</small></button>
-          <button class="fan-card" style="--a:-11deg;--i:1;z-index:3" data-name="דוד לוי" data-init="ד"><span class="avatar">ד</span><b>דוד לוי</b><small>חוזר בעוד 10 דקות</small></button>
+          <button class="fan-card" style="--a:-26deg;--i:0;z-index:2" data-name="שירה כהן" data-init="ש"><span class="avatar">ש</span><b>שירה כהן</b><small>זמינה עכשיו</small></button>
+          <button class="fan-card" style="--a:-13deg;--i:1;z-index:3" data-name="דוד לוי" data-init="ד"><span class="avatar">ד</span><b>דוד לוי</b><small>חוזר בעוד 10 דקות</small></button>
           <button class="fan-card" style="--a:0deg;--i:2;z-index:4" data-name="מאיה אברהם" data-init="מ"><span class="avatar">מ</span><b>מאיה אברהם</b><small>זמינה עכשיו</small></button>
-          <button class="fan-card" style="--a:11deg;--i:3;z-index:3" data-name="יוסי חדד" data-init="י"><span class="avatar">י</span><b>יוסי חדד</b><small>בשיחה עד 15:30</small></button>
-          <button class="fan-card" style="--a:22deg;--i:4;z-index:2" data-name="נועה ברק" data-init="נ"><span class="avatar">נ</span><b>נועה ברק</b><small>זמינה עכשיו</small></button>
+          <button class="fan-card" style="--a:13deg;--i:3;z-index:3" data-name="יוסי חדד" data-init="י"><span class="avatar">י</span><b>יוסי חדד</b><small>בשיחה עד 15:30</small></button>
+          <button class="fan-card" style="--a:26deg;--i:4;z-index:2" data-name="נועה ברק" data-init="נ"><span class="avatar">נ</span><b>נועה ברק</b><small>זמינה עכשיו</small></button>
         </div>
         <div class="fan-hint">לחצו על הכפתור - המניפה נפרסת</div>
       </div>
-      <div class="es-state" style="text-align:center;margin-top:14px">דרואר-מניפה: האפשרויות נפרסות כמו קלפים מהקצה, ובחירה עפה בקשת מעגלית ונוחתת בראש הקומפוננטה</div>
+      <div class="es-state" style="text-align:center;margin-top:14px">המניפה נפרסת עם כל האפשרויות גלויות - מגע על קלף מרים אותו לקריאה מלאה, ובחירה עפה בקשת מעגלית ונוחתת בראש הקומפוננטה</div>
     </div></div>
   </div>
 
@@ -506,11 +539,11 @@ footer a:hover{color:var(--accent)}
 
   <div class="demo rv">
     <div class="demo-bar">
-      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m12 2 9 5-9 5-9-5 9-5z"/></svg><span dir="ltr">magnetic-button.tsx</span></span>
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m12 2 9 5-9 5-9-5 9-5z"/></svg><span dir="ltr">lift-button.tsx</span></span>
     </div>
     <div class="stage" id="magnetStage"><div class="stage-inner" style="text-align:center">
-      <span class="magnet" id="magnetWrap"><button class="btn primary" id="magnetBtn" style="padding:16px 34px;font-size:16px">כפתור מגנטי</button></span>
-      <div class="es-state" style="margin-top:20px" id="magnetHint">הקיפו אותו עם העכבר - הוא נמשך וקופץ חזרה</div>
+      <span class="magnet" id="magnetWrap"><button class="btn primary lift-btn" id="magnetBtn" style="padding:16px 34px;font-size:16px">כפתור מרחף</button></span>
+      <div class="es-state" style="margin-top:20px" id="magnetHint">לוחצים ומחזיקים - הכפתור ממריא עם צל; משחררים - הוא נופל חזרה עם קפיצה</div>
     </div></div>
   </div>
 </section>
@@ -896,12 +929,22 @@ if(gs){
 $$(".ripple-host").forEach(b=>b.addEventListener("pointerdown",e=>{
   if(reduce)return;
   const el=e.currentTarget,r=el.getBoundingClientRect();
-  const d=Math.max(r.width,r.height)*2.1;
-  const ink=document.createElement("span");
-  ink.className="ripple-ink";
-  ink.style.cssText=`width:${d}px;height:${d}px;left:${e.clientX-r.left-d/2}px;top:${e.clientY-r.top-d/2}px`;
-  el.appendChild(ink);
-  ink.addEventListener("animationend",()=>ink.remove());
+  const px=e.clientX-r.left,py=e.clientY-r.top;
+  const goLeft=px>r.width/2;
+  for(let i=0;i<6;i++){
+    const bub=document.createElement("span");
+    bub.className="ripple-bubble";
+    const sz=14+Math.random()*26;
+    bub.style.cssText=`width:${sz}px;height:${sz}px;left:${px-sz/2}px;top:${py-sz/2}px`;
+    el.appendChild(bub);
+    const travel=(goLeft?-1:1)*(r.width*(.55+Math.random()*.5));
+    const dy=(Math.random()-.5)*r.height*.6;
+    bub.animate([
+      {transform:"translate(0,0) scale(.25)",opacity:.4},
+      {transform:`translate(${(travel*.6).toFixed(0)}px,${(dy*.6).toFixed(0)}px) scale(1)`,opacity:.25,offset:.6},
+      {transform:`translate(${travel.toFixed(0)}px,${dy.toFixed(0)}px) scale(1.7)`,opacity:0}
+    ],{duration:650+Math.random()*300,delay:i*55,easing:"cubic-bezier(.22,1,.36,1)",fill:"backwards"}).onfinish=()=>bub.remove();
+  }
 }));
 
 /* ============ guarded save with error + retry + success burst ============ */
@@ -942,28 +985,55 @@ if(saveBtn){
   });
 }
 
-/* ============ magnetic button ============ */
-const magWrap=$("#magnetWrap"),magStage=$("#magnetStage"),magHint=$("#magnetHint");
-if(magWrap&&magStage){
-  if(reduce||matchMedia("(hover: none)").matches){
-    magHint.textContent="במסך מגע אין ריחוף - הכפתור מתנהג רגיל";
-  }else{
-    let tx=0,ty=0,cx=0,cy=0,raf=null;
-    const loop=()=>{
-      cx+=(tx-cx)*.16;cy+=(ty-cy)*.16;
-      magWrap.style.transform=`translate(${cx.toFixed(2)}px,${cy.toFixed(2)}px)`;
-      if(Math.abs(tx-cx)>.1||Math.abs(ty-cy)>.1)raf=requestAnimationFrame(loop);
-      else{raf=null;magWrap.style.transform=`translate(${tx}px,${ty}px)`;}
-    };
-    magStage.addEventListener("pointermove",e=>{
-      const r=magWrap.getBoundingClientRect();
-      const dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2);
-      const dist=Math.hypot(dx,dy);
-      if(dist<120){tx=dx*.3;ty=dy*.3;}else{tx=0;ty=0;}
-      if(!raf)raf=requestAnimationFrame(loop);
-    });
-    magStage.addEventListener("pointerleave",()=>{tx=0;ty=0;if(!raf)raf=requestAnimationFrame(loop);});
-  }
+/* ============ lift button (press to lift, release to drop) ============ */
+const magBtn=$("#magnetBtn"),magHint=$("#magnetHint");
+if(magBtn){
+  const drop=()=>{
+    magBtn.classList.remove("lifted");
+    magBtn.classList.remove("dropping");void magBtn.offsetWidth;magBtn.classList.add("dropping");
+  };
+  magBtn.addEventListener("pointerdown",()=>{magBtn.classList.remove("dropping");magBtn.classList.add("lifted");});
+  magBtn.addEventListener("pointerup",drop);
+  magBtn.addEventListener("pointercancel",drop);
+  magBtn.addEventListener("pointerleave",()=>{if(magBtn.classList.contains("lifted"))drop();});
+  magBtn.addEventListener("animationend",()=>magBtn.classList.remove("dropping"));
+}
+
+/* ============ aquarium form: fish behind the inputs ============ */
+const aquaC=$("#aquaCanvas");
+if(aquaC){
+  const ctx=aquaC.getContext("2d");
+  const colors=["#14b8a6","#f5b453","#fb7185","#34d399","#7dd3fc"];
+  const dpr=Math.min(2,devicePixelRatio||1);
+  let W=0,H=0,raf=null,visible=true,inView=true;
+  const fish=Array.from({length:7},(_,k)=>({
+    x:Math.random(),y:.18+Math.random()*.64,
+    len:9+Math.random()*8,v:(.0006+Math.random()*.0009)*(k%2?1:-1),
+    c:colors[k%colors.length],ph:Math.random()*6.28
+  }));
+  const size=()=>{const r=aquaC.getBoundingClientRect();W=r.width;H=r.height;aquaC.width=W*dpr;aquaC.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);};
+  const draw=t=>{
+    ctx.clearRect(0,0,W,H);
+    for(const f of fish){
+      if(!reduce){f.x+=f.v;if(f.x>1.08)f.x=-.08;if(f.x<-.08)f.x=1.08;}
+      const x=f.x*W,y=f.y*H+Math.sin(t*.0022+f.ph)*5;
+      const dir=f.v>=0?1:-1,L=f.len;
+      ctx.save();ctx.translate(x,y);ctx.scale(dir,1);
+      ctx.fillStyle=f.c;ctx.globalAlpha=.85;
+      ctx.beginPath();ctx.ellipse(0,0,L,L*.42,0,0,6.29);ctx.fill();
+      const w=Math.sin(t*.012+f.ph)*L*.22;
+      ctx.beginPath();ctx.moveTo(-L*.9,0);ctx.lineTo(-L*1.5,-L*.34+w);ctx.lineTo(-L*1.5,L*.34+w);ctx.closePath();ctx.fill();
+      ctx.globalAlpha=1;ctx.fillStyle="#04211d";
+      ctx.beginPath();ctx.arc(L*.55,-L*.08,1.6,0,6.29);ctx.fill();
+      ctx.restore();
+    }
+  };
+  const loop=t=>{draw(t);if(!reduce&&visible&&inView){raf=requestAnimationFrame(loop);}else raf=null;};
+  const start=()=>{size();if(reduce){draw(0);return;}if(!raf&&visible&&inView)raf=requestAnimationFrame(loop);};
+  document.addEventListener("visibilitychange",()=>{visible=!document.hidden;if(visible)start();});
+  new IntersectionObserver(e=>{inView=e[0].isIntersecting;if(inView)start();},{rootMargin:"80px"}).observe(aquaC);
+  addEventListener("resize",()=>{size();if(reduce)draw(0);});
+  start();
 }
 })();
 </script>
@@ -979,19 +1049,23 @@ const CHECK='<svg class="dd-check" viewBox="0 0 24 24" fill="none" stroke="curre
 const xcCount=$("#xcCount");
 if(xcCount){
   const boxes=$$(".xcheck input");
-  const bitColors=["var(--accent)","var(--amber)","var(--rose)"];
-  const burst=box=>{
+  const bitColors=["var(--accent)","var(--amber)","var(--rose)","var(--green)"];
+  const confetti=row=>{
     if(reduce)return;
-    for(let i=0;i<10;i++){
+    row.classList.remove("celebrate");void row.offsetWidth;row.classList.add("celebrate");
+    const w=row.offsetWidth;
+    for(let i=0;i<18;i++){
       const s=document.createElement("span");
-      s.className="ck-bit";
-      const a=Math.random()*Math.PI*2,d=18+Math.random()*22;
-      s.style.setProperty("--tx",(Math.cos(a)*d).toFixed(1)+"px");
-      s.style.setProperty("--ty",(Math.sin(a)*d).toFixed(1)+"px");
-      s.style.setProperty("--rr",(Math.random()*260-130).toFixed(0)+"deg");
-      s.style.setProperty("--bc",bitColors[i%3]);
-      box.appendChild(s);
-      s.addEventListener("animationend",()=>s.remove());
+      s.className="ck-conf";
+      s.style.insetInlineStart=(Math.random()*w).toFixed(0)+"px";
+      s.style.top=(8+Math.random()*70)+"%";
+      s.style.setProperty("--bc",bitColors[i%4]);
+      const a=-Math.PI/2+(Math.random()-.5)*1.7,d=26+Math.random()*46;
+      row.appendChild(s);
+      s.animate([
+        {transform:"translate(0,0) rotate(0) scale(1)",opacity:1},
+        {transform:`translate(${(Math.cos(a)*d).toFixed(0)}px,${(Math.sin(a)*d+20).toFixed(0)}px) rotate(${(Math.random()*360-180).toFixed(0)}deg) scale(.4)`,opacity:0}
+      ],{duration:600+Math.random()*350,easing:"cubic-bezier(.22,1,.36,1)"}).onfinish=()=>s.remove();
     }
   };
   const update=()=>{
@@ -1000,7 +1074,7 @@ if(xcCount){
     const b=$("b",xcCount);
     b.classList.remove("pop");void b.offsetWidth;b.classList.add("pop");
   };
-  boxes.forEach(b=>b.addEventListener("change",()=>{if(b.checked)burst(b.nextElementSibling);update();}));
+  boxes.forEach(b=>b.addEventListener("change",()=>{if(b.checked)confetti(b.closest(".xcheck"));update();}));
 }
 
 /* ============ shared: fly along a circular arc ============ */

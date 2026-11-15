@@ -2,7 +2,7 @@
 name: finesse
 description: "Design skill for Next.js + shadcn/ui + Tailwind app interfaces. Use when building or refactoring React components, pages, dashboards, forms, chats or settings screens so they come out polished, animated and RTL-aware instead of default-looking. Trigger when the user asks to build a UI, says 'finesse', 'make it look designed', 'polish this', or when a component looks like library defaults."
 argument-hint: "[component or page path] | audit <path>"
-version: 1.3.0
+version: 1.4.0
 metadata:
   opencode/slash: "true"
 ---
