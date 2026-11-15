@@ -193,56 +193,85 @@ footer a:hover{color:var(--accent)}
 @keyframes twinkle{0%,100%{opacity:.15}50%{opacity:1}}
 .gs-labels{display:flex;align-items:center;gap:14px;font-size:13px;color:var(--muted)}
 .gs-labels output{font-family:"JetBrains Mono",monospace;color:var(--accent);min-width:46px;text-align:center}
-/* --- animated standard controls --- */
+/* --- animated standard controls (signature level, round 3) --- */
+/* burst checkbox */
 .xc-list{display:flex;flex-direction:column;gap:12px;width:100%;max-width:400px}
 .xcheck{display:flex;align-items:center;gap:12px;cursor:pointer;padding:13px 15px;border:1px solid var(--border-soft);border-radius:13px;background:var(--card);transition:border-color .2s,transform .12s var(--ease);user-select:none;font-size:14.5px}
 .xcheck:hover{border-color:var(--border)}
 .xcheck:active{transform:scale(.98)}
 .xcheck input{position:absolute;opacity:0;pointer-events:none}
-.xc-box{position:relative;width:24px;height:24px;border-radius:8px;border:2px solid var(--border);display:grid;place-items:center;transition:background .25s,border-color .25s,transform .35s cubic-bezier(.34,1.56,.64,1);flex-shrink:0}
+.xc-box{position:relative;width:24px;height:24px;border-radius:8px;border:2px solid var(--border);display:grid;place-items:center;transition:background .25s,border-color .25s;flex-shrink:0}
 .xc-box svg{width:14px;height:14px;fill:none;stroke:#04211d;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
 .xc-tick{stroke-dasharray:22;stroke-dashoffset:22;transition:stroke-dashoffset .3s ease .06s}
-.xcheck input:checked+.xc-box{background:linear-gradient(135deg,var(--accent),var(--accent-strong));border-color:transparent;transform:scale(1.1)}
+.xcheck input:checked+.xc-box{background:linear-gradient(135deg,var(--accent),var(--accent-strong));border-color:transparent;animation:ckJelly .55s var(--ease)}
 .xcheck input:checked+.xc-box .xc-tick{stroke-dashoffset:0}
-.xcheck input:checked+.xc-box::after{content:"";position:absolute;inset:-2px;border-radius:10px;border:2px solid var(--accent);animation:xcPing .5s ease-out forwards}
-@keyframes xcPing{from{opacity:.85;transform:scale(1)}to{opacity:0;transform:scale(1.7)}}
+@keyframes ckJelly{0%{transform:scale(1)}30%{transform:scale(1.3,.7)}52%{transform:scale(.82,1.18)}72%{transform:scale(1.12,.9)}100%{transform:scale(1)}}
+.ck-bit{position:absolute;left:50%;top:50%;width:5px;height:5px;border-radius:2px;pointer-events:none;background:var(--bc,var(--accent));animation:ckBurst .6s var(--ease) forwards}
+@keyframes ckBurst{0%{transform:translate(-50%,-50%) scale(1);opacity:1}100%{transform:translate(calc(-50% + var(--tx)),calc(-50% + var(--ty))) rotate(var(--rr)) scale(.2);opacity:0}}
 .xcheck input:focus-visible+.xc-box{outline:2px solid var(--accent);outline-offset:3px}
 .xc-count{margin-top:18px;font-size:14px;color:var(--muted)}
 .xc-count b{color:var(--accent);display:inline-block}
 .xc-count b.pop{animation:checkpop .4s var(--ease)}
+/* unfold dropdown + cascade combobox */
 .dd,.cb{position:relative;width:100%;max-width:340px}
+.dd{perspective:900px}
 .dd-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px 16px;color:var(--text);font-family:inherit;font-size:14.5px;font-weight:600;cursor:pointer;transition:border-color .2s}
 .dd-btn:hover{border-color:var(--accent-strong)}
 .dd-btn:focus-visible,.cb-input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.dd-btn .chev{transition:transform .25s var(--ease);color:var(--muted);flex-shrink:0}
+.dd-btn .chev{transition:transform .35s cubic-bezier(.34,1.56,.64,1);color:var(--muted);flex-shrink:0}
 .dd.open .dd-btn .chev{transform:rotate(180deg)}
+#ddLabel{display:inline-block;transition:filter .16s,opacity .16s,transform .16s}
+#ddLabel.swapping{filter:blur(5px);opacity:0;transform:translateY(6px)}
 .dd-panel,.cb-panel{position:absolute;top:calc(100% + 8px);inset-inline:0;background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-2);padding:6px;z-index:6;opacity:0;transform:scale(.96) translateY(-6px);transform-origin:top center;pointer-events:none;transition:opacity .18s var(--ease),transform .22s var(--ease);max-height:240px;overflow-y:auto}
 .dd.open .dd-panel,.cb.open .cb-panel{opacity:1;transform:none;pointer-events:auto}
-.dd-item{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;padding:11px 12px;border:0;background:transparent;color:var(--text);font-family:inherit;font-size:14px;border-radius:9px;cursor:pointer;text-align:start;opacity:0;transform:translateY(6px)}
-.dd.open .dd-item,.cb.open .dd-item{opacity:1;transform:none;transition:opacity .25s var(--ease) calc(var(--i)*45ms),transform .25s var(--ease) calc(var(--i)*45ms),background .15s}
+.dd-item{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;padding:11px 12px;border:0;background:transparent;color:var(--text);font-family:inherit;font-size:14px;border-radius:9px;cursor:pointer;text-align:start;transform-origin:50% 0}
+.dd.open .dd-item{animation:unfoldIn .5s cubic-bezier(.2,1.35,.3,1) calc(var(--i)*55ms) backwards}
+@keyframes unfoldIn{from{opacity:0;transform:rotateX(-75deg) translateY(-8px)}to{opacity:1;transform:none}}
+.cb.open .dd-item{animation:cascIn .4s var(--ease) calc(var(--i)*50ms) backwards}
+@keyframes cascIn{from{opacity:0;filter:blur(6px);transform:translateY(10px) scale(.98)}to{opacity:1;filter:blur(0);transform:none}}
 .dd-item:hover{background:var(--card-2)}
-.dd-check{width:16px;height:16px;color:var(--accent);opacity:0;transform:scale(.5);transition:all .25s cubic-bezier(.34,1.56,.64,1);flex-shrink:0}
-.dd-item[aria-selected="true"] .dd-check{opacity:1;transform:scale(1)}
+.dd-check{width:16px;height:16px;color:var(--accent);opacity:0;transform:scale(.4) rotate(-30deg);transition:all .3s cubic-bezier(.34,1.8,.64,1);flex-shrink:0}
+.dd-item[aria-selected="true"] .dd-check{opacity:1;transform:scale(1) rotate(0)}
 .dd-item[aria-selected="true"]{color:var(--accent);font-weight:600}
+.dd-item.flash{animation:itemFlash .7s var(--ease)}
+@keyframes itemFlash{0%{background:var(--accent-soft)}100%{background:transparent}}
 .cb-inputwrap{position:relative}
+.cb-inputwrap.shake{animation:shakeX .4s var(--ease)}
+@keyframes shakeX{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}50%{transform:translateX(5px)}75%{transform:translateX(-3px)}}
 .mini-spin{position:absolute;inset-inline-end:13px;top:50%;translate:0 -50%;width:15px;height:15px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;display:none}
 .cb.searching .mini-spin{display:block}
-.cb-empty{padding:20px 12px;text-align:center;color:var(--faint);font-size:13.5px}
-.cb-chip{display:inline-flex;align-items:center;gap:9px;background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:6px 8px 6px 15px;font-size:13.5px;font-weight:600;margin-bottom:12px;animation:checkpop .35s var(--ease)}
+.cb-empty{padding:20px 12px;text-align:center;color:var(--faint);font-size:13.5px;animation:cascIn .35s var(--ease)}
+.cb-chip{display:inline-flex;align-items:center;gap:9px;background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:6px 8px 6px 15px;font-size:13.5px;font-weight:600;margin-bottom:12px;animation:chipIn .45s cubic-bezier(.34,1.7,.64,1)}
 [dir="rtl"] .cb-chip{padding:6px 15px 6px 8px}
+@keyframes chipIn{from{opacity:0;transform:scale(.3) rotate(-8deg)}to{opacity:1;transform:none}}
 .cb-chip button{background:none;border:0;color:inherit;cursor:pointer;font-size:16px;line-height:1;padding:0 2px}
-.drawer-stage{position:relative;width:100%;min-height:380px;border-radius:12px;overflow:hidden;background:var(--bg);display:grid;place-items:center}
-.sheet-backdrop{position:absolute;inset:0;background:rgba(4,8,12,.62);opacity:0;pointer-events:none;transition:opacity .3s}
-.drawer-stage.open .sheet-backdrop{opacity:1;pointer-events:auto}
-.sheet{position:absolute;inset-inline:0;bottom:0;background:var(--card);border:1px solid var(--border);border-bottom:0;border-radius:20px 20px 0 0;padding:8px 20px 22px;transform:translateY(105%);box-shadow:0 -12px 40px rgba(0,0,0,.45);will-change:transform}
-.sheet-handle{width:44px;height:5px;border-radius:99px;background:var(--border);margin:6px auto 16px;cursor:grab;touch-action:none}
-.sheet-handle:active{cursor:grabbing}
-.sheet-title{font-size:15.5px;font-weight:700;margin-bottom:6px}
-.sheet-row{display:flex;align-items:center;gap:12px;padding:13px 4px;border-bottom:1px solid var(--border-soft);font-size:14px;color:var(--text)}
-.sheet-row:last-of-type{border-bottom:0}
-.sheet-row .avatar{width:32px;height:32px;font-size:12px}
-.sheet-sub{font-size:12px;color:var(--muted)}
-.loaders{display:flex;gap:34px;justify-content:center;align-items:center;flex-wrap:wrap;padding:6px 0 26px}
+/* shared fly-arc element (selection lands at the component head) */
+.fly-arc{position:fixed;z-index:70;pointer-events:none;display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--accent-strong);border-radius:12px;padding:9px 14px;box-shadow:var(--shadow-2);font-size:13.5px;font-weight:600;color:var(--text);white-space:nowrap;will-change:transform}
+.fly-arc .avatar{width:26px;height:26px;font-size:10px}
+/* fan drawer: options unfold like cards, selection arcs to the head */
+.fan-stage{position:relative;width:100%;min-height:470px;border-radius:12px;overflow:hidden;background:radial-gradient(90% 70% at 50% 100%,#101722,var(--bg))}
+.fan-trigger{position:absolute;top:26px;left:50%;translate:-50% 0;display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:999px;padding:11px 20px;color:var(--text);font-family:inherit;font-size:14.5px;font-weight:600;cursor:pointer;transition:border-color .2s;z-index:5;white-space:nowrap}
+.fan-trigger:hover{border-color:var(--accent-strong)}
+.fan-trigger:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.fan-trigger .chev{transition:transform .35s cubic-bezier(.34,1.56,.64,1);color:var(--muted)}
+.fan-stage.open .fan-trigger .chev{transform:rotate(180deg)}
+.fan-trigger.landed{animation:landPop .55s cubic-bezier(.34,1.8,.64,1)}
+@keyframes landPop{0%{transform:scale(.82);box-shadow:0 0 0 0 rgba(20,184,166,.45)}60%{transform:scale(1.07)}100%{transform:scale(1);box-shadow:0 0 0 20px rgba(20,184,166,0)}}
+.fan-trigger .avatar{width:26px;height:26px;font-size:10px}
+.fan-backdrop{position:absolute;inset:0;background:rgba(4,8,12,.55);opacity:0;pointer-events:none;transition:opacity .35s}
+.fan-stage.open .fan-backdrop{opacity:1;pointer-events:auto}
+.fan{position:absolute;left:50%;bottom:70px;z-index:4}
+.fan-card{position:absolute;left:0;bottom:0;width:118px;height:150px;margin-left:-59px;transform-origin:50% 160%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;background:linear-gradient(180deg,var(--card),var(--card-2));border:1px solid var(--border);border-radius:16px;box-shadow:0 14px 34px rgba(0,0,0,.45);color:var(--text);font-family:inherit;cursor:pointer;padding:12px 8px;opacity:0;pointer-events:none;transform:rotate(0deg) translateY(60px) scale(.4);transition:transform .5s cubic-bezier(.2,1.45,.32,1) calc(var(--i)*55ms),opacity .3s var(--ease) calc(var(--i)*55ms),border-color .2s;will-change:transform}
+.fan-stage.open .fan-card{opacity:1;pointer-events:auto;transform:rotate(var(--a)) translateY(0) scale(1)}
+.fan-card:hover{border-color:var(--accent-strong)}
+.fan-card:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.fan-card .avatar{width:42px;height:42px;font-size:14px}
+.fan-card b{font-size:13px}
+.fan-card small{font-size:10.5px;color:var(--muted);text-align:center}
+.fan-hint{position:absolute;bottom:12px;left:50%;translate:-50% 0;font-size:12px;color:var(--faint);z-index:3;transition:opacity .3s;white-space:nowrap}
+.fan-stage.open .fan-hint{opacity:0}
+/* loaders with character */
+.loaders{display:flex;gap:30px;justify-content:center;align-items:center;flex-wrap:wrap;padding:6px 0 26px}
 .orbit{position:relative;width:46px;height:46px;animation:spin 1.6s linear infinite}
 .orbit span{position:absolute;width:9px;height:9px;border-radius:50%;background:var(--accent)}
 .orbit span:nth-child(1){top:0;left:50%;translate:-50% 0}
@@ -255,6 +284,16 @@ footer a:hover{color:var(--accent)}
 .bars span:nth-child(4){animation-delay:.36s}
 .bars span:nth-child(5){animation-delay:.48s;background:var(--rose)}
 @keyframes barEq{0%,100%{height:10px}50%{height:34px}}
+.converge{position:relative;width:52px;height:52px}
+.converge span{position:absolute;top:50%;left:50%;width:9px;height:9px;margin:-4.5px 0 0 -4.5px;border-radius:50%;background:var(--accent);animation:conv 2.4s ease-in-out infinite}
+.converge span:nth-child(1){--ang:0deg}
+.converge span:nth-child(2){--ang:72deg;background:var(--amber)}
+.converge span:nth-child(3){--ang:144deg;background:var(--rose)}
+.converge span:nth-child(4){--ang:216deg}
+.converge span:nth-child(5){--ang:288deg;background:var(--amber)}
+@keyframes conv{0%{transform:rotate(var(--ang)) translateX(26px) scale(.55);opacity:.45}30%,50%{transform:rotate(var(--ang)) translateX(0) scale(1.15);opacity:1}72%,100%{transform:rotate(calc(var(--ang) + 180deg)) translateX(26px) scale(.55);opacity:.45}}
+.blob{width:38px;height:38px;background:linear-gradient(135deg,var(--accent),var(--amber));animation:blobMorph 3.4s ease-in-out infinite}
+@keyframes blobMorph{0%,100%{border-radius:58% 42% 55% 45%/45% 55% 42% 58%;transform:rotate(0)}33%{border-radius:42% 58% 40% 60%/60% 42% 58% 40%;transform:rotate(120deg)}66%{border-radius:50% 50% 38% 62%/44% 62% 38% 56%;transform:rotate(240deg)}}
 .ring-wrap{display:flex;flex-direction:column;align-items:center;gap:16px}
 .ring-holder{position:relative;width:84px;height:84px}
 .ring-holder svg{transform:rotate(-90deg)}
@@ -297,7 +336,7 @@ footer a:hover{color:var(--accent)}
 
 <section id="signature" dir="rtl" lang="he" class="heb">
   <div class="sec-head rv"><span class="sec-num">01</span><h2>אנימציות חתימה - השכבה המתקדמת</h2></div>
-  <p class="sec-sub rv">מעבר ל-stagger ול-fade הרגילים: סוויץ עם אופי, זכוכית שגוררים בין יום ללילה, סצנת Three.js חיה - וגם קומפוננטות יומיומיות ברמה אחרת: צ'קבוקס שה-V נצייר, דרופדאון שפותח בסטאגר, קומבובוקס עם חיפוש חי, דרואר שגוררים וטוענים עם אופי. כל דמו כאן באמת עובד - עם טוען, שגיאה וניסיון חוזר, ובלי מסכים ריקים. הקוד המלא להעתקה נמצא בקובץ <a href="https://github.com/delevski/finesse/blob/main/skills/finesse/references/advanced-motion.md" target="_blank" rel="noopener" dir="ltr" style="color:var(--muted);border-bottom:1px solid var(--border)">advanced-motion.md</a> בריפו.</p>
+  <p class="sec-sub rv">מעבר ל-stagger ול-fade הרגילים: סוויץ עם אופי, זכוכית שגוררים בין יום ללילה, סצנת Three.js חיה - וגם קומפוננטות יומיומיות ברמת וואו: צ'קבוקס עם פיצוץ חלקיקים וג'לי, דרופדאון שנפרש בתלת-ממד, קומבובוקס שהבחירה בו עפה והופכת לצ'יפ, דרואר-מניפה עם טרנזישן מעגלי וטוענים עם אופי. כל דמו כאן באמת עובד - עם טוען, שגיאה וניסיון חוזר, ובלי מסכים ריקים. הקוד המלא להעתקה נמצא בקובץ <a href="https://github.com/delevski/finesse/blob/main/skills/finesse/references/advanced-motion.md" target="_blank" rel="noopener" dir="ltr" style="color:var(--muted);border-bottom:1px solid var(--border)">advanced-motion.md</a> בריפו.</p>
 
   <div class="demo rv" style="margin-bottom:18px">
     <div class="demo-bar">
@@ -424,22 +463,22 @@ footer a:hover{color:var(--accent)}
 
   <div class="demo rv" style="margin-bottom:18px">
     <div class="demo-bar">
-      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 20h18"/><path d="M6 20V8m6 12V4m6 16v-8"/></svg><span dir="ltr">drawer.tsx</span></span>
+      <span class="demo-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 20h18"/><path d="M6 20V8m6 12V4m6 16v-8"/></svg><span dir="ltr">fan-drawer.tsx</span></span>
     </div>
     <div class="stage"><div class="stage-inner">
-      <div class="drawer-stage" id="drawerStage">
-        <button class="btn primary ripple-host" id="openSheet">פתח חלונית תחתונה</button>
-        <div class="sheet-backdrop" id="sheetBackdrop"></div>
-        <div class="sheet" id="sheet" role="dialog" aria-label="חלונית נציגים">
-          <div class="sheet-handle" id="sheetHandle"></div>
-          <div class="sheet-title">בחירת נציג</div>
-          <div class="sheet-row"><span class="avatar">ש</span><div><div>שירה כהן</div><div class="sheet-sub">זמינה עכשיו</div></div></div>
-          <div class="sheet-row"><span class="avatar">ד</span><div><div>דוד לוי</div><div class="sheet-sub">חוזר בעוד 10 דקות</div></div></div>
-          <div class="sheet-row"><span class="avatar">מ</span><div><div>מאיה אברהם</div><div class="sheet-sub">זמינה עכשיו</div></div></div>
-          <button class="submit ripple-host" id="sheetDone" style="margin-top:16px">סגירה</button>
+      <div class="fan-stage" id="fanStage">
+        <button class="fan-trigger" id="fanTrigger" aria-expanded="false"><span id="fanLabel">בחירת נציג</span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="fan-backdrop" id="fanBackdrop"></div>
+        <div class="fan" id="fan">
+          <button class="fan-card" style="--a:-22deg;--i:0;z-index:2" data-name="שירה כהן" data-init="ש"><span class="avatar">ש</span><b>שירה כהן</b><small>זמינה עכשיו</small></button>
+          <button class="fan-card" style="--a:-11deg;--i:1;z-index:3" data-name="דוד לוי" data-init="ד"><span class="avatar">ד</span><b>דוד לוי</b><small>חוזר בעוד 10 דקות</small></button>
+          <button class="fan-card" style="--a:0deg;--i:2;z-index:4" data-name="מאיה אברהם" data-init="מ"><span class="avatar">מ</span><b>מאיה אברהם</b><small>זמינה עכשיו</small></button>
+          <button class="fan-card" style="--a:11deg;--i:3;z-index:3" data-name="יוסי חדד" data-init="י"><span class="avatar">י</span><b>יוסי חדד</b><small>בשיחה עד 15:30</small></button>
+          <button class="fan-card" style="--a:22deg;--i:4;z-index:2" data-name="נועה ברק" data-init="נ"><span class="avatar">נ</span><b>נועה ברק</b><small>זמינה עכשיו</small></button>
         </div>
+        <div class="fan-hint">לחצו על הכפתור - המניפה נפרסת</div>
       </div>
-      <div class="es-state" style="text-align:center;margin-top:14px">החלונית קופצת מלמטה, הרקע מחשיך, ואפשר לגרור אותה מהידית כדי לסגור - עם אלסטיות בקצה</div>
+      <div class="es-state" style="text-align:center;margin-top:14px">דרואר-מניפה: האפשרויות נפרסות כמו קלפים מהקצה, ובחירה עפה בקשת מעגלית ונוחתת בראש הקומפוננטה</div>
     </div></div>
   </div>
 
@@ -451,6 +490,8 @@ footer a:hover{color:var(--accent)}
       <div class="loaders">
         <div class="orbit" aria-label="טוען"><span></span><span></span><span></span></div>
         <div class="bars" aria-label="טוען"><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="converge" aria-label="טוען"><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="blob" aria-label="טוען"></div>
       </div>
       <div class="ring-wrap">
         <div class="ring-holder">
@@ -459,7 +500,7 @@ footer a:hover{color:var(--accent)}
         </div>
         <button class="btn primary ripple-host" id="ringBtn">התחל העלאה (דמו)</button>
       </div>
-      <div class="es-state" style="text-align:center;margin-top:16px">טוענים עם אופי במקום ספינר אפור: מסלול, אקולייזר, וטבעת התקדמות עם אחוזים ו-V בסוף</div>
+      <div class="es-state" style="text-align:center;margin-top:16px">טוענים עם אופי במקום ספינר אפור: מסלול, אקולייזר, חלקיקים שמתכנסים למרכז וחוזרים, בלוב שמשנה צורה, וטבעת התקדמות עם אחוזים ו-V בסוף</div>
     </div></div>
   </div>
 
@@ -934,60 +975,111 @@ const $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
 const CHECK='<svg class="dd-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>';
 
-/* ============ checkbox list ============ */
+/* ============ burst checkbox ============ */
 const xcCount=$("#xcCount");
 if(xcCount){
   const boxes=$$(".xcheck input");
+  const bitColors=["var(--accent)","var(--amber)","var(--rose)"];
+  const burst=box=>{
+    if(reduce)return;
+    for(let i=0;i<10;i++){
+      const s=document.createElement("span");
+      s.className="ck-bit";
+      const a=Math.random()*Math.PI*2,d=18+Math.random()*22;
+      s.style.setProperty("--tx",(Math.cos(a)*d).toFixed(1)+"px");
+      s.style.setProperty("--ty",(Math.sin(a)*d).toFixed(1)+"px");
+      s.style.setProperty("--rr",(Math.random()*260-130).toFixed(0)+"deg");
+      s.style.setProperty("--bc",bitColors[i%3]);
+      box.appendChild(s);
+      s.addEventListener("animationend",()=>s.remove());
+    }
+  };
   const update=()=>{
     const n=boxes.filter(b=>b.checked).length;
     xcCount.innerHTML=`נבחרו <b>${n}</b> מתוך ${boxes.length}`;
     const b=$("b",xcCount);
     b.classList.remove("pop");void b.offsetWidth;b.classList.add("pop");
   };
-  boxes.forEach(b=>b.addEventListener("change",update));
+  boxes.forEach(b=>b.addEventListener("change",()=>{if(b.checked)burst(b.nextElementSibling);update();}));
 }
 
-/* ============ dropdown ============ */
+/* ============ shared: fly along a circular arc ============ */
+const flyArc=(fromRect,toRect,html,dur=640)=>{
+  return new Promise(res=>{
+    if(reduce){res();return;}
+    const x0=fromRect.left+fromRect.width/2,y0=fromRect.top+fromRect.height/2;
+    const x1=toRect.left+toRect.width/2,y1=toRect.top+toRect.height/2;
+    const el=document.createElement("div");
+    el.className="fly-arc";el.innerHTML=html;
+    el.style.left=x0+"px";el.style.top=y0+"px";
+    document.body.appendChild(el);
+    const dx=x1-x0,dy=y1-y0,len=Math.hypot(dx,dy)||1;
+    const px=-dy/len,py=dx/len,side=x0<=x1?1:-1;
+    const cx=(x0+x1)/2+px*len*.3*side,cy=(y0+y1)/2+py*len*.3*side-len*.08;
+    const t0=performance.now();
+    const step=now=>{
+      const t=Math.min(1,(now-t0)/dur),e=t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2,u=1-e;
+      const x=u*u*x0+2*u*e*cx+e*e*x1,y=u*u*y0+2*u*e*cy+e*e*y1;
+      const ang=Math.atan2(2*u*(cy-y0)+2*e*(y1-cy),2*u*(cx-x0)+2*e*(x1-cx))*57.2958;
+      el.style.transform=`translate(-50%,-50%) translate(${(x-x0).toFixed(1)}px,${(y-y0).toFixed(1)}px) rotate(${(ang*.22).toFixed(1)}deg) scale(${(1-.68*e).toFixed(3)})`;
+      if(t<1)requestAnimationFrame(step);else{el.remove();res();}
+    };
+    requestAnimationFrame(step);
+  });
+};
+
+/* ============ unfold dropdown (3D) ============ */
 const dd=$("#dd");
 if(dd){
   const btn=$("#ddBtn",dd),panel=$("#ddPanel",dd),label=$("#ddLabel",dd);
   const opts=["תל אביב - רוטשילד","חיפה - הכרמל","ירושלים - מרכז","באר שבע - צפון"];
   let sel=-1;
+  const swapLabel=txt=>{
+    label.classList.add("swapping");
+    setTimeout(()=>{label.textContent=txt;label.classList.remove("swapping");},reduce?0:160);
+  };
   const render=()=>{
     panel.innerHTML=opts.map((o,i)=>`<button class="dd-item" role="option" style="--i:${i}" aria-selected="${i===sel}" data-i="${i}"><span>${o}</span>${CHECK}</button>`).join("");
     $$(".dd-item",panel).forEach(it=>it.addEventListener("click",()=>{
       sel=+it.dataset.i;
-      label.textContent=opts[sel];
-      render();
-      close();
+      $$(".dd-item",panel).forEach(o=>o.setAttribute("aria-selected",String(+o.dataset.i===sel)));
+      it.classList.add("flash");
+      swapLabel(opts[sel]);
+      setTimeout(close,reduce?0:260);
     }));
   };
-  const open=()=>{dd.classList.add("open");btn.setAttribute("aria-expanded","true");};
+  const open=()=>{render();dd.classList.add("open");btn.setAttribute("aria-expanded","true");};
   const close=()=>{dd.classList.remove("open");btn.setAttribute("aria-expanded","false");};
   btn.addEventListener("click",()=>dd.classList.contains("open")?close():open());
   document.addEventListener("click",e=>{if(!dd.contains(e.target))close();});
   document.addEventListener("keydown",e=>{if(e.key==="Escape")close();});
-  render();
 }
 
-/* ============ combobox ============ */
+/* ============ cascade combobox (selection flies into a chip) ============ */
 const cb=$("#cb");
 if(cb){
-  const input=$("#cbInput",cb),panel=$("#cbPanel",cb),chipWrap=$("#cbChipWrap",cb);
+  const input=$("#cbInput",cb),panel=$("#cbPanel",cb),chipWrap=$("#cbChipWrap",cb),wrap=$(".cb-inputwrap",cb);
   const cities=["תל אביב","ירושלים","חיפה","באר שבע","נתניה","הרצליה","רמת גן","אילת","אשדוד","פתח תקווה"];
-  let picked=null,timer=0;
+  let picked=null,timer=0,flying=false;
   const open=()=>{cb.classList.add("open");input.setAttribute("aria-expanded","true");};
   const close=()=>{cb.classList.remove("open");input.setAttribute("aria-expanded","false");};
   const render=list=>{
     if(!list.length){panel.innerHTML='<div class="cb-empty">לא נמצאו ערים מתאימות (דמו)</div>';return;}
     panel.innerHTML=list.map((c,i)=>`<button class="dd-item" role="option" style="--i:${i}" aria-selected="${c===picked}" data-c="${c}"><span>${c}</span>${CHECK}</button>`).join("");
-    $$(".dd-item",panel).forEach(it=>it.addEventListener("click",()=>{
+    $$(".dd-item",panel).forEach(it=>it.addEventListener("click",async()=>{
+      if(flying)return;flying=true;
       picked=it.dataset.c;
-      chipWrap.innerHTML=`<span class="cb-chip">${picked}<button aria-label="הסרת הבחירה">×</button></span>`;
-      $("button",chipWrap).addEventListener("click",()=>{picked=null;chipWrap.innerHTML="";render(cities);});
-      input.value="";
-      render(cities);
       close();
+      await flyArc(it.getBoundingClientRect(),chipWrap.getBoundingClientRect(),`<span>${picked}</span>`,520);
+      chipWrap.innerHTML=`<span class="cb-chip">${picked}<button aria-label="הסרת הבחירה">×</button></span>`;
+      $("button",chipWrap).addEventListener("click",()=>{
+        const chip=$(".cb-chip",chipWrap);
+        chip.style.transition="transform .3s var(--ease),opacity .3s";
+        chip.style.transform="scale(.3) rotate(10deg)";chip.style.opacity="0";
+        setTimeout(()=>{picked=null;chipWrap.innerHTML="";},reduce?0:280);
+      });
+      input.value="";
+      flying=false;
     }));
   };
   input.addEventListener("focus",()=>{render(cities);open();});
@@ -997,7 +1089,9 @@ if(cb){
     timer=setTimeout(()=>{
       cb.classList.remove("searching");
       const q=input.value.trim();
-      render(cities.filter(c=>c.includes(q)));
+      const list=cities.filter(c=>c.includes(q));
+      if(!list.length&&q){wrap.classList.remove("shake");void wrap.offsetWidth;wrap.classList.add("shake");}
+      render(list);
       open();
     },reduce?40:380);
   });
@@ -1006,50 +1100,27 @@ if(cb){
   render(cities);
 }
 
-/* ============ drawer (bottom sheet) ============ */
-const dStage=$("#drawerStage");
-if(dStage){
-  const sheet=$("#sheet",dStage),backdrop=$("#sheetBackdrop",dStage),handle=$("#sheetHandle",dStage);
-  let openSt=false,dragging=false,startY=0,curY=0,anim=null;
-  const setY=y=>{sheet.style.transform=`translateY(${y}px)`;};
-  const animateTo=(target,dur)=>{
-    if(anim)anim.cancel();
-    if(reduce){setY(target);return Promise.resolve();}
-    const from=curY;
-    return new Promise(res=>{
-      anim=sheet.animate(
-        [{transform:`translateY(${from}px)`},{transform:`translateY(${target}px)`}],
-        {duration:dur,easing:"cubic-bezier(.22,1,.36,1)",fill:"forwards"});
-      anim.onfinish=()=>{setY(target);curY=target;anim=null;res();};
-    });
-  };
-  const sheetH=()=>sheet.offsetHeight+8;
-  const openSheet=()=>{openSt=true;dStage.classList.add("open");curY=sheetH();setY(curY);animateTo(0,420);};
-  const closeSheet=()=>{openSt=false;dStage.classList.remove("open");animateTo(sheetH(),320);};
-  $("#openSheet",dStage).addEventListener("click",openSheet);
-  $("#sheetDone",dStage).addEventListener("click",closeSheet);
-  backdrop.addEventListener("click",closeSheet);
-  handle.addEventListener("pointerdown",e=>{
-    dragging=true;startY=e.clientY;
-    handle.setPointerCapture(e.pointerId);
-    if(anim){anim.cancel();anim=null;}
-    e.preventDefault();
-  });
-  handle.addEventListener("pointermove",e=>{
-    if(!dragging)return;
-    let dy=e.clientY-startY;
-    if(dy<0)dy*=0.25; // rubber-band upward
-    curY=dy;
-    setY(dy);
-    backdrop.style.opacity=String(Math.max(0,0.62*(1-dy/sheetH())));
-  });
-  handle.addEventListener("pointerup",e=>{
-    if(!dragging)return;
-    dragging=false;
-    backdrop.style.opacity="";
-    const dy=e.clientY-startY;
-    if(dy>90)closeSheet();else animateTo(0,300);
-  });
+/* ============ fan drawer (מניפה נפרסת + מעוף מעגלי) ============ */
+const fanStage=$("#fanStage");
+if(fanStage){
+  const trigger=$("#fanTrigger",fanStage),label=$("#fanLabel",fanStage),backdrop=$("#fanBackdrop",fanStage);
+  const cards=$$(".fan-card",fanStage);
+  let flying=false;
+  const openFan=()=>{fanStage.classList.add("open");trigger.setAttribute("aria-expanded","true");};
+  const closeFan=()=>{fanStage.classList.remove("open");trigger.setAttribute("aria-expanded","false");};
+  trigger.addEventListener("click",()=>fanStage.classList.contains("open")?closeFan():openFan());
+  backdrop.addEventListener("click",closeFan);
+  document.addEventListener("keydown",e=>{if(e.key==="Escape")closeFan();});
+  cards.forEach(card=>card.addEventListener("click",async()=>{
+    if(flying)return;flying=true;
+    const name=card.dataset.name,init=card.dataset.init;
+    cards.forEach(c=>c.style.pointerEvents="none");
+    await flyArc(card.getBoundingClientRect(),trigger.getBoundingClientRect(),`<span class="avatar">${init}</span><span>${name}</span>`,680);
+    label.innerHTML=`<span class="avatar">${init}</span> ${name}`;
+    trigger.classList.remove("landed");void trigger.offsetWidth;trigger.classList.add("landed");
+    closeFan();
+    setTimeout(()=>{cards.forEach(c=>c.style.pointerEvents="");flying=false;},reduce?0:350);
+  }));
 }
 
 /* ============ progress ring ============ */

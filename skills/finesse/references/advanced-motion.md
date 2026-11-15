@@ -410,19 +410,21 @@ Call it when the submit promise resolves, on the button that was clicked. The bu
 
 ## 6. Standard controls, signature level
 
-The everyday components are where "basic" is most visible. Each of these keeps its states layer (focus ring, aria, keyboard) and adds one crafted motion detail:
+The everyday components are where "basic" is most visible. These recipes are inspired by the high-star animation libraries - React Bits (davidhdev/react-bits), Magic UI (magicuidesign/magicui), Codrops demos - and rebuilt for Next.js + shadcn with the states layer intact (focus ring, aria, keyboard). Every selection deserves a story: open with character, confirm with motion, land the choice where the user can see it.
 
-**Checkbox** - the check draws itself: SVG path with `stroke-dasharray`/`dashoffset` transitioning 22 -> 0 over ~300ms, the box fills and pops to `scale(1.1)` with an overshoot bezier (`cubic-bezier(.34,1.56,.64,1)`), and a one-shot ring ping expands on check. The label row presses to `scale(.98)`.
+**Checkbox (burst)** - the check draws itself (SVG `stroke-dasharray` 22 -> 0), and on check the box plays a jelly squash-and-stretch (`scale(1.3,.7) -> (.82,1.18) -> (1.12,.9) -> 1`, ~550ms) while 8-12 small particles burst outward from the box center with random angle/distance/rotation and fade. Particles are spawned spans, removed on `animationend`; skip them under `prefers-reduced-motion`.
 
-**Dropdown** - the panel opens with `scale(.96) translateY(-6px)` -> none from `transform-origin: top`, and items stagger in at ~45ms each. The selected item's check pops in with the same overshoot bezier; the chevron rotates 180deg. Close on outside click and Escape; `aria-expanded`, `role="listbox"`/`option`, `aria-selected`.
+**Dropdown (3D unfold)** - the wrapper gets `perspective: ~900px`; items enter with `rotateX(-75deg) translateY(-8px)` -> none, `transform-origin: top`, staggered ~55ms with an overshoot bezier (`cubic-bezier(.2,1.35,.3,1)`), so the panel reads as unfolding, not fading. On select, the chosen row flashes the accent wash once, the button label swaps through a blur (blur(5px)/fade out, swap text, blur back in), and the check springs in with rotation. Close on outside click and Escape; `aria-expanded`, `role="listbox"`/`option`, `aria-selected`.
 
-**Combobox** - typing shows a mini spinner inside the input (the async state is visible, per the states layer), results stagger in like the dropdown, zero results get a designed empty state, and the selection becomes a removable chip that pops in above the input.
+**Combobox (cascade + fly-to-chip)** - typing shows the mini spinner (visible async state); results cascade in with `blur(6px) translateY(10px)` -> sharp, staggered ~50ms, re-running on every keystroke's render. Zero results get a designed empty state plus a short horizontal shake on the input. On select, the option row flies (shared `flyArc`) into the chip area and lands as a removable chip that springs in (`scale(.3) rotate(-8deg)` -> none); removing the chip shrinks/rotates it out.
 
-**Drawer / bottom sheet** - enters with a spring (`cubic-bezier(.22,1,.36,1)`, ~420ms) over a fading backdrop. The handle is draggable with pointer capture: downward drags follow the finger, upward drags rubber-band at 25%, release past ~90px (or fast velocity) closes, otherwise it springs back. In RTL nothing changes - the sheet moves on the Y axis.
+**Fan drawer (the selection fan)** - instead of a plain bottom sheet: options are cards stacked on a shared pivot below the stage (`transform-origin: 50% 160%`). Opening rotates each card to its fan angle (`--a: -22deg..22deg`) with a staggered overshoot (`cubic-bezier(.2,1.45,.32,1)`, ~55ms apart) over a dimming backdrop - the fan unfolds like a hand of cards. Center card carries the top z-index. On select, a clone of the card flies a quadratic-bezier arc (perpendicular control point ~0.3x the chord) up to the trigger at the head, rotating with the path tangent and shrinking to ~30%; on landing the trigger pops (`scale .82 -> 1.07 -> 1` + expanding glow ring) and shows the selection; the fan collapses with reverse stagger. Escape/backdrop close. RTL-safe: rotation is symmetric, no logical-property offsets in the fan geometry.
 
-**Loaders with character** - replace the gray spinner: three orbiting dots, an equalizer of bars, or a progress ring that fills with a live `Intl`-formatted percentage and ends in a drawn check. A determinate action (upload, import) always gets the ring over an indeterminate spinner.
+**Loaders with character** - replace the gray spinner: three orbiting dots, an equalizer of bars, five particles that converge to the center, merge, and pass through to the opposite side (`rotate(var(--ang)) translateX(...)` keyframes), a morphing blob (animated `border-radius` + rotation), or a progress ring that fills with a live percentage and ends in a drawn check. A determinate action (upload, import) always gets the ring over an indeterminate spinner.
 
-All five are demoed live in the gallery (`docs/index.html`, the signature-motion section) - copy the behavior from there.
+**Shared: `flyArc(from, to, html)`** - the selection-flight primitive used by the combobox and fan drawer: fixed-position clone, rAF loop over a quadratic bezier (endpoints = element centers, control point = chord midpoint + perpendicular offset), rotation follows the path tangent, scale eases toward the target, element removed on finish. Resolves immediately under reduced motion. One layout read per endpoint per flight - never per frame.
+
+All of these are demoed live in the gallery (`docs/index.html`, the signature-motion section) - copy the behavior from there.
 
 ---
 
