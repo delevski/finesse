@@ -94,6 +94,70 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
 }
 
+/* Assistant text contrast: CopilotKit v2 renders assistant markdown in a dim
+   zinc tone that is unreadable on this dark theme - force readable light text. */
+.copilotKitAssistantMessage,
+.copilotKitAssistantMessage p,
+.copilotKitAssistantMessage li,
+.copilotKitAssistantMessage span,
+.copilotKitAssistantMessage strong,
+.copilotKitAssistantMessage em,
+.copilotKitAssistantMessage h1,
+.copilotKitAssistantMessage h2,
+.copilotKitAssistantMessage h3,
+.copilotKitAssistantMessage h4,
+.copilotKitUserMessage,
+.copilotKitUserMessage p,
+.copilotKitUserMessage span {
+  color: #e8eef4 !important;
+}
+.copilotKitAssistantMessage a {
+  color: #5eead4 !important;
+}
+
+/* Visible failure/slow notice with retry, shown above the composer */
+.fc-notice {
+  position: fixed;
+  bottom: 150px;
+  right: 24px;
+  width: min(372px, calc(100vw - 48px));
+  z-index: 1300;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #1a2230;
+  color: #e8eef4;
+  border: 1px solid #f59e0b;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-family: "Inter", "Heebo", system-ui, sans-serif;
+  font-size: 13.5px;
+  line-height: 1.45;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+.fc-notice-failed {
+  border-color: #f87171;
+}
+.fc-notice button {
+  flex: none;
+  background: #14b8a6;
+  color: #06251f;
+  border: none;
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+@media (max-width: 768px) {
+  .fc-notice {
+    left: 12px;
+    right: 12px;
+    width: auto;
+    bottom: 132px;
+  }
+}
+
 /* Keep the floating toggle above the site's mobile bottom nav */
 @media (max-width: 768px) {
   [data-copilotkit] [class*="toggle"],

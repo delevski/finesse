@@ -5,6 +5,7 @@ import { createRoot } from "react-dom/client";
 import {
   CopilotKitProvider,
   CopilotSidebar,
+  useAgent,
   useFrontendTool,
   ToolCallStatus,
 } from "@copilotkit/react-core/v2";
@@ -142,6 +143,87 @@ function FinesseTools() {
   return null;
 }
 
+function messageText(m: any): string {
+  const c = m?.content;
+  if (typeof c === "string") return c;
+  if (Array.isArray(c))
+    return c.map((p: any) => (typeof p === "string" ? p : p?.text || p?.content || "")).join("");
+  return "";
+}
+
+// Watches the agent run lifecycle and turns silent failures into a visible
+// Hebrew notice with a retry button. A run that ends with no assistant reply
+// (upstream 429 / stall) shows "נסה שוב"; a run exceeding 90s shows a slow
+// notice with stop+retry. Retry aborts any active run and resends the last
+// user message. window.__fcSimulate drives the same UI for mock verification.
+function RunWatchdog() {
+  const { agent } = useAgent({ agentId: "default" });
+  const [notice, setNotice] = React.useState<null | { kind: string; text: string }>(null);
+  const ref = React.useRef({ wasRunning: false, runStart: 0, countAtStart: 0, lastUserText: "" });
+
+  React.useEffect(() => {
+    (window as any).__fcSimulate = (kind: string) => {
+      ref.current.lastUserText = ref.current.lastUserText || "בדיקה";
+      setNotice(
+        kind === "slow"
+          ? { kind: "slow", text: "לוקח יותר זמן מהרגיל - אפשר לעצור ולנסות שוב." }
+          : { kind: "failed", text: "העוזר לא השיב - ייתכן שהמודל החינמי עמוס כרגע. נסו שוב בעוד רגע." }
+      );
+    };
+    const t = window.setInterval(() => {
+      const s = ref.current;
+      const running = !!agent.isRunning;
+      if (running && !s.wasRunning) {
+        s.runStart = Date.now();
+        s.countAtStart = agent.messages.length;
+        const lastUser = [...agent.messages].reverse().find((m: any) => m.role === "user");
+        const txt = lastUser ? messageText(lastUser).trim() : "";
+        if (txt) s.lastUserText = txt;
+        setNotice(null);
+      } else if (!running && s.wasRunning) {
+        const gotAnswer = agent.messages
+          .slice(s.countAtStart)
+          .some((m: any) => m.role === "assistant" && messageText(m).trim().length > 0);
+        if (!gotAnswer && s.lastUserText) {
+          setNotice({
+            kind: "failed",
+            text: "העוזר לא השיב - ייתכן שהמודל החינמי עמוס כרגע. נסו שוב בעוד רגע.",
+          });
+        }
+      } else if (running && s.wasRunning && Date.now() - s.runStart > 90000) {
+        setNotice((n) =>
+          n ? n : { kind: "slow", text: "לוקח יותר זמן מהרגיל - אפשר לעצור ולנסות שוב." }
+        );
+      }
+      s.wasRunning = running;
+    }, 700);
+    return () => window.clearInterval(t);
+  }, [agent]);
+
+  if (!notice) return null;
+  const retry = () => {
+    setNotice(null);
+    try {
+      if (agent.isRunning) agent.abortRun();
+      const text = ref.current.lastUserText;
+      if (text) {
+        agent.addMessage({ id: crypto.randomUUID(), role: "user", content: text } as any);
+        agent.runAgent();
+      }
+    } catch (e) {
+      (window as any).__chatError = String(e);
+    }
+  };
+  return (
+    <div className={`fc-notice fc-notice-${notice.kind}`} role="alert" dir="rtl">
+      <span>{notice.text}</span>
+      <button type="button" onClick={retry}>
+        נסה שוב
+      </button>
+    </div>
+  );
+}
+
 // Capture crash details for diagnosis, then recover with a reload button
 // instead of unmounting to nothing.
 (window as any).__chatError = null;
@@ -180,11 +262,28 @@ function App() {
     <ChatBoundary>
       <CopilotKitProvider runtimeUrl={RUNTIME_URL}>
         <FinesseTools />
+        <RunWatchdog />
         <CopilotSidebar
           agentId="default"
           width={420}
           defaultOpen={window.matchMedia("(min-width: 1024px)").matches}
-          labels={{ modalHeaderTitle: "finesse Assistant · עוזר הקומפוננטות" }}
+          labels={{
+            modalHeaderTitle: "finesse Assistant · עוזר הקומפוננטות",
+            welcomeMessageText: "איך אפשר לעזור?",
+            chatInputPlaceholder: "כתבו הודעה…",
+            chatDisclaimerText: "העוזר יכול לטעות. כדאי לבדוק מידע חשוב.",
+            chatToggleOpenLabel: "פתיחת הצ'אט",
+            chatToggleCloseLabel: "סגירת הצ'אט",
+            chatInputToolbarSendButtonLabel: "שליחה",
+            chatInputToolbarStopButtonLabel: "עצירה",
+            chatScrollToBottomLabel: "גלילה למטה",
+            chatConnectingLabel: "מתחבר…",
+            assistantMessageToolbarCopyMessageLabel: "העתקה",
+            assistantMessageToolbarCopyCodeLabel: "העתקת קוד",
+            assistantMessageToolbarCopyCodeCopiedLabel: "הועתק",
+            assistantMessageToolbarRegenerateLabel: "נסה שוב",
+            userMessageToolbarCopyMessageLabel: "העתקה",
+          }}
         />
       </CopilotKitProvider>
     </ChatBoundary>
